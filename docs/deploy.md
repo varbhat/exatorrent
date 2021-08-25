@@ -5,7 +5,7 @@ This Documents some things on deployment of `exatorrent` .
 Create new seperate user and group to run `exatorrent` . In this document , we assume that `exatorrent` is run as `exatorrent` user and `exatorrent` group but any name is fine . Run `exatorrent` as seperate user and group .
 
 # Service
-Using Services help to make sure that `exatorrent` will be running even after reboot and better logging by service Manager . Below are example Service files for `Runit` and `Systemd` .
+Using Services help to make sure that `exatorrent` will be running even after reboot and better logging by service Manager . Below are example Service files for `Runit` , `Systemd` , `Sysvinit` and `Openrc` . Modify them to suit your system .
 
 ## Runit
 `run` file of `exatorrent` is as below .
@@ -16,11 +16,30 @@ cd /path/to/directory
 exec chpst -u exatorrent:exatorrent /path/to/exatorrent
 ```
 
-## Sysvinit
-
-The large used one init system, script follow as:
+## Systemd
+Systemd unit file `exatorrent.service` is as follows :
 
 ```
+[Unit]
+Description=exatorrent
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+User=exatorrent
+Group=exatorrent
+WorkingDirectory=/path/to/directory
+ExecStart=/path/to/exatorrent
+
+[Install]
+WantedBy=multi-user.target
+```
+
+## Sysvinit
+Sysvinit script is as follows:
+
+```sh
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          exatorrent
@@ -29,7 +48,7 @@ The large used one init system, script follow as:
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: starts exatorrent
-# Description:       Starts The exatorrent Daemon, SAVBE AS exatorrent
+# Description:       exatorrent is torrent client
 ### END INIT INFO
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
@@ -71,13 +90,11 @@ exit 0
 
 ## openrc
 
-Simple and efficient as openrc
+Openrc `run` file is as follows :
 
-```
+```sh
 #!/sbin/openrc-run
-# Distributed under the terms of the GNU General Public License v2
-
-description="exatorrent daemon"
+description="exatorrent"
 
 depend() {
 	need net
@@ -98,25 +115,7 @@ stop() {
 }
 ```
 
-## Systemd
-Systemd unit file `exatorrent.service` is as follows . 
 
-```
-[Unit]
-Description=exatorrent
-
-[Service]
-Type=simple
-Restart=always
-RestartSec=5s
-User=exatorrent
-Group=exatorrent
-WorkingDirectory=/path/to/directory
-ExecStart=/path/to/exatorrent
-
-[Install]
-WantedBy=multi-user.target
-```
 
 # Reverse Proxy
 We recommend running `exatorrent` behind reverse proxy . Below are example configurations of Nginx , Haproxy and Caddy made to reverse proxy `exatorrent` . Please don't put Basic Auth or any kind of custom auth / request modification system as Authentication is handled by `exatorrent` itself . `/api/socket` is WebSocket endpoint and Reverse Proxying server must not hinder it .
