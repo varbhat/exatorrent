@@ -16,6 +16,88 @@ cd /path/to/directory
 exec chpst -u exatorrent:exatorrent /path/to/exatorrent
 ```
 
+## Sysvinit
+
+The large used one init system, script follow as:
+
+```
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          exatorrent
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts exatorrent
+# Description:       Starts The exatorrent Daemon, SAVBE AS exatorrent
+### END INIT INFO
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+NAME=exatorrent
+USER=exatorrent
+DESC="exatorrent"
+DAEMON_PATH=/path/to/exatorrent/bin/dir
+PIDFILE=/run/$NAME.pid
+LOGFILE=/var/log/$NAME.log
+TIMEOUT=30
+SCRIPTNAME=/etc/init.d/$NAME
+
+case "$1" in
+  start)
+    echo "Starting $DESC"
+    start-stop-daemon --start --background --oknodo --startas $DAEMON --chdir $DAEMON_PATH --chuid $USER --exec $DAEMON_PATH/$NAME -- 
+    ;;
+  stop)
+    echo "Stoping $DESC"
+    start-stop-daemon --stop --quiet --oknodo --retry=0/10/TERM/5/KILL/5 --exec $DAEMON_PATH/$NAME
+    ;;
+  status)
+    start-stop-daemon --status --exec $DAEMON_PATH/$NAME && exit_status=$? || exit_status=$?
+    case "$exit_status" in
+        0)     echo "The '$DESC' is running."            ;;
+        *)     echo "The '$DESC' is not running."            ;;
+    esac
+    ;;
+  restart)
+    echo "Restarting $DESC: "
+    sh $0 stop
+    sleep 20
+    mv --backup=numbered $LOGFILE $LOGFILE.1
+    sh $0 start
+    ;;
+esac
+exit 0
+```
+
+## openrc
+
+Simple and efficient as openrc
+
+```
+#!/sbin/openrc-run
+# Distributed under the terms of the GNU General Public License v2
+
+description="exatorrent daemon"
+
+depend() {
+	need net
+	after firewall
+}
+
+start() {
+	ebegin "Starting exatorrent"
+	start-stop-daemon --start --background --chdir /path/to/exatorrent/dir --exec /path/to/exatorrent/dir/exatorrent --
+	eend $?
+}
+
+stop() {
+	local rv=0
+	ebegin "Stopping exatorrent"
+	start-stop-daemon --stop --quiet --oknodo --retry=0/10/TERM/5/KILL/5 --exec /path/to/exatorrent/dir/exatorrent 
+	eend $?
+}
+```
+
 ## Systemd
 Systemd unit file `exatorrent.service` is as follows . 
 
