@@ -1,0 +1,38 @@
+{
+  "name": "exatorrent",
+  "scripts": {
+    "build": "node ./esbuild.config.js",
+    "watch": "node ./esbuild.config.js -w",
+    "format": "prettier --write --plugin-search-dir=. ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varbhat/exatorrent.git"
+  },
+  "author": "varbhat",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/varbhat/exatorrent/issues"
+  },
+  "homepage": "https://github.com/varbhat/exatorrent#readme",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@tsconfig/svelte": "^2.0.1",
+    "prettier": "^2.3.2",
+    "prettier-plugin-svelte": "^2.3.1",
+    "svelte-check": "^2.2.5",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "slocation": "latest",
+    "esbuild": "^0.12.22",
+    "esbuild-svelte": "^0.5.4",
+    "autoprefixer": "^10.3.2",
+    "@tailwindcss/forms": "^0.3.3",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.7",
+    "svelte-preprocess": "^4.8.0",
+    "svelte": "latest"
+  }
+}

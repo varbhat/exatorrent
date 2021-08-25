@@ -1,0 +1,5 @@
+This product includes software from the anacrolix/torrent project
+ * License : Mozilla Public License 2.0
+ 
+This product includes icons from tailwindlabs/heroicons
+ * License : MIT
