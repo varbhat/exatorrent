@@ -19,7 +19,7 @@ type User struct {
 ```
 
 Length of Username and Password fields of User must be more than 5. CreatedAt field stores the creation time of User. UserType field denotes whether the User is Admin / User / Disabled.
-if UserType field is 0 , User is Disabled and cannot connect to server. if UserType field is 0 , then the User is Normal User and can connect to server and perform normal operations. if UserType field is 1 ,then the User is Admin User and can connect to server. Admin User can also perform Administration Operations in addition to normal Operations.  Token field contains unique random  UUID token issued to User which can be used by User to Authenticate.
+if UserType field is -1 , User is Disabled and cannot connect to server. if UserType field is 0 , then the User is Normal User and can connect to server and perform normal operations. if UserType field is 1 ,then the User is Admin User and can connect to server. Admin User can also perform Administration Operations in addition to normal Operations.  Token field contains unique random  UUID token issued to User which can be used by User to Authenticate.
 
 exatorrent looks whether `session_token` cookie is present in request and if the cookie is present, it validates value of `session_token` as `Token` , and if `Token` is valid, User will be authenticated.
 
