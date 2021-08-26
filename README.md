@@ -31,7 +31,7 @@ Torrented Files are stored in local disk of device where it's run, which are the
 exatorrent can be installed in 3 ways.
 * **Releases:** You can download binary for your OS from [Releases](https://github.com/varbhat/exatorrent/releases/latest) . Mark it as executable and run it . Refer [Usage](docs/usage.md) .
   ```bash
-  wget https://github.com/varbhat/exatorrent/releases/download/latest/exatorrent-linux-amd64
+  wget https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64
   chmod u+x ./exatorrent-linux-amd64
   ./exatorrent-linux-amd64
   ```
