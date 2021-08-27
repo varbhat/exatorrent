@@ -30,6 +30,11 @@ app-linux-amd64:
 app-linux-arm64:
 	env CGO_ENABLED=1 GOOS="linux" GOARCH="arm64" CC="aarch64-linux-musl-gcc" CXX="aarch64-linux-musl-g++" go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME)-linux-arm64 $(MAIN_SOURCE)
 
+##app-windows-amd64: Build the Application for windows (amd64)
+.PHONY: app-windows-amd64
+app-windows-amd64:
+	env CGO_ENABLED=1 GOOS="windows" GOARCH="amd64" CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME).exe $(MAIN_SOURCE)
+
 ##checksum: Generate sha256 checksums for the builds
 .PHONY: checksum
 checksum:
