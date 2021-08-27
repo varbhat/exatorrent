@@ -69,7 +69,7 @@ func (s *machStats) LoadStats(diskDir string) {
 	//count disk usage
 	if stat, err := disk.Usage(diskDir); err == nil {
 		s.DiskUsedPercent = stat.UsedPercent
-		s.DiskFree = stat.Free / 1000000000
+		s.DiskFree = stat.Free
 	}
 	//count memory usage
 	if stat, err := mem.VirtualMemory(); err == nil {
