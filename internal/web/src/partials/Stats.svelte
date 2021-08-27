@@ -116,7 +116,7 @@
     <div class="flex flex-col">
       {#if devicestatsOpen === true}
         <div class="m-1 p-1 break-all">CPU Cycles: {$machstats?.cpucycles}</div>
-        <div class="m-1 p-1 break-all">Disk Free: {$machstats?.diskfree}</div>
+        <div class="m-1 p-1 break-all">Disk Free: {$machstats?.diskfree} GB</div>
         <div class="m-1 p-1 break-all">Disk Percent: {$machstats?.diskpercent} %</div>
         <div class="m-1 p-1 break-all">Memory Percent: {$machstats?.mempercent} %</div>
         <div class="m-1 p-1 break-all">Go Mem: {fileSize($machstats?.gomem)}</div>
