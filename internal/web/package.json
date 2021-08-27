@@ -28,7 +28,7 @@
     "slocation": "latest",
     "esbuild": "^0.12.22",
     "esbuild-svelte": "^0.5.4",
-    "autoprefixer": "^10.3.2",
+    "autoprefixer": "^10.3.3",
     "@tailwindcss/forms": "^0.3.3",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7",
