@@ -3,12 +3,12 @@ APP_NAME = exatorrent
 PACKAGES ?= ./...
 MAIN_SOURCE = exatorrent.go
 .DEFAULT_GOAL := help
-BUILD_FLAGS =
 
-ifeq ($(shell uname),Linux)
-	BUILD_FLAGS = -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"'
+BUILD_FLAGS = -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"'
+ifeq ($(shell uname),Darwin)
+	BUILD_FLAGS = -trimpath -buildmode=pie -ldflags '-extldflags "-s -w"'
 endif
-	
+
 ##help: Display list of commands
 .PHONY: help
 help: Makefile
