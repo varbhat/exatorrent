@@ -3,7 +3,12 @@ APP_NAME = exatorrent
 PACKAGES ?= ./...
 MAIN_SOURCE = exatorrent.go
 .DEFAULT_GOAL := help
+BUILD_FLAGS =
 
+ifeq ($(shell uname),Linux)
+	BUILD_FLAGS = -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"'
+endif
+	
 ##help: Display list of commands
 .PHONY: help
 help: Makefile
@@ -18,7 +23,7 @@ web:
 ##app: Build the Application
 .PHONY: app
 app:
-	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build $(BUILD_FLAGS) -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-linux-amd64: Build the Application for linux (amd64)
 .PHONY: app-linux-amd64
