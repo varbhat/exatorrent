@@ -248,9 +248,11 @@ func Initialize() {
 		}
 	}
 
-	tc.DefaultStorage = storage.NewFileWithCustomPathMakerAndCompletion(Dirconfig.TrntDir, func(baseDir string, info *metainfo.Info, infoHash metainfo.Hash) string {
+	stor := storage.NewFileOpts(storage.NewFileClientOpts{ClientBaseDir: Dirconfig.TrntDir, FilePathMaker: nil, TorrentDirMaker: func(baseDir string, info *metainfo.Info, infoHash metainfo.Hash) string {
 		return filepath.Join(baseDir, infoHash.HexString())
-	}, Engine.PcDb)
+	}, PieceCompletion: Engine.PcDb})
+
+	tc.DefaultStorage = stor
 
 	Engine.Torc, err = torrent.NewClient(tc)
 	if err != nil {
@@ -265,6 +267,7 @@ func Initialize() {
 				Warn.Println(err)
 			}
 		}()
+		var stoperr error
 		stopsignal := make(chan os.Signal, 5)
 		signal.Notify(stopsignal, os.Interrupt, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 		sig := <-stopsignal
@@ -274,9 +277,15 @@ func Initialize() {
 		Engine.TorDb.Close()
 		Engine.TrackerDB.Close()
 		Engine.TUDb.Close()
-		_ = Engine.PcDb.Close() // Close PcDb at the end
-		// Stop The Engine
-		Engine.Torc.Close()
+		stoperr = Engine.PcDb.Close() // Close PcDb at the end
+		if stoperr != nil {
+			Warn.Println("Error Closing PieceCompletion DB ", stoperr)
+		}
+		Engine.Torc.Close()    // Close the Torrent Client
+		stoperr = stor.Close() // Close the storage.ClientImplCloser
+		if stoperr != nil {
+			Warn.Println("Error Closing Default Storage ", stoperr)
+		}
 		os.Exit(1)
 	}()
 

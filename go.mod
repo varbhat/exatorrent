@@ -6,7 +6,7 @@ require (
 	crawshaw.io/sqlite v0.3.3-0.20210127221821-98b1f83c5508
 	github.com/anacrolix/go-libutp v1.0.4
 	github.com/anacrolix/log v0.9.0
-	github.com/anacrolix/torrent v1.30.4
+	github.com/anacrolix/torrent v1.31.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/jackc/pgx/v4 v4.13.0

@@ -1,6 +1,15 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte';
   import { SignOut, Connect } from './core';
+
+  onDestroy(() => {
+    document.title = 'exatorrent';
+  });
 </script>
+
+<svelte:head>
+  <title>exatorrent - Disconnected</title>
+</svelte:head>
 
 <div class="mx-auto max-w-xl">
   <div class="flex justify-center p-10">

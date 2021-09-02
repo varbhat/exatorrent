@@ -21,8 +21,13 @@
 
   onDestroy(() => {
     filepagediscon.set(false);
+    document.title = 'exatorrent';
   });
 </script>
+
+<svelte:head>
+  <title>{$fsfileinfo?.name}</title>
+</svelte:head>
 
 <div class="mx-auto max-w-xl">
   <div class="flex justify-between h-16">

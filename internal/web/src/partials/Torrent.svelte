@@ -15,6 +15,7 @@
 
   onDestroy(() => {
     Send({ command: 'stopstream' });
+    document.title = 'exatorrent';
   });
 
   let infohash = $slocation.pathname?.split('/').reverse()[0];

@@ -36,7 +36,7 @@ var (
 		DataDir   string
 		TrntDir   string
 	}{}
-	Configmu sync.Mutex //TODO
+	Configmu sync.Mutex
 )
 
 type TorConfig struct {
