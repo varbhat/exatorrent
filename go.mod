@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
-	github.com/shirou/gopsutil v3.21.7+incompatible
+	github.com/shirou/gopsutil v3.21.8+incompatible
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac
 )
@@ -72,7 +72,7 @@ require (
 	github.com/rs/dnscache v0.0.0-20210201191234-295bba877686 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
-	github.com/tklauser/go-sysconf v0.3.8 // indirect
+	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	github.com/tklauser/numcpus v0.3.0 // indirect
 	github.com/willf/bitset v1.1.11 // indirect
 	github.com/willf/bloom v2.0.3+incompatible // indirect
