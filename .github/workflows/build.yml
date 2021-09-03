@@ -21,11 +21,11 @@ jobs:
           xbps-install -Syu || xbps-install -yu xbps
           xbps-install -yu
       - name: Install Packages
-        run: xbps-install -Sy git curl bash make go nodejs cross-x86_64-linux-musl cross-aarch64-linux-musl github-cli
+        run: xbps-install -Sy git curl bash make go nodejs cross-x86_64-w64-mingw32 cross-x86_64-linux-musl cross-aarch64-linux-musl github-cli
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Build exatorrent
-        run: go mod tidy && make web && make app-linux-amd64 && make app-linux-arm64 && make checksum
+        run: go mod tidy && make web && make app-linux-amd64 && make app-linux-arm64 && make app-windows-amd64 && make checksum
       - name: Publish Releases
         run: |
           gh config set prompt disabled
