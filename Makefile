@@ -43,7 +43,7 @@ app-darwin-arm64:
 ##app-win-amd64: Build the Application for Windows (amd64)
 .PHONY: app-win-amd64
 app-win-amd64:
-	env CGO_ENABLED=1 GOOS="windows" GOARCH="amd64" CC="x86_64-w64-mingw32-gcc" CXX="x86_64-w64-mingw32-g++" go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME)-win-amd64.exe $(MAIN_SOURCE)
+	env CGO_ENABLED=1 GOOS="windows" GOARCH="amd64" CC="x86_64-w64-mingw32-gcc" CXX="x86_64-w64-mingw32-g++" go build -trimpath -buildmode=pie -ldflags '-extldflags "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -s -w"' -o  build/$(APP_NAME)-win-amd64.exe $(MAIN_SOURCE)
 
 ##app-no-buildflags: Build the Application without any buildflags
 .PHONY: app-no-buildflags
