@@ -31,7 +31,7 @@
     "autoprefixer": "^10.3.4",
     "@tailwindcss/forms": "^0.3.3",
     "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.9",
+    "tailwindcss": "^2.2.11",
     "svelte-preprocess": "^4.9.1",
     "svelte": "latest"
   }
