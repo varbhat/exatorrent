@@ -11,8 +11,6 @@ import (
 	"github.com/varbhat/exatorrent/internal/web"
 )
 
-const Version string = "src"
-
 func main() {
 	core.Initialize()
 
