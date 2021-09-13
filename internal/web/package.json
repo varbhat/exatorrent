@@ -22,7 +22,7 @@
     "prettier": "^2.3.2",
     "prettier-plugin-svelte": "^2.4.0",
     "svelte-check": "^2.2.5",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "slocation": "latest",
