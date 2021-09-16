@@ -54,6 +54,7 @@ func Initialize() {
 	var engc bool
 	var err error
 	var auser string
+	var pw bool
 
 	flag.Usage = func() {
 		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "exatorrent is bittorrent client\n\n")
@@ -75,6 +76,7 @@ func Initialize() {
 	flag.StringVar(&Flagconfig.TLSCertPath, "cert", "", "<path> Path to TLS Certificate (Required for HTTPS)")
 	flag.StringVar(&Dirconfig.DirPath, "dir", "exadir", `<path> exatorrent Directory (Default: "exadir")`)
 	flag.StringVar(&auser, "admin", "adminuser", `<user> Default admin username (Default Username: "adminuser" and Default Password: "adminpassword")`)
+	flag.BoolVar(&pw, "passw", false, `<opt>  Set Default admin password from "EXAPASSWORD" environment variable`)
 	flag.BoolVar(&psql, "psql", false, "<opt>  Generate Sample Postgresql Connection URL")
 	flag.BoolVar(&engc, "engc", false, "<opt>  Generate Custom Engine Configuration")
 	flag.BoolVar(&torcc, "torc", false, "<opt>  Generate Custom Torrent Client Configuration")
@@ -83,7 +85,7 @@ func Initialize() {
 	if len(flag.Args()) != 0 {
 		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "Invalid Flags Provided: %s\n\n", flag.Args())
 		flag.Usage()
-		return
+		os.Exit(1)
 	}
 
 	// Display All Flag Configurations Provided to exatorrent
@@ -237,14 +239,26 @@ func Initialize() {
 
 	_, err = os.Stat(filepath.Join(Dirconfig.DataDir, ".adminadded"))
 	if errors.Is(err, os.ErrNotExist) {
-		Info.Println(`Adding Admin user with username "` + auser + `" and password "adminpassword"`)
-		er := Engine.UDb.Add(auser, "adminpassword", 1)
-		if er != nil {
-			Err.Fatalln("Unable to add admin user to adminless exatorrent instance", er)
-		}
-		_, er = os.Create(filepath.Join(Dirconfig.DataDir, ".adminadded"))
-		if er != nil {
-			Err.Fatalln(er)
+		if pw {
+			Info.Println(`Adding Admin user with username "` + auser + `" and custom password`)
+			er := Engine.UDb.Add(auser, os.Getenv("EXAPASSWORD"), 1)
+			if er != nil {
+				Err.Fatalln("Unable to add admin user to adminless exatorrent instance :", er)
+			}
+			_, er = os.Create(filepath.Join(Dirconfig.DataDir, ".adminadded"))
+			if er != nil {
+				Err.Fatalln(er)
+			}
+		} else {
+			Info.Println(`Adding Admin user with username "` + auser + `" and password "adminpassword"`)
+			er := Engine.UDb.Add(auser, "adminpassword", 1)
+			if er != nil {
+				Err.Fatalln("Unable to add admin user to adminless exatorrent instance :", er)
+			}
+			_, er = os.Create(filepath.Join(Dirconfig.DataDir, ".adminadded"))
+			if er != nil {
+				Err.Fatalln(er)
+			}
 		}
 	}
 

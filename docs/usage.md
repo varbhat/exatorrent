@@ -7,6 +7,7 @@ Usage of exatorrent:
  -dir     <path> exatorrent Directory (Default: "exadir")
  -engc    <opt>  Generate Custom Engine Configuration
  -key     <path> Path to TLS Key (Required for HTTPS)
+ -passw   <opt>  Set Default admin password from "EXAPASSWORD" environment variable
  -psql    <opt>  Generate Sample Postgresql Connection URL
  -torc    <opt>  Generate Custom Torrent Client Configuration
  -unix    <path> Unix Socket Path
@@ -23,7 +24,7 @@ Valid Listen Addresses include `localhost:9999` , `0.0.0.0:3456` , `127.0.0.1:77
 ### `-admin`
 Usernames of Users in `exatorrent`  can't be changed after User is created . It must be choosen while creating User and can't be changed later . Note that password can be changed anytime later .
 
-On the first use of `exatorrent` , `exatorrent` creates Admin user with username `adminuser` and password `adminpassword` . Since this username `adminuser` can't be changed later on , you can customize it before first run itself by passing your desired username to `-admin` flag.
+On the first use of `exatorrent` , `exatorrent` creates Admin user with username `adminuser` and password `adminpassword` . Since this username `adminuser` can't be changed later on , you can customize it before first run itself by passing your desired username to `-admin` flag. Also see `-passw` flag below .
 
 ```bash
 exatorrent -admin "mycustomadminusername"
@@ -36,6 +37,13 @@ If HTTPS needs to be served , Path to TLS Certificate must be specified in this 
 
 ### `-key`
 If HTTPS needs to be served , Path to TLS Key must be specified in this flag . Note that `-cert` flag is also necessary along with this flag to serve HTTPS .
+
+### `-passw`
+On the first use of `exatorrent` , `exatorrent` creates Admin user with username `adminuser` and password `adminpassword` . You can make exatorrent to use custom password rather than default password (`adminpassword`) by `-passw` flag. `-passw` flag sets value of `EXAPASSWORD` environment variable as Password of created Admin User . Also see `-admin` flag above .
+
+```bash
+EXAPASSWORD="MyCustomPassword" exatorrent -passw
+```
 
 ### `-unix`
 This flag specifies file path where Unix Socket must be served . This flag is alternative to `-addr` flag and works only on Operating Systems that support [Unix Sockets](https://en.wikipedia.org/wiki/Unix_domain_socket) .

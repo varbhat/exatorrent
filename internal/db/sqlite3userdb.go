@@ -49,7 +49,7 @@ func (db *Sqlite3UserDb) Add(Username string, Password string, UserType int) (er
 			err = fmt.Errorf("uuid error") // uuid may panic
 		}
 	}()
-	if len(Username) < 5 || len(Password) < 5 {
+	if len(Username) <= 5 || len(Password) <= 5 {
 		return fmt.Errorf("username or password size too small")
 	}
 	bytes, err := bcrypt.GenerateFromPassword([]byte(Password), 10)

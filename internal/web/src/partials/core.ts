@@ -12,12 +12,6 @@ export interface DlObject {
   seeding?: boolean;
 }
 
-interface DlObject2 {
-  locked: boolean;
-  addedat: string;
-  startedat: string;
-}
-
 interface RespObject {
   type: string;
   state: string;
@@ -128,7 +122,6 @@ export const downloadslist: Writable<{ has: boolean; data: DlObject[] }> = writa
   data: []
 });
 export const torrentinfo: Writable<DlObject> = writable({} as DlObject);
-export const torrentinfostat: Writable<DlObject2> = writable({} as DlObject2);
 export const istrntlocked: Writable<boolean> = writable(false);
 export const resplist: Writable<{ has: boolean; data: RespObject[] }> = writable({
   has: false,
