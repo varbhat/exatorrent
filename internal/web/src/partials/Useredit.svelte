@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
 
   onMount(() => {
     console.log('on mount');

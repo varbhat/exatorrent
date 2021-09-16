@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
   import { onMount } from 'svelte';
   import { torrentsforuser, Send, adminmode, isAdmin } from './core';
 

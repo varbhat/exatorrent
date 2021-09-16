@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store';
 import type { Writable } from 'svelte/store';
-import { slocation } from 'slocation';
+import slocation from 'slocation';
 
 export interface DlObject {
   infohash: string;

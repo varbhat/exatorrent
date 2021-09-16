@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { Send, adminmode, torrentstats, isAdmin, usersfortorrent, torctime, torrentinfo, fileSize, fsdirinfo, torrentfiles, fileviewpath, fileviewinfohash, istrntlocked, torrentinfostat } from './core';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
   import TorrentCard from './TorrentCard.svelte';
   import type { DlObject } from './core';
   import ProgStat from './ProgStat.svelte';

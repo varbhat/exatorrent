@@ -1,6 +1,6 @@
 <script lang="ts">
   import { dontstart, Send, SignOut, socket, adminmode, isAdmin, engconfig, fileSize, diskstats, nooftrackersintrackerdb } from './core';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
 
   let ds = false;
   if ($dontstart === 'true') {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Send, userconnlist, userlist, isAdmin } from './core';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
   import { onMount } from 'svelte';
   import Useredit from './Useredit.svelte';
 

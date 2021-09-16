@@ -1,7 +1,7 @@
 <script lang="ts">
   import { torcstatus, machinfo, machstats, Send, fileSize, hasMachinfo, isAdmin } from './core';
   import { onMount } from 'svelte';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
 
   let deviceinfoOpen = false;
   let devicestatsOpen = false;

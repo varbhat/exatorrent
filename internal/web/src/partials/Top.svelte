@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { socket, Connect } from './core';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
 
   function closeSocket() {
     if (socket?.readyState === WebSocket.OPEN) {

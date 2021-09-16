@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fileSize, Send, adminmode } from './core';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
 
   export let state: string = '';
   export let name: string | undefined = '';

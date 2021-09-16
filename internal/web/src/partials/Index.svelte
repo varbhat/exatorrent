@@ -1,6 +1,6 @@
 <script lang="ts">
   import { dontstart, Send, isAdmin } from './core';
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
   let ismetainfo = true;
   let torrentinput = '';
   let trntfilestring = '';

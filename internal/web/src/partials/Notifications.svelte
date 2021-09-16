@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slocation } from 'slocation';
+  import slocation from 'slocation';
   import { resplist } from './core';
 </script>
 
