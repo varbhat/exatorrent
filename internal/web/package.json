@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "slocation": "latest",
-    "esbuild": "^0.12.28",
+    "esbuild": "^0.13.2",
     "esbuild-svelte": "^0.5.4",
     "autoprefixer": "^10.3.4",
     "@tailwindcss/forms": "^0.3.3",
