@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "slocation": "latest",
-    "esbuild": "^0.12.28",
-    "esbuild-svelte": "^0.5.4",
-    "autoprefixer": "^10.3.4",
+    "esbuild": "^0.13.2",
+    "esbuild-svelte": "^0.5.6",
+    "autoprefixer": "^10.3.5",
     "@tailwindcss/forms": "^0.3.3",
-    "postcss": "^8.3.6",
+    "postcss": "^8.3.8",
     "tailwindcss": "^2.2.15",
-    "svelte-preprocess": "^4.9.4",
+    "svelte-preprocess": "^4.9.5",
     "svelte": "latest"
   }
 }
