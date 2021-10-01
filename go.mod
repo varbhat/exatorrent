@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
-	github.com/shirou/gopsutil v3.21.8+incompatible
+	github.com/shirou/gopsutil v3.21.9+incompatible
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac
 )
