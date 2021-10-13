@@ -6,12 +6,12 @@ require (
 	crawshaw.io/sqlite v0.3.3-0.20210127221821-98b1f83c5508
 	github.com/anacrolix/go-libutp v1.0.4
 	github.com/anacrolix/log v0.9.0
-	github.com/anacrolix/torrent v1.31.1-0.20210910222643-d957502528e0
+	github.com/anacrolix/torrent v1.33.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
-	github.com/shirou/gopsutil v3.21.8+incompatible
+	github.com/shirou/gopsutil v3.21.9+incompatible
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac
 )
@@ -19,9 +19,9 @@ require (
 require (
 	github.com/RoaringBitmap/roaring v0.9.4 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
-	github.com/anacrolix/chansync v0.2.1-0.20210910114620-14955c95ded9 // indirect
+	github.com/anacrolix/chansync v0.3.0-0.0.20211007004133-3f72684c4a93 // indirect
 	github.com/anacrolix/confluence v1.9.0 // indirect
-	github.com/anacrolix/dht/v2 v2.10.5-0.20210902001729-06cc4fe90e53 // indirect
+	github.com/anacrolix/dht/v2 v2.10.6-0.20211007004332-99263ec9c1c8 // indirect
 	github.com/anacrolix/envpprof v1.1.1 // indirect
 	github.com/anacrolix/missinggo v1.3.0 // indirect
 	github.com/anacrolix/missinggo/perf v1.0.0 // indirect
@@ -52,7 +52,7 @@ require (
 	github.com/jackc/puddle v1.1.4 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
 	github.com/pion/datachannel v1.4.21 // indirect
-	github.com/pion/dtls/v2 v2.0.9 // indirect
+	github.com/pion/dtls/v2 v2.0.10 // indirect
 	github.com/pion/ice/v2 v2.1.12 // indirect
 	github.com/pion/interceptor v0.1.0 // indirect
 	github.com/pion/logging v0.2.2 // indirect
@@ -67,7 +67,7 @@ require (
 	github.com/pion/transport v0.12.3 // indirect
 	github.com/pion/turn/v2 v2.0.5 // indirect
 	github.com/pion/udp v0.1.1 // indirect
-	github.com/pion/webrtc/v3 v3.1.1 // indirect
+	github.com/pion/webrtc/v3 v3.1.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/dnscache v0.0.0-20210201191234-295bba877686 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
@@ -77,9 +77,9 @@ require (
 	github.com/willf/bitset v1.1.11 // indirect
 	github.com/willf/bloom v2.0.3+incompatible // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
-	golang.org/x/net v0.0.0-20210924151903-3ad01bbaa167 // indirect
+	golang.org/x/net v0.0.0-20211013171255-e13a2654a71e // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20210925032602-92d5a993a665 // indirect
+	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
