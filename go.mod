@@ -5,7 +5,7 @@ go 1.17
 require (
 	crawshaw.io/sqlite v0.3.3-0.20210127221821-98b1f83c5508
 	github.com/anacrolix/go-libutp v1.0.4
-	github.com/anacrolix/log v0.9.0
+	github.com/anacrolix/log v0.10.0
 	github.com/anacrolix/torrent v1.33.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
@@ -59,7 +59,7 @@ require (
 	github.com/pion/mdns v0.0.5 // indirect
 	github.com/pion/randutil v0.1.0 // indirect
 	github.com/pion/rtcp v1.2.8 // indirect
-	github.com/pion/rtp v1.7.2 // indirect
+	github.com/pion/rtp v1.7.4 // indirect
 	github.com/pion/sctp v1.7.12 // indirect
 	github.com/pion/sdp/v3 v3.0.4 // indirect
 	github.com/pion/srtp/v2 v2.0.5 // indirect
@@ -77,9 +77,9 @@ require (
 	github.com/willf/bitset v1.1.11 // indirect
 	github.com/willf/bloom v2.0.3+incompatible // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
-	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
+	golang.org/x/net v0.0.0-20211020060615-d418f374d309 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211015200801-69063c4bb744 // indirect
+	golang.org/x/sys v0.0.0-20211023085530-d6a326fbbf70 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
