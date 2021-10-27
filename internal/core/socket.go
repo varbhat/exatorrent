@@ -344,6 +344,46 @@ func wshandler(uc *UserConn, req *ConReq) {
 				return
 			}
 			Configmu.Lock()
+			if Engine.Econfig.ListenCompletion != newconfig.ListenCompletion {
+				if newconfig.ListenCompletion == false {
+					for _, eachchan := range Engine.onCloseMap {
+						if eachchan != nil {
+							eachchan.Set()
+							eachchan.Clear()
+						}
+					}
+				} else {
+					trntlist := Engine.Torc.Torrents()
+					for _, eachtrnt := range trntlist {
+						if eachtrnt != nil {
+							infohash := eachtrnt.InfoHash()
+							go func() {
+								if _, ok := Engine.onCloseMap[infohash]; !ok {
+									Engine.onCloseMap[infohash] = &eachtrnt.Complete
+									Info.Println("Listening for Completion of Torrent ", infohash)
+									<-eachtrnt.Complete.On()
+									delete(Engine.onCloseMap, infohash)
+
+									_, err := Engine.TorDb.GetTorrent(infohash)
+									if err != nil {
+										Info.Println(infohash, " Removed")
+									} else {
+										Info.Println(infohash, " Completed")
+										hpu := Engine.Econfig.GetHPU()
+										if hpu != "" {
+											trntname := ""
+											if eachtrnt != nil {
+												trntname = eachtrnt.Name()
+											}
+											sendPostReq(infohash, hpu, trntname)
+										}
+									}
+								}
+							}()
+						}
+					}
+				}
+			}
 			Engine.Econfig = newconfig
 			_ = Engine.Econfig.WriteConfig()
 			Info.Println("Torrent Configuration has been Updated by ", uc.Username)

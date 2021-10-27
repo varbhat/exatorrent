@@ -61,8 +61,9 @@ If you want to deploy `exatorrent` on server , please also refer [Deploy Docs](d
 * Stop , Remove or Delete Torrent
 * Persistent between Sessions
 * Stop Torrent once SeedRatio is reached (Optional)
+* Perform Actions on Torrent [Completion](docs/config.md#actions-on-torrent-completion) (Optional)
 * Powered by [anacrolix/torrent](https://github.com/anacrolix/torrent)
-* Download/Upload [Rate limiter](https://github.com/varbhat/exatorrent/blob/main/docs/usage.md#rate-limiter) (Optional)
+* Download/Upload [Rate limiter](docs/usage.md#rate-limiter) (Optional)
 * Apply [Blocklist](docs/usage.md#blocklist) (Optional)
 * [Configurable](docs/config.md) via Config File but works fine with Zero Configuration
 * Share Files by Unlocking Torrent or Lock Torrent (protect by Auth)  to prevent External Access 
@@ -86,8 +87,11 @@ Communication about the project is primarily through [Discussions](https://githu
 ## Contribute
 You are welcome to contribute . Please Read the [contributing docs](docs/CONTRIBUTING.md) first.
 
-## Sponsor
-If you like this Project , please consider this as an opportunity to sponsor / donate to this project . This would help me maintain this project and also work on other Open Source Projects . Use [Liberapay](https://liberapay.com/varbhat) , [Paypal](https://www.paypal.me/varbhat) , [Ko-fi](https://ko-fi.com/varbhat) or [UPI](https://en.wikipedia.org/wiki/Unified_Payments_Interface) (VPA: `mailvarbhat@okhdfcbank`) to Sponsor / Donate to this Project .
+## Donate
+If you like this Project , please consider this as an opportunity to donate to this project . This would help me maintain this project and also work on other Open Source Projects . Use [Liberapay](https://liberapay.com/varbhat) , [Paypal](https://www.paypal.me/varbhat) , [Ko-fi](https://ko-fi.com/varbhat) or [UPI](https://en.wikipedia.org/wiki/Unified_Payments_Interface) (VPA: `varbhat@icici`) to Donate to this Project .
+
+
+You might want to checkout [Jetbrains](https://jb.gg/OpenSource) and their awesome IDEs and tools for software developers. Their Tools are really very good and empowering. [Jetbrains](https://jb.gg/OpenSource) supports the development of `exatorrent` with it's [IDEs](https://www.jetbrains.com/opensource/). 
 
 ## License
 [GPL-v3](LICENSE)

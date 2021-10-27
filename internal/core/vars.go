@@ -364,6 +364,10 @@ type EngConfig struct {
 	DontRemoveCacheInfo bool    `json:"dontremovecacheinfo"`    // When Torrent is Deleted from Storage, it's cache file(.torrent) from Local Cache is not Deleted
 
 	LockbyDefault bool `json:"lockbydefault"` // If set to true , locks every torrent on Add
+
+	ListenCompletion bool   `json:"listencompletion"`
+	HookPostURL      string `json:"hookposturl"`
+	NotifyOnComplete bool   `json:"notifyoncomplete"`
 }
 
 func (ec *EngConfig) GetDTU() (ret bool) {
@@ -427,6 +431,27 @@ func (ec *EngConfig) GetSRR() (ret int64) {
 func (ec *EngConfig) GetLBD() (ret bool) {
 	Configmu.Lock()
 	ret = ec.LockbyDefault
+	Configmu.Unlock()
+	return
+}
+
+func (ec *EngConfig) GetListenC() (ret bool) {
+	Configmu.Lock()
+	ret = ec.ListenCompletion
+	Configmu.Unlock()
+	return
+}
+
+func (ec *EngConfig) GetHPU() (ret string) {
+	Configmu.Lock()
+	ret = ec.HookPostURL
+	Configmu.Unlock()
+	return
+}
+
+func (ec *EngConfig) GetNOC() (ret bool) {
+	Configmu.Lock()
+	ret = ec.NotifyOnComplete
 	Configmu.Unlock()
 	return
 }

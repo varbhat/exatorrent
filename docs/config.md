@@ -14,3 +14,10 @@ Many of configuration of torrent engine `anacrolix/torrent` are only applied at 
 Note that most of torcconfig maps to [ClientConfig](https://github.com/anacrolix/torrent/blob/master/config.go#L23)
 
 You can generate sample torcconfig(so that you can modify it to set value you want it to have) by passing flag `-torc` while starting the program. Note that if you don't want to configure , set it's value as `null` .
+
+## Actions on Torrent Completion
+
+`exatorrent` can listen to completion of torrent and call Hook on Completion . Hook is just a HTTP POST Request containing  Infohash, Name, Completed Time of Completed Torrent sent to configured URL.
+`listencompletion` of engconfig.json specifies whether the torrent must be listened for completion . 
+`hookposturl` of engconfig.json specifies URL where the Hook HTTP request must be posted. 
+`notifyoncomplete` of engconfig.json specifies whether the connected user( and owner of torrent) must be notified of completion via API/Web-Interface. 

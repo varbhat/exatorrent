@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"github.com/anacrolix/chansync"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,6 +18,8 @@ type Eng struct {
 	PsqlCon string
 
 	Torc *torrent.Client
+
+	onCloseMap map[metainfo.Hash]*chansync.Flag
 
 	PcDb      db.PcDb
 	TorDb     db.TorrentDb
@@ -200,12 +203,7 @@ func StartTorrent(User string, infohash metainfo.Hash, nofsdb bool) {
 	}
 
 	if trnt.Info() != nil {
-		trnt.AllowDataUpload()
-		trnt.AllowDataDownload()
-		// start file by setting the priority
-		for _, f := range trnt.Files() {
-			f.SetPriority(torrent.PiecePriorityNormal)
-		}
+		trnt.DownloadAll()
 	} else {
 		Warn.Println("Torrent can't be Started Because Metainfo is not yet recieved")
 		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Started Because Metainfo is not yet recieved")
@@ -227,6 +225,35 @@ func StartTorrent(User string, infohash metainfo.Hash, nofsdb bool) {
 
 	Info.Println("Torrent ", infohash, " Started by ", User)
 	MainHub.SendMsgU(User, "resp", infohash.HexString(), "success", "Torrent Started")
+
+	if Engine.Econfig.GetListenC() {
+		go func() {
+			if _, ok := Engine.onCloseMap[infohash]; !ok {
+				Engine.onCloseMap[infohash] = &trnt.Complete
+				Info.Println("Listening for Completion of Torrent ", infohash)
+				<-trnt.Complete.On()
+				delete(Engine.onCloseMap, infohash)
+
+				_, err := Engine.TorDb.GetTorrent(infohash)
+				if err != nil {
+					Info.Println(infohash, " Removed")
+				} else {
+					Info.Println(infohash, " Completed")
+					if Engine.Econfig.GetNOC() {
+						MainHub.SendMsgU(User, "resp", infohash.HexString(), "success", "Torrent Completed")
+					}
+					hpu := Engine.Econfig.GetHPU()
+					if hpu != "" {
+						trntname := ""
+						if trnt != nil {
+							trntname = trnt.Name()
+						}
+						sendPostReq(infohash, hpu, trntname)
+					}
+				}
+			}
+		}()
+	}
 }
 
 // StopTorrent Stops Torrent given infohash
@@ -259,12 +286,7 @@ func StopTorrent(User string, infohash metainfo.Hash) {
 	}
 
 	if trnt.Info() != nil {
-		trnt.DisallowDataUpload()
-		trnt.DisallowDataDownload()
-		for _, f := range trnt.Files() {
-			f.SetPriority(torrent.PiecePriorityNone)
-		}
-
+		trnt.CancelPieces(0, trnt.NumPieces(), "")
 	} else {
 		Warn.Println("Torrent can't be Stopped Because Metainfo is not yet recieved")
 		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Stopped Because Metainfo is not yet recieved")
@@ -307,6 +329,11 @@ func RemoveTorrent(User string, infohash metainfo.Hash) {
 	}
 
 	trnt.Drop()
+
+	if Engine.Econfig.GetListenC() {
+		trnt.Complete.Set()
+		trnt.Complete.Clear()
+	}
 
 	err := Engine.TorDb.Delete(infohash)
 	if err != nil {

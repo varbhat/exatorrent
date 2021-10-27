@@ -6,6 +6,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/anacrolix/chansync"
 	"io/fs"
 	"log"
 	"os"
@@ -274,6 +275,8 @@ func Initialize() {
 	} else {
 		Info.Println("Torrent Client Created")
 	}
+
+	Engine.onCloseMap = make(map[metainfo.Hash]*chansync.Flag)
 
 	go func() {
 		defer func() {

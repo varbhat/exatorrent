@@ -1,7 +1,10 @@
 package core
 
 import (
+	"bytes"
 	"encoding/json"
+	"github.com/anacrolix/torrent/metainfo"
+	"net/http"
 	"sync"
 	"time"
 
@@ -148,4 +151,40 @@ func (uc *UserConn) Close() {
 	_ = uc.Conn.Close()
 	uc.Sendmu.Unlock()
 	MainHub.Remove(uc)
+}
+
+func sendPostReq(h metainfo.Hash, url string, name string) {
+	Info.Println("Torrent ", h, " has completed. Sending POST request to ", url)
+	postrequest := struct {
+		Metainfo metainfo.Hash `json:"metainfo"`
+		Name     string        `json:"name"`
+		State    string        `json:"state"`
+		Time     time.Time     `json:"time"`
+	}{
+		Metainfo: h,
+		Name:     name,
+		Time:     time.Now(),
+		State:    "torrent-completed-exatorrent",
+	}
+
+	jsonData, err := json.Marshal(postrequest)
+
+	if err != nil {
+		Warn.Println(err)
+		return
+	}
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+
+	if err != nil {
+		Warn.Println("POST Request failed to Send. Hook failed")
+		Warn.Println(err)
+		return
+	}
+
+	if resp != nil {
+		resp.Body.Close()
+	}
+
+	Info.Println("POST Request Sent. Hook Succeeded")
 }
