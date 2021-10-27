@@ -6,7 +6,7 @@ require (
 	crawshaw.io/sqlite v0.3.3-0.20210127221821-98b1f83c5508
 	github.com/anacrolix/go-libutp v1.0.4
 	github.com/anacrolix/log v0.10.0
-	github.com/anacrolix/torrent v1.33.0
+	github.com/anacrolix/torrent v1.34.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/jackc/pgx/v4 v4.13.0
@@ -41,6 +41,7 @@ require (
 	github.com/elliotchance/orderedmap v1.4.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/btree v1.0.1 // indirect
+	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.10.0 // indirect
@@ -53,7 +54,7 @@ require (
 	github.com/mschoch/smat v0.2.0 // indirect
 	github.com/pion/datachannel v1.4.21 // indirect
 	github.com/pion/dtls/v2 v2.0.10 // indirect
-	github.com/pion/ice/v2 v2.1.12 // indirect
+	github.com/pion/ice/v2 v2.1.13 // indirect
 	github.com/pion/interceptor v0.1.0 // indirect
 	github.com/pion/logging v0.2.2 // indirect
 	github.com/pion/mdns v0.0.5 // indirect
@@ -67,7 +68,7 @@ require (
 	github.com/pion/transport v0.12.3 // indirect
 	github.com/pion/turn/v2 v2.0.5 // indirect
 	github.com/pion/udp v0.1.1 // indirect
-	github.com/pion/webrtc/v3 v3.1.5 // indirect
+	github.com/pion/webrtc/v3 v3.1.6 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/dnscache v0.0.0-20210201191234-295bba877686 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
@@ -79,7 +80,7 @@ require (
 	go.etcd.io/bbolt v1.3.6 // indirect
 	golang.org/x/net v0.0.0-20211020060615-d418f374d309 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211023085530-d6a326fbbf70 // indirect
+	golang.org/x/sys v0.0.0-20211025201205-69cdffdb9359 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
