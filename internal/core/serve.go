@@ -99,8 +99,8 @@ func StreamFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if t.Info() == nil {
-		Warn.Println("Metainfo not yet recieved")
-		http.Error(w, "Metainfo not yet recieved", http.StatusNotFound)
+		Warn.Println("Metainfo not yet received")
+		http.Error(w, "Metainfo not yet received", http.StatusNotFound)
 		return
 	}
 
