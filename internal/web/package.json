@@ -21,7 +21,7 @@
     "@tsconfig/svelte": "^2.0.1",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "svelte-check": "^2.2.7",
+    "svelte-check": "^2.2.10",
     "typescript": "^4.4.4"
   },
   "dependencies": {
