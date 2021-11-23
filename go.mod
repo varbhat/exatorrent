@@ -4,12 +4,13 @@ go 1.17
 
 require (
 	crawshaw.io/sqlite v0.3.3-0.20210127221821-98b1f83c5508
+	github.com/anacrolix/chansync v0.3.0-0.0.20211007004133-3f72684c4a93
 	github.com/anacrolix/go-libutp v1.0.4
 	github.com/anacrolix/log v0.10.0
-	github.com/anacrolix/torrent v1.34.0
+	github.com/anacrolix/torrent v1.15.2
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.4.2
-	github.com/jackc/pgx/v4 v4.13.0
+	github.com/jackc/pgx/v4 v4.14.0
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.9+incompatible
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
@@ -19,9 +20,7 @@ require (
 require (
 	github.com/RoaringBitmap/roaring v0.9.4 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
-	github.com/anacrolix/chansync v0.3.0-0.0.20211007004133-3f72684c4a93 // indirect
-	github.com/anacrolix/confluence v1.9.0 // indirect
-	github.com/anacrolix/dht/v2 v2.10.6-0.20211007004332-99263ec9c1c8 // indirect
+	github.com/anacrolix/dht/v2 v2.8.0 // indirect
 	github.com/anacrolix/envpprof v1.1.1 // indirect
 	github.com/anacrolix/missinggo v1.3.0 // indirect
 	github.com/anacrolix/missinggo/perf v1.0.0 // indirect
@@ -44,31 +43,15 @@ require (
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
-	github.com/jackc/pgconn v1.10.0 // indirect
+	github.com/jackc/pgconn v1.10.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgproto3/v2 v2.1.1 // indirect
+	github.com/jackc/pgproto3/v2 v2.2.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
-	github.com/jackc/pgtype v1.8.1 // indirect
-	github.com/jackc/puddle v1.1.4 // indirect
+	github.com/jackc/pgtype v1.9.0 // indirect
+	github.com/jackc/puddle v1.2.0 // indirect
+	github.com/mattn/go-sqlite3 v2.0.2+incompatible // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
-	github.com/pion/datachannel v1.4.21 // indirect
-	github.com/pion/dtls/v2 v2.0.10 // indirect
-	github.com/pion/ice/v2 v2.1.13 // indirect
-	github.com/pion/interceptor v0.1.0 // indirect
-	github.com/pion/logging v0.2.2 // indirect
-	github.com/pion/mdns v0.0.5 // indirect
-	github.com/pion/randutil v0.1.0 // indirect
-	github.com/pion/rtcp v1.2.8 // indirect
-	github.com/pion/rtp v1.7.4 // indirect
-	github.com/pion/sctp v1.7.12 // indirect
-	github.com/pion/sdp/v3 v3.0.4 // indirect
-	github.com/pion/srtp/v2 v2.0.5 // indirect
-	github.com/pion/stun v0.3.5 // indirect
-	github.com/pion/transport v0.12.3 // indirect
-	github.com/pion/turn/v2 v2.0.5 // indirect
-	github.com/pion/udp v0.1.1 // indirect
-	github.com/pion/webrtc/v3 v3.1.6 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/dnscache v0.0.0-20210201191234-295bba877686 // indirect
 	github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46 // indirect
