@@ -289,7 +289,7 @@ func Initialize() {
 		signal.Notify(stopsignal, os.Interrupt, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 		sig := <-stopsignal
 		fmt.Fprintf(os.Stderr, "\n")
-		Warn.Println("Recieved ", sig)
+		Warn.Println("Caught Signal:", sig)
 		Warn.Println("Closing exatorrent")
 		Engine.TorDb.Close()
 		Engine.TrackerDB.Close()

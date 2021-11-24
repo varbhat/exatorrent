@@ -205,8 +205,8 @@ func StartTorrent(User string, infohash metainfo.Hash, nofsdb bool) {
 	if trnt.Info() != nil {
 		trnt.DownloadAll()
 	} else {
-		Warn.Println("Torrent can't be Started Because Metainfo is not yet recieved")
-		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Started Because Metainfo is not yet recieved")
+		Warn.Println("Torrent couldn't be Started Because Metainfo is not yet loaded")
+		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Started Because Metainfo is not yet loaded")
 		return
 	}
 	err = Engine.TorDb.Start(infohash)
@@ -286,7 +286,7 @@ func StopTorrent(User string, infohash metainfo.Hash) {
 	}
 
 	if trnt.Info() != nil {
-		trnt.CancelPieces(0, trnt.NumPieces(), "")
+		trnt.CancelPieces(0, trnt.NumPieces())
 	} else {
 		Warn.Println("Torrent can't be Stopped Because Metainfo is not yet recieved")
 		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Stopped Because Metainfo is not yet recieved")
