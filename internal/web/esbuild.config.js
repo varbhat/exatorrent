@@ -28,7 +28,7 @@ build({
   incremental: WATCH,
   plugins: [
     sveltePlugin({
-      compileOptions: {
+      compilerOptions: {
         dev: WATCH
       },
       preprocess: sveltePreprocess({

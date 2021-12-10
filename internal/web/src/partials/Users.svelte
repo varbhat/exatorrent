@@ -88,21 +88,20 @@
       {#if userconnlistOpen === true}
         <button
           type="button"
-          class="flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0"
+          class="flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0"
           on:click={() => {
             Send({
               command: 'listuserconns',
               aop: 1
             });
-          }}
-        >
+          }}>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
         </button>
       {/if}
 
-      <button type="button" class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1" on:click={userconnlistaction}>
+      <button type="button" class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1" on:click={userconnlistaction}>
         {#if userconnlistOpen === true}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
@@ -118,7 +117,7 @@
     <div class="flex flex-col">
       {#if userconnlistOpen === true}
         {#each $userconnlist as eachuser (eachuser?.username)}
-          <div class="text-gray-200 bg-gray-900 px-1 py-3 rounded-md w-full my-1">
+          <div class="text-neutral-200 bg-neutral-900 px-1 py-3 rounded-md w-full my-1">
             <div>
               <div class="flex items-center justify-between flex-wrap py-1 mr-1">
                 <div class="w-0 flex-1 flex">
@@ -129,15 +128,14 @@
                 </div>
 
                 <div
-                  class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1"
+                  class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1"
                   on:click={() => {
                     Send({
                       command: 'kickuser',
                       data1: eachuser?.username,
                       aop: 1
                     });
-                  }}
-                >
+                  }}>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -164,21 +162,20 @@
       {#if manageUsersOpen === true}
         <button
           type="button"
-          class="flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0"
+          class="flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0"
           on:click={() => {
             Send({
               command: 'getusers',
               aop: 1
             });
-          }}
-        >
+          }}>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
         </button>
       {/if}
 
-      <button type="button" class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1" on:click={manageUsersaction}>
+      <button type="button" class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1" on:click={manageUsersaction}>
         {#if manageUsersOpen === true}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
@@ -208,7 +205,7 @@
         <p class="ml-3 font-medium  truncate">Add User</p>
       </div>
 
-      <button type="button" class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1" on:click={useraddaction}>
+      <button type="button" class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1" on:click={useraddaction}>
         {#if addUserOpen === true}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
@@ -226,11 +223,11 @@
         <div class="mt-2">
           <label for="username" class="sr-only">Username</label>
 
-          <input id="username" name="email" type="text" bind:value={newusername} required class="bg-gray-800 appearance-none rounded-md w-full px-3 py-2 border border-gray-800 placeholder-gray-500 text-gray-200 focus:outline-none" placeholder="Username" />
+          <input id="username" name="email" type="text" bind:value={newusername} required class="bg-neutral-800 appearance-none rounded-md w-full px-3 py-2 border border-neutral-800 placeholder-neutral-500 text-neutral-200 focus:outline-none" placeholder="Username" />
 
           <label for="password" class="sr-only">Password</label>
 
-          <div class="flex bg-gray-800 rounded-md my-2 appearance-none border border-gray-800 w-full">
+          <div class="flex bg-neutral-800 rounded-md my-2 appearance-none border border-neutral-800 w-full">
             <input
               id="password"
               name="password"
@@ -239,18 +236,16 @@
               bind:value={newpassword}
               bind:this={pwbox}
               required
-              class="bg-gray-800 appearance-none rounded-md w-full flex-grow px-3 py-2 border-none placeholder-gray-500 text-gray-200 focus:outline-none"
-              placeholder="Password"
-            />
+              class="bg-neutral-800 appearance-none rounded-md w-full flex-grow px-3 py-2 border-none placeholder-neutral-500 text-neutral-200 focus:outline-none"
+              placeholder="Password" />
             <button type="button" class="focus:outline-none focus:text-green-500" on:click={toggleinput}>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 my-2 mx-2 flex-grow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400 my-2 mx-2 flex-grow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {#if pwvisible}
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                  />
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                 {:else}
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -259,7 +254,7 @@
             </button>
           </div>
 
-          <select class="bg-gray-800 rounded-md w-full flex-grow px-3 py-2 border-none placeholder-gray-500 text-gray-200 focus:outline-none" bind:value={newusertype}>
+          <select class="bg-neutral-800 rounded-md w-full flex-grow px-3 py-2 border-none placeholder-neutral-500 text-neutral-200 focus:outline-none" bind:value={newusertype}>
             <option value="user">User</option>
             <option value="disabled">Disabled</option>
             <option value="admin">Admin</option>

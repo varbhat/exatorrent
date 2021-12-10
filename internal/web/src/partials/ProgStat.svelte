@@ -14,7 +14,7 @@
   <div class="bg-black rounded-full overflow-hidden">
     <div class="bg-blue-700  h-1.5" style="width:{progress ? progress : 0}%" />
   </div>
-  <div class="text-gray-400 flex justify-between text-sm font-medium">
+  <div class="text-neutral-400 flex justify-between text-sm font-medium">
     <div class="break-all">
       {fileSize(bytescompleted)} / {fileSize(length)} (Off. {offset})
     </div>

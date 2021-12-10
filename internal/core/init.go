@@ -141,7 +141,7 @@ func Initialize() {
 	}
 
 	// Load Custom Engine Configuration
-	Engine.Econfig = EngConfig{GlobalSeedRatio: 0, OnlineCacheURL: "https://itorrents.org/torrent/%s.torrent", SRRefresh: 150, TrackerRefresh: 60, TrackerListURLs: []string{"https://ngosang.github.io/trackerslist/trackers_best.txt"}}
+	Engine.Econfig = EngConfig{GlobalSeedRatio: 0, OnlineCacheURL: "", SRRefresh: 150, TrackerRefresh: 60, TrackerListURLs: []string{"https://ngosang.github.io/trackerslist/trackers_best.txt"}}
 	// You can also add these "https://newtrackon.com/api/stable" , "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/best.txt"
 	cfilename = filepath.Join(Dirconfig.ConfigDir, "engconfig.json")
 	_, cfileerr = os.Stat(cfilename)

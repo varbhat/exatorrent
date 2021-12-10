@@ -71,19 +71,19 @@
 <div class="mt-10  flex items-center justify-center px-4">
   <div class="max-w-md w-full ">
     <div>
-      <h2 class=" text-center text-3xl font-extrabold text-gray-300">
+      <h2 class=" text-center text-3xl font-extrabold text-neutral-300">
         {#if ismetainfo}Enter Magnet or Infohash{:else}Select Torrent File{/if}
       </h2>
     </div>
 
     <div class="mt-8">
-      <div class="flex bg-gray-800 rounded-md mb-3 border border-gray-800">
+      <div class="flex bg-neutral-800 rounded-md mb-3 border border-neutral-800">
         {#if ismetainfo}
-          <input id="torrentinput" type="text" required class=" bg-gray-800 appearance-none rounded-md w-full flex-grow px-3 py-2 border-none placeholder-gray-500 text-gray-200  focus:outline-none sm:text-sm" placeholder="Magnet / Infohash" bind:value={torrentinput} on:keydown={entertoadd} />
+          <input id="torrentinput" type="text" required class=" bg-neutral-800 appearance-none rounded-md w-full flex-grow px-3 py-2 border-none placeholder-neutral-500 text-neutral-200  focus:outline-none sm:text-sm" placeholder="Magnet / Infohash" bind:value={torrentinput} on:keydown={entertoadd} />
         {:else}
-          <label class="bg-gray-800 appearance-none rounded-md w-full flex-grow px-3 py-2  placeholder-gray-500 text-gray-200  focus:outline-none sm:text-sm">
-            <div class="text-gray-200 flex">
-              <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-400 h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <label class="bg-neutral-800 appearance-none rounded-md w-full flex-grow px-3 py-2  placeholder-neutral-500 text-neutral-200  focus:outline-none sm:text-sm">
+            <div class="text-neutral-200 flex">
+              <svg xmlns="http://www.w3.org/2000/svg" class="text-neutral-400 h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
               </svg>
               Select a Torrent File
@@ -92,7 +92,7 @@
           </label>
         {/if}
         <button type="button" class="focus:outline-none focus:text-green-500" on:click={toggleismetainfo}>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 my-2 mx-2 flex-grow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-400 my-2 mx-2 flex-grow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             {#if ismetainfo}
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
             {:else}
@@ -110,29 +110,26 @@
 <div class="mx-auto max-w-xl">
   <div class="grid grid-flow-col grid-cols-2  mt-3">
     <div
-      class="bg-gray-800 text-gray-200 px-5 py-5 rounded-lg m-3 cursor-pointer"
+      class="bg-neutral-800 text-neutral-200 px-5 py-5 rounded-lg m-3 cursor-pointer"
       on:click={() => {
         slocation.goto('/torrents');
-      }}
-    >
+      }}>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
       </svg>
       Torrents
     </div>
     <div
-      class="bg-gray-800 text-gray-200 px-5 py-5 rounded-lg m-3 cursor-pointer"
+      class="bg-neutral-800 text-neutral-200 px-5 py-5 rounded-lg m-3 cursor-pointer"
       on:click={() => {
         slocation.goto('/settings');
-      }}
-    >
+      }}>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
-          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-        />
+          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
       Settings
@@ -141,22 +138,20 @@
   {#if $isAdmin}
     <div class="grid grid-flow-col grid-cols-2  mt-3 cursor-pointer">
       <div
-        class="bg-gray-800 text-gray-200 px-5 py-5 rounded-lg m-3"
+        class="bg-neutral-800 text-neutral-200 px-5 py-5 rounded-lg m-3"
         on:click={() => {
           slocation.goto('/users');
-        }}
-      >
+        }}>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
         Users
       </div>
       <div
-        class="bg-gray-800 text-gray-200 px-5 py-5 rounded-lg m-3 cursor-pointer"
+        class="bg-neutral-800 text-neutral-200 px-5 py-5 rounded-lg m-3 cursor-pointer"
         on:click={() => {
           slocation.goto('/stats');
-        }}
-      >
+        }}>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
         </svg>

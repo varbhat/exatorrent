@@ -19,13 +19,12 @@
   {#if Array.isArray($torrentsforuser) && $torrentsforuser?.length}
     {#each $torrentsforuser as trnt (trnt)}
       <div
-        class="bg-gray-800 text-gray-200 px-3 py-5 rounded-lg m-3 noHL"
+        class="bg-neutral-800 text-neutral-200 px-3 py-5 rounded-lg m-3 noHL"
         on:click={() => {
           if (typeof trnt === 'string' && trnt?.length > 0) {
             slocation.goto(`/torrent/${trnt}`);
           }
-        }}
-      >
+        }}>
         <div class="break-all mx-1 mb-1 font-bold">
           {trnt}
         </div>

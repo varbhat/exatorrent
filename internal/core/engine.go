@@ -104,7 +104,7 @@ func AddfromSpec(User string, spec *torrent.TorrentSpec, dontstart bool, nofsdb 
 			Info.Println("Getting Metainfo from Local Cache")
 			sp, err := GetMetaCache(ih)
 			if err != nil {
-				Info.Println("Torrent Metainfo is not present in Cache", err)
+				Info.Println("Torrent Metainfo is not present in Cache: ", err)
 				notmerged = true
 			} else {
 

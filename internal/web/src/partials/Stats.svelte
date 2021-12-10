@@ -48,7 +48,7 @@
         <p class="ml-3 font-medium  truncate">Device Info</p>
       </div>
 
-      <button type="button" class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1" on:click={devinfoaction}>
+      <button type="button" class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1" on:click={devinfoaction}>
         {#if deviceinfoOpen === true}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
@@ -89,18 +89,17 @@
       {#if devicestatsOpen === true}
         <button
           type="button"
-          class="flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0"
+          class="flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0"
           on:click={() => {
             Send({ command: 'machstats', aop: 1 });
-          }}
-        >
+          }}>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
         </button>
       {/if}
 
-      <button type="button" class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1" on:click={devicestatsaction}>
+      <button type="button" class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1" on:click={devicestatsaction}>
         {#if devicestatsOpen === true}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
@@ -138,18 +137,17 @@
       {#if torcstatsOpen === true}
         <button
           type="button"
-          class="flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0"
+          class="flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0"
           on:click={() => {
             Send({ command: 'torcstatus', aop: 1 });
-          }}
-        >
+          }}>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
         </button>
       {/if}
 
-      <button type="button" class="-mr-1 flex p-2 rounded-md bg-gray-800 focus:outline-none flex-shrink-0 mx-1" on:click={torcstatsaction}>
+      <button type="button" class="-mr-1 flex p-2 rounded-md bg-neutral-800 focus:outline-none flex-shrink-0 mx-1" on:click={torcstatsaction}>
         {#if torcstatsOpen === true}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
@@ -162,7 +160,7 @@
       </button>
     </div>
 
-    <div class="flex flex-col overflow-x-auto bg-gray-800 rounded-md">
+    <div class="flex flex-col overflow-x-auto bg-neutral-800 rounded-md">
       {#if torcstatsOpen === true}
         <pre class="whitespace-pre mb-2 p-2">{$torcstatus} </pre>
       {/if}

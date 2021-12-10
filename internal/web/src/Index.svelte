@@ -58,7 +58,7 @@
 
 <style global lang="postcss">
   body {
-    @apply bg-gray-900;
+    @apply bg-neutral-900;
   }
   .noHL {
     -webkit-tap-highlight-color: transparent;

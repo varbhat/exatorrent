@@ -28,12 +28,12 @@
 <div class="mx-auto max-w-3xl ">
   {#if $terrormsg?.has === false}
     {#if $isAdmin === true && $adminmode === true}
-      <div class="grid grid-flow-col grid-cols-4 pr-2 bg-gray-800 my-2 appearance-none border border-gray-800 w-full">
-        <div class=" bg-gray-800  col-span-3 appearance-none  w-full flex-grow px-3 py-2  border-none  text-gray-300  focus:outline-none">Admin Mode</div>
+      <div class="grid grid-flow-col grid-cols-4 pr-2 bg-neutral-800 my-2 appearance-none border border-neutral-800 w-full">
+        <div class=" bg-neutral-800  col-span-3 appearance-none  w-full flex-grow px-3 py-2  border-none  text-neutral-300  focus:outline-none">Admin Mode</div>
         <div class="flex items-center justify-end w-full my-2 mr-2">
           <label for="dontstarttoggle" class="flex items-center cursor-pointer">
             <div class="relative">
-              <input type="checkbox" class="rounded text-indigo-700 bg-gray-800 form-checkbox" bind:checked={$adminmode} />
+              <input type="checkbox" class="rounded text-indigo-700 bg-neutral-800 form-checkbox" bind:checked={$adminmode} />
             </div>
           </label>
         </div>
