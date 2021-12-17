@@ -79,7 +79,14 @@
     <div class="mt-8">
       <div class="flex bg-neutral-800 rounded-md mb-3 border border-neutral-800">
         {#if ismetainfo}
-          <input id="torrentinput" type="text" required class=" bg-neutral-800 appearance-none rounded-md w-full flex-grow px-3 py-2 border-none placeholder-neutral-500 text-neutral-200  focus:outline-none sm:text-sm" placeholder="Magnet / Infohash" bind:value={torrentinput} on:keydown={entertoadd} />
+          <input
+            id="torrentinput"
+            type="text"
+            required
+            class=" bg-neutral-800 appearance-none rounded-md w-full flex-grow px-3 py-2 border-none placeholder-neutral-500 text-neutral-200  focus:outline-none sm:text-sm"
+            placeholder="Magnet / Infohash"
+            bind:value={torrentinput}
+            on:keydown={entertoadd} />
         {:else}
           <label class="bg-neutral-800 appearance-none rounded-md w-full flex-grow px-3 py-2  placeholder-neutral-500 text-neutral-200  focus:outline-none sm:text-sm">
             <div class="text-neutral-200 flex">
