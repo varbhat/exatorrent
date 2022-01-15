@@ -87,11 +87,8 @@ Communication about the project is primarily through [Discussions](https://githu
 ## Contribute
 You are welcome to contribute . Please Read the [contributing docs](docs/CONTRIBUTING.md) first.
 
-## Donate
-If you like this Project , please consider this as an opportunity to donate to this project . This would help me maintain this project and also work on other Open Source Projects . Use [Liberapay](https://liberapay.com/varbhat) , [Paypal](https://www.paypal.me/varbhat) , [Ko-fi](https://ko-fi.com/varbhat) or [UPI](https://en.wikipedia.org/wiki/Unified_Payments_Interface) (VPA: `varbhat@icici`) to Donate to this Project .
-
-
-You might want to checkout [Jetbrains](https://jb.gg/OpenSource) and their awesome IDEs and tools for software developers. Their Tools are really very good and empowering. [Jetbrains](https://jb.gg/OpenSource) supports the development of `exatorrent` with it's [IDEs](https://www.jetbrains.com/opensource/). 
+## Thanks
+Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent`, Awesome IDEs of [Jetbrains](https://jb.gg/OpenSource) for making this project happen.
 
 ## License
 [GPL-v3](LICENSE)
