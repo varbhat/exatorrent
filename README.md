@@ -7,29 +7,28 @@
 
 
 ## Introduction
-exatorrent is [BitTorrent](https://www.bittorrent.org/) Client written in [Go](https://go.dev/). 
-It can be run locally or be hosted in Remote Server with good resources 
-to use that Server as [SeedBox](https://en.wikipedia.org/wiki/Seedbox). 
-It is Single Completely Statically Linked Binary with Zero External Dependencies .
-
-exatorrent is simple yet feature-rich . It is 
-lightweight and light on resources. It comes with Beautiful Responsive Web Client written in Svelte and Typescript , 
-but thanks to documented [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) [API](docs/API.md) of exatorrent , you can also write your own client if you want to.
-
-exatorrent can operate in Optional Multi-User Mode administrated by admin user/s 
-but it can successfully be used by Single-User as well. 
-Torrented Files are stored in local disk of device where it's run, which are then retrievable or streamable via HTTP.
+* exatorrent is Elegant [BitTorrent](https://www.bittorrent.org/) Client written in [Go](https://go.dev/). 
+* It is Simple, easy to use, yet feature rich.
+* It can be run locally or be hosted in Remote Server with good resources. 
+* It is Single Completely Statically Linked Binary with Zero External Dependencies.
+* It is lightweight and light on resources. 
+* It comes with Beautiful Responsive Web Client written in Svelte and Typescript.
+* Thanks to documented [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) [API](docs/API.md) of exatorrent , custom client can be created.
+* It supports Single User Mode and Multi User Mode.
+* Torrented Files are stored in local disk can be downloaded and streamed via HTTP/Browser/Media Players.
 
 <hr>
 <p align="center">
-<img src="https://raw.githubusercontent.com/varbhat/assets/master/exatorrent/main.png" alt="exatorrent web client" width=400 height=550 />
+<img src="https://raw.githubusercontent.com/varbhat/assets/main/exatorrent/main.png" alt="exatorrent web client" width=400 height=550 />
   <p align="center"><a href="docs/screenshots.md">More Screenshots →</a></p>
 </p>
 <hr>
 
 ## Installation
-exatorrent can be installed in 3 ways.
-* **Releases:** You can download binary for your OS from [Releases](https://github.com/varbhat/exatorrent/releases/latest) . Mark it as executable and run it . Refer [Usage](docs/usage.md) .
+* **Releases:** 
+  
+  * exatorrent built executables are provided for Linux([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64) and [arm64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-arm64)), MacOS([Intel](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-amd64) and [Apple Silicon](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-arm64)) and Windows([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-win-amd64.exe)).
+  * You can download binary for your OS from [Releases](https://github.com/varbhat/exatorrent/releases/latest) . Mark it as executable and run it . Refer [Usage](docs/usage.md) .
   ```bash
   wget https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64
   chmod u+x ./exatorrent-linux-amd64
@@ -44,11 +43,11 @@ exatorrent can be installed in 3 ways.
    ```bash
    make web && make app
    ```
-Note that **Username** and **Password** of Default User created on first run are `adminuser` and `adminpassword` respectively. You can change Password later but Username of Account can't be changed after creation. Refer [Usage](docs/usage.md#-admin) .
 
-[Github Actions](https://github.com/features/actions) is used to build and publish [Releases](https://github.com/varbhat/exatorrent/releases/latest) and [Docker/Podman Images](https://ghcr.io/varbhat/exatorrent) of exatorrent .
-
-If you want to deploy `exatorrent` on server , please also refer [Deploy Docs](docs/deploy.md) .
+* Note that **Username** and **Password** of Default User created on first run are `adminuser` and `adminpassword` respectively.
+* You can change Password later but Username of Account can't be changed after creation. Refer [Usage](docs/usage.md#-admin) .
+* [Github Actions](https://github.com/features/actions) is used to build and publish [Releases](https://github.com/varbhat/exatorrent/releases/latest) and [Docker/Podman Images](https://ghcr.io/varbhat/exatorrent) of exatorrent .
+* If you want to deploy `exatorrent` on server , please also refer [Deploy Docs](docs/deploy.md) .
 
 ## Features
 * Single Executable File with No Dependencies 
@@ -81,14 +80,13 @@ If you want to deploy `exatorrent` on server , please also refer [Deploy Docs](d
 </p>
 
 ## Help
-
-Communication about the project is primarily through [Discussions](https://github.com/varbhat/exatorrent/discussions) and the [Issues](https://github.com/varbhat/exatorrent/issues).
+Communication about the project is primarily through the [Issues](https://github.com/varbhat/exatorrent/issues).
 
 ## Contribute
-You are welcome to contribute . Please Read the [contributing docs](docs/CONTRIBUTING.md) first.
+You are welcome to contribute. You can contribute code,documentation,icon or anything that you think benefits the project. If you want to implement any significant feature, please discuss it first.
 
 ## Thanks
-Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent`, Awesome IDEs of [Jetbrains](https://jb.gg/OpenSource) for making this project happen.
+Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent`, Awesome IDEs of [Jetbrains](https://jb.gg/OpenSource) and Users for making this project happen.
 
 ## License
 [GPL-v3](LICENSE)
