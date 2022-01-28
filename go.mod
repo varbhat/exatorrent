@@ -13,7 +13,7 @@ require (
 	github.com/jackc/pgx/v4 v4.14.1
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.11+incompatible
-	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce
+	golang.org/x/crypto v0.0.0-20220126234351-aa10faf2a1f8
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11
 )
 
@@ -55,8 +55,8 @@ require (
 	github.com/mschoch/smat v0.2.0 // indirect
 	github.com/pion/datachannel v1.5.2 // indirect
 	github.com/pion/dtls/v2 v2.1.0 // indirect
-	github.com/pion/ice/v2 v2.1.18 // indirect
-	github.com/pion/interceptor v0.1.5 // indirect
+	github.com/pion/ice/v2 v2.1.19 // indirect
+	github.com/pion/interceptor v0.1.7 // indirect
 	github.com/pion/logging v0.2.2 // indirect
 	github.com/pion/mdns v0.0.5 // indirect
 	github.com/pion/randutil v0.1.0 // indirect
@@ -69,7 +69,7 @@ require (
 	github.com/pion/transport v0.13.0 // indirect
 	github.com/pion/turn/v2 v2.0.6 // indirect
 	github.com/pion/udp v0.1.1 // indirect
-	github.com/pion/webrtc/v3 v3.1.16 // indirect
+	github.com/pion/webrtc/v3 v3.1.17 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/rs/dnscache v0.0.0-20211102005908-e0241e321417 // indirect
@@ -81,14 +81,14 @@ require (
 	github.com/willf/bloom v2.0.3+incompatible // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
-	golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d // indirect
+	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	modernc.org/libc v1.14.3 // indirect
+	modernc.org/libc v1.14.5 // indirect
 	modernc.org/mathutil v1.4.1 // indirect
 	modernc.org/memory v1.0.5 // indirect
 	modernc.org/sqlite v1.14.5 // indirect
-	zombiezen.com/go/sqlite v0.8.0 // indirect
+	zombiezen.com/go/sqlite v0.9.2 // indirect
 )
