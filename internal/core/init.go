@@ -6,19 +6,23 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/anacrolix/chansync"
 	"io/fs"
-	"log"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"syscall"
+	"time"
 
+	"github.com/anacrolix/chansync"
 	utp "github.com/anacrolix/go-libutp"
+
+	"github.com/varbhat/exatorrent/internal/db"
+
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/anacrolix/torrent/storage"
-	"github.com/varbhat/exatorrent/internal/db"
+
+	anaclog "github.com/anacrolix/log"
 )
 
 func checkDir(dir string) {
@@ -206,7 +210,15 @@ func Initialize() {
 	tc := Engine.Tconfig.ToTorrentConfig()
 
 	// Set Different Logger for UTP
-	utp.Logger = log.New(os.Stderr, "[UTP ] ", log.LstdFlags) // Info Logger
+	utp.Logger = anaclog.Logger{} // Info Logger
+	utp.Logger.Handlers = []anaclog.Handler{anaclog.StreamHandler{
+		W: os.Stderr,
+		Fmt: func(msg anaclog.Record) []byte {
+			var pc [1]uintptr
+			msg.Callers(1, pc[:])
+			return []byte(fmt.Sprintf("[UTp ] %s %s\n", time.Now().Format("2006/01/02 03:04:05"), msg.Text()))
+		},
+	}}
 
 	if psql {
 

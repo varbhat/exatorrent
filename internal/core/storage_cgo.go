@@ -6,8 +6,9 @@ package core
 import (
 	"path/filepath"
 
-	"github.com/anacrolix/torrent"
 	"github.com/varbhat/exatorrent/internal/db"
+
+	"github.com/anacrolix/torrent"
 )
 
 func sqliteSetup(tc *torrent.ClientConfig) {

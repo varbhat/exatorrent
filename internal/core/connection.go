@@ -3,10 +3,11 @@ package core
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/anacrolix/torrent/metainfo"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/anacrolix/torrent/metainfo"
 
 	"github.com/gorilla/websocket"
 )

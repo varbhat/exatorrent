@@ -2,14 +2,16 @@ package core
 
 import (
 	"fmt"
-	"github.com/anacrolix/chansync"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/anacrolix/chansync"
+
+	"github.com/varbhat/exatorrent/internal/db"
+
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
-	"github.com/varbhat/exatorrent/internal/db"
 )
 
 type Eng struct {

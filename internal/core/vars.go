@@ -91,7 +91,8 @@ type TorConfig struct {
 func (t *TorConfig) ToTorrentConfig() (tc *torrent.ClientConfig) {
 	tc = torrent.NewDefaultClientConfig()
 
-	tc.Logger = anaclog.Discard // Discard Logging of Torrent Client by Default
+	tc.Logger = anaclog.Logger{}
+	tc.Logger.Handlers = []anaclog.Handler{anaclog.DiscardHandler} // Discard Logging of Torrent Client by Default
 
 	tc.HTTPProxy = http.ProxyFromEnvironment // Use Proxy Variables from Environment
 
@@ -253,16 +254,15 @@ func (t *TorConfig) ToTorrentConfig() (tc *torrent.ClientConfig) {
 
 	if t.Logger != nil {
 		if *t.Logger {
-			tc.Logger = anaclog.Logger{
-				LoggerImpl: anaclog.StreamLogger{
-					W: os.Stderr,
-					Fmt: func(msg anaclog.Msg) []byte {
-						var pc [1]uintptr
-						msg.Callers(1, pc[:])
-						return []byte(fmt.Sprintf("[TORC] %s %s\n", time.Now().Format("2006/01/02 03:04:05"), msg.Text()))
-					},
+			tc.Logger = anaclog.Logger{}
+			tc.Logger.Handlers = []anaclog.Handler{anaclog.StreamHandler{
+				W: os.Stderr,
+				Fmt: func(msg anaclog.Record) []byte {
+					var pc [1]uintptr
+					msg.Callers(1, pc[:])
+					return []byte(fmt.Sprintf("[TORC] %s %s\n", time.Now().Format("2006/01/02 03:04:05"), msg.Text()))
 				},
-			}
+			}}
 		}
 	}
 
