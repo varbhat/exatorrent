@@ -30,6 +30,11 @@ app-linux-amd64:
 app-linux-arm64:
 	env CGO_ENABLED=1 GOOS="linux" GOARCH="arm64" CC="aarch64-linux-musl-gcc" CXX="aarch64-linux-musl-g++" go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME)-linux-arm64 $(MAIN_SOURCE)
 
+##app-linux-x86: Build the Application for linux (x86 32bit)
+.PHONY: app-linux-x86
+app-linux-x86:
+	env CGO_ENABLED=1 GOOS="linux" GOARCH="386" CC="i686-linux-musl-gcc" CXX="i686-linux-musl-g++" go build -trimpath -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME)-linux-x86 $(MAIN_SOURCE)
+
 ##app-darwin-amd64: Build the Application for MacOS (amd64)
 .PHONY: app-darwin-amd64
 app-darwin-amd64:

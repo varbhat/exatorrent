@@ -27,7 +27,7 @@
 ## Installation
 * **Releases:** 
   
-  * exatorrent built executables are provided for Linux([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64) and [arm64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-arm64)), MacOS([Intel](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-amd64) and [Apple Silicon](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-arm64)) and Windows([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-win-amd64.exe)).
+  * exatorrent built executables are provided for Linux([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64), [arm64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-arm64),[x86-32bit](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-x86)), MacOS([Intel](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-amd64) and [Apple Silicon](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-arm64)) and Windows([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-win-amd64.exe)).
   * You can download binary for your OS from [Releases](https://github.com/varbhat/exatorrent/releases/latest) . Mark it as executable and run it . Refer [Usage](docs/usage.md) .
   ```bash
   wget https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64
@@ -86,7 +86,7 @@ Communication about the project is primarily through the [Issues](https://github
 You are welcome to contribute. You can contribute code,documentation,icon or anything that you think benefits the project. If you want to implement any significant feature, please discuss it first.
 
 ## Thanks
-Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent`, Awesome IDEs of [Jetbrains](https://jb.gg/OpenSource) and Users for making this project happen.
+Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent` and Users for making this project happen.
 
 ## License
 [GPL-v3](LICENSE)
