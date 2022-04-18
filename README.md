@@ -83,7 +83,7 @@
 Communication about the project is primarily through the [Issues](https://github.com/varbhat/exatorrent/issues).
 
 ## Contribute
-You are welcome to contribute. You can contribute code,documentation,icon or anything that you think benefits the project. If you want to implement any significant feature, please discuss it first.
+You are welcome to contribute. If you want to implement any significant feature, please discuss it first.
 
 ## Thanks
 Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent` and Users for making this project happen.
