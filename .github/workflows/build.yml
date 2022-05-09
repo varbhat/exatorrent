@@ -36,7 +36,7 @@ jobs:
       - name: Generate SHA256 Checksum
         run: |
           make checksum
-      - name: Publish Releases
-        run: |
-          gh config set prompt disabled
-          gh release create $(git tag -l | tail -n1) -t $(git tag -l | tail -n1) -p build/*
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "build/*"
