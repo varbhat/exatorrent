@@ -9,6 +9,7 @@ jobs:
   build:
     if: ${{ github.owner }} == "varbhat"
     runs-on: ubuntu-latest
+    permissions: write-all
 
     container:
       image: "ghcr.io/varbhat/void-container:glibc"
@@ -38,5 +39,6 @@ jobs:
           make checksum
       - name: Publish Releases
         run: |
+          git config --global --add safe.directory .
           gh config set prompt disabled
           gh release create $(git tag -l | tail -n1) -t $(git tag -l | tail -n1) -p build/*
