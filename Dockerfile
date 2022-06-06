@@ -10,4 +10,5 @@ FROM gcr.io/distroless/base
 COPY --from=build --chown=1000:1000 /exa/build/exatorrent /exatorrent
 USER 1000:1000
 WORKDIR /exa
+EXPOSE 5000
 ENTRYPOINT ["/exatorrent"]
