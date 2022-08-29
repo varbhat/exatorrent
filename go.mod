@@ -9,7 +9,7 @@ require (
 	github.com/anacrolix/log v0.13.1
 	github.com/anacrolix/torrent v1.41.1-0.20220309095723-02b6ee995497
 	github.com/google/uuid v1.3.0
-	github.com/gorilla/websocket v1.4.2
+	github.com/gorilla/websocket v1.5.0
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.11+incompatible
