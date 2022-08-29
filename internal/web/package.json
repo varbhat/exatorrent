@@ -19,20 +19,20 @@
   "type": "module",
   "devDependencies": {
     "@tsconfig/svelte": "^3.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
-    "svelte-check": "^2.7.1",
-    "typescript": "^4.7.2"
+    "svelte-check": "^2.9.0",
+    "typescript": "^4.8.2"
   },
   "dependencies": {
     "slocation": "1.5.0",
-    "esbuild": "^0.14.42",
-    "esbuild-svelte": "^0.7.0",
-    "autoprefixer": "^10.4.7",
+    "esbuild": "^0.15.5",
+    "esbuild-svelte": "^0.7.1",
+    "autoprefixer": "^10.4.8",
     "@tailwindcss/forms": "^0.5.2",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.0.24",
-    "svelte-preprocess": "^4.10.6",
-    "svelte": "^3.48.0"
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
+    "svelte-preprocess": "^4.10.7",
+    "svelte": "^3.49.0"
   }
 }
