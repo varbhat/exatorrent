@@ -33,6 +33,6 @@
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8",
     "svelte-preprocess": "^4.10.7",
-    "svelte": "^3.49.0"
+    "svelte": "^3.52.0"
   }
 }
