@@ -53,7 +53,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/386,linux/ppc64le
           push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            varbhat/exatorrent:latest
-            ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/${{ github.repository }}:${{ steps.meta.outputs.tag }}
           labels: ${{ steps.meta.outputs.labels }}
