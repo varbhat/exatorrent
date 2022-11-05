@@ -13,7 +13,7 @@
 * It is Single Completely Statically Linked Binary with Zero External Dependencies.
 * It is lightweight and light on resources. 
 * It comes with Beautiful Responsive Web Client written in Svelte and Typescript.
-* Thanks to documented [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) [API](docs/API.md) of exatorrent , custom client can be created.
+* Thanks to documented [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) [API](docs/API.md) of exatorrent, custom client can be created.
 * It supports Single User Mode and Multi User Mode.
 * Torrented Files are stored in local disk can be downloaded and streamed via HTTP/Browser/Media Players.
 
@@ -25,39 +25,30 @@
 <hr>
 
 ## Installation
-* **Releases:** 
-  
-  * exatorrent built executables are provided for Linux([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64), [arm64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-arm64),[x86-32bit](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-x86)), MacOS([Intel](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-amd64) and [Apple Silicon](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-darwin-arm64)) and Windows([amd64](https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-win-amd64.exe)).
-  * You can download binary for your OS from [Releases](https://github.com/varbhat/exatorrent/releases/latest) . Mark it as executable and run it . Refer [Usage](docs/usage.md) .
-  ```bash
-  wget https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64
-  chmod u+x ./exatorrent-linux-amd64
-  ./exatorrent-linux-amd64
-  ```
- * **Docker:** exatorrent can also be run inside Docker ( or Podman ). See [Docker Docs](docs/docker.md) .
+ * **Docker:** exatorrent can be run inside Docker. See [Docker Docs](docs/docker.md). Docker supports Linux, MacOS and Windows. 
    ```bash
    docker pull ghcr.io/varbhat/exatorrent:latest
    docker run -p 5000:5000 -p 42069:42069 -v /path/to/directory:/exa/exadir ghcr.io/varbhat/exatorrent:latest
    ```
- * **Build:** exatorrent is open source and can be built from sources . See [Build Docs](docs/build.md) .
+ * **Build:** exatorrent is open source and can be built from sources. See [Build Docs](docs/build.md).
    ```bash
    make web && make app
    ```
 
 * Note that **Username** and **Password** of Default User created on first run are `adminuser` and `adminpassword` respectively.
-* You can change Password later but Username of Account can't be changed after creation. Refer [Usage](docs/usage.md#-admin) .
-* [Github Actions](https://github.com/features/actions) is used to build and publish [Releases](https://github.com/varbhat/exatorrent/releases/latest) and [Docker/Podman Images](https://ghcr.io/varbhat/exatorrent) of exatorrent .
-* If you want to deploy `exatorrent` on server , please also refer [Deploy Docs](docs/deploy.md) .
+* You can change Password later but Username of Account can't be changed after creation. Refer [Usage](docs/usage.md#-admin).
+* [Github Actions](https://github.com/features/actions) is used to build and publish [Docker Images](https://ghcr.io/varbhat/exatorrent) of exatorrent.
+
 
 ## Features
 * Single Executable File with No Dependencies 
 * Small in Size
 * Cross Platform
-* Download (or Build ) Single Executable Binary and run . That's it 
+* Download (or Build ) Single Executable Binary and run. That's it 
 * Open and Stream Torrents in your Browser 
 * Add Torrents by Magnet or by Infohash or Torrent File
 * Individual File Control (Start, Stop or Delete )
-* Stop , Remove or Delete Torrent
+* Stop, Remove or Delete Torrent
 * Persistent between Sessions
 * Stop Torrent once SeedRatio is reached (Optional)
 * Perform Actions on Torrent [Completion](docs/config.md#actions-on-torrent-completion) (Optional)
@@ -74,10 +65,6 @@
 * Stream directly on Browser or [VLC](https://www.videolan.org/vlc/) or [mpv](https://mpv.io/) or other Media Players
 * [Documented API](docs/API.md)
 * Uses Sqlite3 (embedded database with no setup and no configuration) by Default for [Database](docs/database.md) but PostgreSQL can be used instead too
-
-<p align="center">
-  <p align="center"><a href="docs/features.md">Read More →</a></p>
-</p>
 
 ## Help
 Communication about the project is primarily through the [Issues](https://github.com/varbhat/exatorrent/issues).

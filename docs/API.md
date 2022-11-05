@@ -54,11 +54,11 @@ to get `Token` and `UserType` of the User. Response will be of the form ,
 
 # WebSocket API
 
-exatorrent has WebSocket API which provides API to control exatorrent . Note that there is seperate HTTP API Endpoint to retrieve / stream Torrent Files for which websocket will not be used and is documented later.
+exatorrent has WebSocket API which provides API to control exatorrent. Note that there is seperate HTTP API Endpoint to retrieve / stream Torrent Files for which websocket will not be used and is documented later.
 
-Only Authenticated User who is not `disabled` can connect to WebSocket API . Only ONE WebSocket connection is allowed per User(existing WebSocket connection of User gets disconnected on new WebSocket connection of User).
+Only Authenticated User who is not `disabled` can connect to WebSocket API. Only ONE WebSocket connection is allowed per User(existing WebSocket connection of User gets disconnected on new WebSocket connection of User).
 
-Communication in exatorrent  WebSocket  is done through JSON . exatorrent WebSocket Only accepts JSON requests of the form,
+Communication in exatorrent  WebSocket  is done through JSON. exatorrent WebSocket Only accepts JSON requests of the form,
 
 ```json
 {
@@ -88,7 +88,7 @@ command field of json request represents command that needs to be done. `data1` 
 
 ## Stream Requests 
 
-Some Requests namely `getalltorrents` , `gettorrents` , `gettorrentinfo`  are stream requests . They continuously send data regularly with 5 seconds gap in between. This is useful , say for showing progress of Torrent . There can be only 1 Stream at a time , so if you request new stream , old stream stops . you can also stop stream by sending request `{"command":"stopstream"}` . This stops stream if any do exist.
+Some Requests namely `getalltorrents` , `gettorrents` , `gettorrentinfo`  are stream requests. They continuously send data regularly with 5 seconds gap in between. This is useful , say for showing progress of Torrent. There can be only 1 Stream at a time , so if you request new stream , old stream stops. you can also stop stream by sending request `{"command":"stopstream"}`. This stops stream if any do exist.
 
 ## Reference
 Please Read [wshandler](https://github.com/varbhat/exatorrent/blob/main/internal/core/socket.go#L108) to get more details about API

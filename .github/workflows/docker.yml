@@ -36,10 +36,10 @@ jobs:
       - name: Build the arm64 image
         run: docker buildx build --load --platform "linux/arm64" . --tag ghcr.io/varbhat/exatorrent:arm64
 
-      - name: Push Images
-        run: docker push ghcr.io/varbhat/exatorrent -a
+      - name: Build the arm32(linux/arm/v7) image
+        run: docker buildx build --load --platform "linux/arm/v7" . --tag ghcr.io/varbhat/exatorrent:arm32
 
-      - name: Create and Push Manifest
+      - name: Create Manifest and Push Image
         run: |
-          docker manifest create ghcr.io/varbhat/exatorrent:latest ghcr.io/varbhat/exatorrent:amd64 ghcr.io/varbhat/exatorrent:arm64
+          docker manifest create ghcr.io/varbhat/exatorrent:latest ghcr.io/varbhat/exatorrent:amd64 ghcr.io/varbhat/exatorrent:arm64 ghcr.io/varbhat/exatorrent:arm32
           docker manifest push ghcr.io/varbhat/exatorrent:latest
