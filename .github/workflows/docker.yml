@@ -30,22 +30,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build the amd64 image
-        run: docker buildx build --load --platform "linux/amd64" . --tag ghcr.io/varbhat/exatorrent:amd64
+      - name: Docker meta tags
+        id: meta # you'll use this in the next step
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ghcr.io/varbhat/exatorrent
+          # Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
 
-      - name: Build the arm64 image
-        run: docker buildx build --load --platform "linux/arm64" . --tag ghcr.io/varbhat/exatorrent:arm64
-
-      - name: Build the arm32(arm/v7) image
-        run: docker buildx build --load --platform "linux/arm/v7" . --tag ghcr.io/varbhat/exatorrent:arm32
-
-      - name: Build the i386 image
-        run: docker buildx build --load --platform "linux/386" . --tag ghcr.io/varbhat/exatorrent:i386
-
-      - name: Build the ppc64le image
-        run: docker buildx build --load --platform "linux/ppc64le" . --tag ghcr.io/varbhat/exatorrent:ppc64le
-
-      - name: Create Manifest and Push Image
-        run: |
-          docker manifest create ghcr.io/varbhat/exatorrent:latest ghcr.io/varbhat/exatorrent:amd64 ghcr.io/varbhat/exatorrent:arm64 ghcr.io/varbhat/exatorrent:arm32 ghcr.io/varbhat/exatorrent:i386 ghcr.io/varbhat/exatorrent:ppc64le
-          docker manifest push ghcr.io/varbhat/exatorrent:latest
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/386,linux/ppc64le
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
