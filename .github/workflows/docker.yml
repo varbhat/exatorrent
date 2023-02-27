@@ -55,5 +55,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:amd64
+            ghcr.io/${{ github.repository }}:arm64
             ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
