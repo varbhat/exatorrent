@@ -10,7 +10,7 @@ require (
 	github.com/anacrolix/torrent v1.48.1-0.20230224052008-2ae264b6ccc0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/websocket v1.5.0
-	github.com/jackc/pgx/v4 v4.18.0
+	github.com/jackc/pgx/v4 v4.18.1
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	golang.org/x/crypto v0.6.0
