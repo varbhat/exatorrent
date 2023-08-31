@@ -19,7 +19,7 @@
 
 <hr>
 <p align="center">
-<img src="https://raw.githubusercontent.com/varbhat/assets/main/exatorrent/main.png" alt="exatorrent web client" width=400 height=550 />
+<img src="https://raw.githubusercontent.com/varbhat/exatorrent/assets/main.png" alt="exatorrent web client" width=400 height=550 />
   <p align="center"><a href="docs/screenshots.md">More Screenshots →</a></p>
 </p>
 <hr>
