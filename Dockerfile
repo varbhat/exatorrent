@@ -1,20 +1,39 @@
-FROM docker.io/alpine:edge AS build
-RUN apk add --no-cache git make musl-dev go nodejs npm gcc g++
-WORKDIR /exa
-ADD . /exa
-RUN go mod tidy && make web && make app
+# syntax=docker/dockerfile:1
 
-FROM docker.io/alpine:edge
+# Build the web ui from source
+FROM docker.io/node:18 AS build-node
+WORKDIR /exa
+ADD internal/web /exa/internal/web
+ADD Makefile /exa/
+RUN make web
+
+# Build the application from source
+FROM docker.io/golang:1.20-alpine AS build-go
+WORKDIR /exa
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . ./
+COPY --from=build-node /exa/internal/web/build /exa/internal/web/build
+RUN apk add --no-cache make gcc g++ && \
+    make app
+
+# Deploy the application binary into a lean image
+FROM scratch
+
 LABEL maintainer="varbhat"
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.name="varbhat/exatorrent"
 LABEL org.label-schema.description="self-hostable torrent client"
 LABEL org.label-schema.url="https://github.com/varbhat/exatorrent"
 LABEL org.label-schema.vcs-url="https://github.com/varbhat/exatorrent"
-COPY --from=build --chown=1000:1000 /exa/build/exatorrent /exatorrent
+
+COPY --from=build-go --chown=1000:1000 /exa/build/exatorrent /exatorrent
+
 USER 1000:1000
 WORKDIR /exa
-EXPOSE 5000
-EXPOSE 42069
+EXPOSE 5000 42069
 VOLUME /exa/exadir
+
 ENTRYPOINT ["/exatorrent"]

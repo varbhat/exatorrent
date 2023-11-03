@@ -1,0 +1,6 @@
+.github
+docs/
+build/
+internal/web/build/
+internal/web/node_modules/
+Dockerfile
