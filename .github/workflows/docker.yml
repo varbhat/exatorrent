@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-container-images:
-    if: ${{ github.owner }} == "varbhat"
+    if: ${{ github.repository_owner }} == "varbhat"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -32,13 +32,16 @@ jobs:
 
       - name: Docker meta tags
         id: meta # you'll use this in the next step
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v5
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/varbhat/exatorrent
+            ghcr.io/${{ github.repository_owner }}/exatorrent
           # Docker tags based on the following events/attributes
           tags: |
+            type=raw,value=amd64
+            type=raw,value=arm64
+            type=raw,value=latest
             type=schedule
             type=ref,event=branch
             type=ref,event=pr
@@ -53,9 +56,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/386,linux/ppc64le
           push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:amd64
-            ghcr.io/${{ github.repository }}:arm64
-            ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
