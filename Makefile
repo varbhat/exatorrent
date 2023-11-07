@@ -18,7 +18,7 @@ web:
 ##app: Build the Application
 .PHONY: app
 app:
-	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w -Wl,--allow-multiple-definition"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-no-buildflags: Build the Application without any buildflags
 .PHONY: app-no-buildflags

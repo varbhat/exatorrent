@@ -8,7 +8,7 @@ ADD Makefile /exa/
 RUN make web
 
 # Build the application from source
-FROM docker.io/golang:1.20-alpine3.18 AS build-go
+FROM docker.io/golang:1.21-alpine3.18 AS build-go
 WORKDIR /exa
 
 COPY go.mod go.sum ./
