@@ -1,14 +1,8 @@
 name: Create and publish binaries
 
 on:
-  # push:
-  #   paths: [ '**.go' ]
-  # pull_request:
-  #   paths: [ '**.go' ]
-  pull_request:
-  push:
-    # tags:
-    #   - "*"
+  release:
+    types: [created]
 
 jobs:
   goreleaser:
@@ -38,8 +32,13 @@ jobs:
           trimpath: true
           buildmode: pie
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: exatorrent-builds
+      #     path: build/*
+
+      - name: Upload the artifacts
+        uses: skx/github-action-publish-binaries@master
         with:
-          name: exatorrent-builds
-          path: build/*
+          args: "build/*"
