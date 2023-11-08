@@ -16,6 +16,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "^18"
+          cache: "npm"
+          cache-dependency-path: "internal/web/package-lock.json"
+
+      - name: Build Web UI
+        run: make web-ci
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:

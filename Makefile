@@ -15,6 +15,11 @@ help: Makefile
 web:
 	cd internal/web && npm install && npm run build
 
+##web: Build the Web Client for CI
+.PHONY: web-ci
+web-ci:
+	cd internal/web && npm ci && npm run build
+
 ##app: Build the Application
 .PHONY: app
 app:
