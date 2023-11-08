@@ -18,16 +18,18 @@ dist: ./build
 builds:
   - env:
       - CGO_ENABLED=1
+    flags:
+      - -trimpath
+      - -buildmode=pie
     ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.CommitDate}}
       - -extldflags "-Wl,--allow-multiple-definition"
     goos:
-      # - windows
       - linux
       - darwin
     goarch:
       - amd64
-      - arm
+      # - arm
       - arm64
 
 archives:
