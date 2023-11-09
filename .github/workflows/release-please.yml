@@ -14,6 +14,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
+        id: release
         with:
           release-type: go
           package-name: exatorrent
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Set up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "^18"
+          cache: "npm"
+          cache-dependency-path: "internal/web/package-lock.json"
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build Web UI
+        run: |
+          make web-ci
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build
+        uses: crazy-max/ghaction-xgo@v3
+        with:
+          xgo_version: latest
+          go_version: 1.21
+          dest: build
+          targets: linux/amd64,linux/arm64,linux/arm-7,linux/386
+          ldflags: -extldflags "-s -w -static -Wl,--allow-multiple-definition"
+          trimpath: true
+          buildmode: pie
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Upload Release Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ steps.release.outputs.tag_name }} ./build/**/*
+        if: ${{ steps.release.outputs.release_created }}
