@@ -66,24 +66,16 @@ jobs:
         with:
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta.outputs.bake-file }}
           targets: artifact-all
           provenance: false
-          set: |
-            *.cache-from=type=gha,scope=image
-            *.cache-to=type=gha,scope=image,mode=max
 
       - name: Flatten artifact
         uses: docker/bake-action@v4
         with:
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta.outputs.bake-file }}
           targets: release
           provenance: false
-          set: |
-            *.cache-from=type=gha,scope=image
-            *.cache-to=type=gha,scope=image,mode=max
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -98,6 +90,6 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            artifact/*
+            release/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
