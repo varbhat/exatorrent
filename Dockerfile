@@ -1,14 +1,14 @@
 # syntax=docker/dockerfile:1
 
 # Build the web ui from source
-FROM docker.io/node:18 AS build-node
+FROM --platform=$BUILDPLATFORM docker.io/node:18 AS build-node
 WORKDIR /exa
 ADD internal/web /exa/internal/web
 ADD Makefile /exa/
 RUN make web
 
 # Build the application from source
-FROM docker.io/golang:1.21-alpine3.18 AS build-go
+FROM --platform=$BUILDPLATFORM docker.io/golang:1.21-alpine3.18 AS build-go
 WORKDIR /exa
 
 COPY go.mod go.sum ./
@@ -19,8 +19,30 @@ COPY --from=build-node /exa/internal/web/build /exa/internal/web/build
 RUN apk add --no-cache make gcc g++ && \
     make app
 
+# Artifact Target
+FROM scratch as artifact
+
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+
+COPY --link --from=build-go /exa/build/exatorrent /exatorrent-${TARGETOS}-${TARGETARCH}${TARGETVARIANT}
+
+# Failover if contexts=artifacts=<path> is not set
+FROM scratch AS artifacts 
+# Releaser flat all artifacts
+FROM base AS releaser
+WORKDIR /out
+RUN --mount=from=artifacts,source=.,target=/artifacts <<EOT
+    set -e
+    cp /artifacts/**/* /out/ 2>/dev/null || cp /artifacts/* /out/
+EOT
+FROM scratch AS release
+COPY --link --from=releaser /out /
+
+# Final stage
 # Deploy the application binary into a lean image
-FROM alpine:3.18
+FROM --platform=$BUILDPLATFORM docker.io/alpine:3.18
 
 LABEL maintainer="varbhat"
 LABEL org.label-schema.schema-version="1.0"
