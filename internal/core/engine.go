@@ -290,8 +290,8 @@ func StopTorrent(User string, infohash metainfo.Hash) {
 	if trnt.Info() != nil {
 		trnt.CancelPieces(0, trnt.NumPieces())
 	} else {
-		Warn.Println("Torrent can't be Stopped Because Metainfo is not yet recieved")
-		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Stopped Because Metainfo is not yet recieved")
+		Warn.Println("Torrent can't be Stopped Because Metainfo is not yet received")
+		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent couldn't be Stopped Because Metainfo is not yet received")
 		return
 	}
 
@@ -424,8 +424,8 @@ func StartFile(User string, infohash metainfo.Hash, fp string) {
 			}
 		}
 	} else {
-		Warn.Println("File ", fp, "can't be Started Because Metainfo is not yet recieved")
-		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "File "+fp+" couldn't be Started Because Metainfo is not yet recieved")
+		Warn.Println("File ", fp, "can't be Started Because Metainfo is not yet received")
+		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "File "+fp+" couldn't be Started Because Metainfo is not yet received")
 		return
 	}
 
@@ -491,8 +491,8 @@ func StopFile(User string, infohash metainfo.Hash, fp string) {
 			}
 		}
 	} else {
-		Warn.Println("File ", fp, "can't be Stopped Because Metainfo is not yet recieved")
-		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "File "+fp+" couldn't be Stopped Because Metainfo is not yet recieved")
+		Warn.Println("File ", fp, "can't be Stopped Because Metainfo is not yet received")
+		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "File "+fp+" couldn't be Stopped Because Metainfo is not yet received")
 		return
 	}
 
