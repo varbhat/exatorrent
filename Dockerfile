@@ -29,7 +29,7 @@ ARG TARGETVARIANT
 COPY --link --from=build-go /exa/build/exatorrent /exatorrent-${TARGETOS}-${TARGETARCH}${TARGETVARIANT}
 
 # Failover if contexts=artifacts=<path> is not set
-FROM scratch AS artifacts 
+FROM scratch AS artifacts
 # Releaser flat all artifacts
 FROM base AS releaser
 WORKDIR /out
@@ -60,7 +60,7 @@ USER 1000:1000
 
 WORKDIR /exa
 
-RUN mkdir -p exadir 
+RUN mkdir -p exadir
 
 EXPOSE 5000 42069
 
