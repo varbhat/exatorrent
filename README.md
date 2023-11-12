@@ -1,4 +1,4 @@
-<h1 align="center">exatorrent</h1> 
+<h1 align="center">exatorrent</h1>
 <p align="center">self-hostable torrent client</p>
 
 <hr>
@@ -7,11 +7,11 @@
 
 
 ## Introduction
-* exatorrent is Elegant [BitTorrent](https://www.bittorrent.org/) Client written in [Go](https://go.dev/). 
+* exatorrent is Elegant [BitTorrent](https://www.bittorrent.org/) Client written in [Go](https://go.dev/).
 * It is Simple, easy to use, yet feature rich.
-* It can be run locally or be hosted in Remote Server with good resources. 
+* It can be run locally or be hosted in Remote Server with good resources.
 * It is Single Completely Statically Linked Binary with Zero External Dependencies.
-* It is lightweight and light on resources. 
+* It is lightweight and light on resources.
 * It comes with Beautiful Responsive Web Client written in Svelte and Typescript.
 * Thanks to documented [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) [API](docs/API.md) of exatorrent, custom client can be created.
 * It supports Single User Mode and Multi User Mode.
@@ -25,7 +25,7 @@
 <hr>
 
 ## Installation
- * **Docker:** exatorrent can be run inside Docker. See [Docker Docs](docs/docker.md). Docker supports Linux, MacOS and Windows. 
+ * **Docker:** exatorrent can be run inside Docker. See [Docker Docs](docs/docker.md). Docker supports Linux, MacOS and Windows.
    ```bash
    docker pull ghcr.io/varbhat/exatorrent:latest
    docker run -p 5000:5000 -p 42069:42069 -v /path/to/directory:/exa/exadir ghcr.io/varbhat/exatorrent:latest
@@ -41,11 +41,11 @@
 
 
 ## Features
-* Single Executable File with No Dependencies 
+* Single Executable File with No Dependencies
 * Small in Size
 * Cross Platform
-* Download (or Build ) Single Executable Binary and run. That's it 
-* Open and Stream Torrents in your Browser 
+* Download (or Build ) Single Executable Binary and run. That's it
+* Open and Stream Torrents in your Browser
 * Add Torrents by Magnet or by Infohash or Torrent File
 * Individual File Control (Start, Stop or Delete )
 * Stop, Remove or Delete Torrent
@@ -56,7 +56,7 @@
 * Download/Upload [Rate limiter](docs/usage.md#rate-limiter) (Optional)
 * Apply [Blocklist](docs/usage.md#blocklist) (Optional)
 * [Configurable](docs/config.md) via Config File but works fine with Zero Configuration
-* Share Files by Unlocking Torrent or Lock Torrent (protect by Auth)  to prevent External Access 
+* Share Files by Unlocking Torrent or Lock Torrent (protect by Auth)  to prevent External Access
 * Retrieve or Stream Files via HTTP
 * Multi-Users with Authentication
 * Auto Add Trackers to Torrent from TrackerList URL

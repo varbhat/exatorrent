@@ -43,8 +43,6 @@ cd internal/web && npm install && npm run build
 cd../..
 env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/exatorrent exatorrent.go
 ```
-## Notes 
+## Notes
 * See [Building Docker/Podman Images](./docker.md#building-podman--docker-container-image) if you want to build `exatorrent` Docker / Podman Images.
 * If you don't want to build Web Client or want to skip building Web Client , you can do it by creating empty / dummy `index.html` file at `internal/web/build` directory ( Create `build` folder if it didn't exist ).  Note that Web Client will not be available then.
-
-
