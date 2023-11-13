@@ -13,7 +13,7 @@ require (
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.11+incompatible
-	golang.org/x/crypto v0.14.0
+	golang.org/x/crypto v0.15.0
 	golang.org/x/time v0.4.0
 )
 
