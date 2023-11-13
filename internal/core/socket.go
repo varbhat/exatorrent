@@ -345,7 +345,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 			}
 			Configmu.Lock()
 			if Engine.Econfig.ListenCompletion != newconfig.ListenCompletion {
-				if newconfig.ListenCompletion == false {
+				if !newconfig.ListenCompletion {
 					for _, eachchan := range Engine.onCloseMap {
 						if eachchan != nil {
 							eachchan.Set()
@@ -357,7 +357,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 					for _, eachtrnt := range trntlist {
 						if eachtrnt != nil {
 							infohash := eachtrnt.InfoHash()
-							go func() {
+							go func(eachtrnt *torrent.Torrent) {
 								if _, ok := Engine.onCloseMap[infohash]; !ok {
 									Engine.onCloseMap[infohash] = &eachtrnt.Complete
 									Info.Println("Listening for Completion of Torrent ", infohash)
@@ -379,7 +379,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 										}
 									}
 								}
-							}()
+							}(eachtrnt)
 						}
 					}
 				}

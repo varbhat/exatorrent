@@ -13,9 +13,9 @@ Usage of exatorrent:
  -unix    <path> Unix Socket Path
  -help    <opt>  Print this Help
  ```
- 
+
  ### `-addr`
-Listen Address of `exatorrent` . It specifies the TCP address for the `exatorrent` to listen on . It's of form `host:port` . The host must be a literal IP address, or a host name that can be resolved to IP addresses. The port must be a literal port number or a service name. If the host is a literal IPv6 address it must be enclosed in square brackets, as in `[2001:db8::1]:80` or `[fe80::1%zone]:80`. 
+Listen Address of `exatorrent` . It specifies the TCP address for the `exatorrent` to listen on . It's of form `host:port` . The host must be a literal IP address, or a host name that can be resolved to IP addresses. The port must be a literal port number or a service name. If the host is a literal IPv6 address it must be enclosed in square brackets, as in `[2001:db8::1]:80` or `[fe80::1%zone]:80`.
 
 Default Listen Address is `:5000` . Open http://localhost:5000 or http://0.0.0.0:5000 or http://127.0.0.1:5000 to use `exatorrent` Web Client if exatorrent is listening on Default Address .
 

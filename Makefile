@@ -8,7 +8,7 @@ MAIN_SOURCE = exatorrent.go
 .PHONY: help
 help: Makefile
 	@printf "Options:\n"
-	@sed -n 's|^##||p' $<  
+	@sed -n 's|^##||p' $<
 
 ##web: Build the Web Client
 .PHONY: web

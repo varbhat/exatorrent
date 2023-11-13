@@ -18,6 +18,6 @@ You can generate sample torcconfig(so that you can modify it to set value you wa
 ## Actions on Torrent Completion
 
 `exatorrent` can listen to completion of torrent and call Hook on Completion. Hook is just a HTTP POST Request containing Infohash, Name, Completed Time of Completed Torrent sent to configured URL.
-`listencompletion` of engconfig.json specifies whether the torrent must be listened for completion. 
-`hookposturl` of engconfig.json specifies URL where the Hook HTTP request must be posted. 
-`notifyoncomplete` of engconfig.json specifies whether the connected user( and owner of torrent) must be notified of completion via API/Web-Interface. 
+`listencompletion` of engconfig.json specifies whether the torrent must be listened for completion.
+`hookposturl` of engconfig.json specifies URL where the Hook HTTP request must be posted.
+`notifyoncomplete` of engconfig.json specifies whether the connected user( and owner of torrent) must be notified of completion via API/Web-Interface.
