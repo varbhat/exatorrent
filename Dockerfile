@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
 
+FROM --platform=$BUILDPLATFORM docker.io/alpine:3.18 as base
+
 # Build the web ui from source
 FROM --platform=$BUILDPLATFORM docker.io/node:18 AS build-node
 WORKDIR /exa
@@ -42,7 +44,7 @@ COPY --link --from=releaser /out /
 
 # Final stage
 # Deploy the application binary into a lean image
-FROM --platform=$BUILDPLATFORM docker.io/alpine:3.18
+FROM base
 
 LABEL maintainer="varbhat"
 LABEL org.label-schema.schema-version="1.0"
