@@ -1,3 +1,6 @@
+//go:build !noui
+// +build !noui
+
 package web
 
 import (
