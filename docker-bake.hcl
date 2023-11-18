@@ -1,5 +1,9 @@
 target "docker-metadata-action" {}
 
+target "default" {
+  inherits = ["docker-metadata-action"]
+}
+
 target "artifact" {
   inherits = ["docker-metadata-action"]
   target = "artifact"
@@ -18,6 +22,10 @@ target "artifact-all" {
   ]
 }
 
-target "default" {
-  inherits = ["docker-metadata-action"]
+target "release" {
+  target = "release"
+  output = ["type=local,dest=./release"]
+  contexts = {
+    artifacts = "./artifact"
+  }
 }
