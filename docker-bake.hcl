@@ -1,7 +1,19 @@
 target "docker-metadata-action" {}
 
-target "default" {
+target "_common" {
   inherits = ["docker-metadata-action"]
+  platforms = [
+    "darwin/amd64",
+    "darwin/arm64",
+    "linux/amd64",
+    "linux/arm64",
+    "linux/arm/v7",
+    "linux/ppc64le",
+  ]
+}
+
+target "default" {
+  inherits = ["_common"]
 }
 
 target "artifact" {
@@ -11,15 +23,7 @@ target "artifact" {
 }
 
 target "artifact-all" {
-  inherits = ["artifact"]
-  platforms = [
-    "darwin/amd64",
-    "darwin/arm64",
-    "linux/amd64",
-    "linux/arm64",
-    "linux/arm/v7",
-    "linux/ppc64le",
-  ]
+  inherits = ["_common", "artifact"]
 }
 
 target "release" {
