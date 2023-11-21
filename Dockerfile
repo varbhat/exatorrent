@@ -11,6 +11,10 @@ RUN make web
 
 # Build the application from source
 FROM --platform=$BUILDPLATFORM docker.io/golang:1.21-alpine3.18 AS build-go
+
+ARG TARGETOS
+ARG TARGETARCH
+
 WORKDIR /exa
 
 COPY go.mod go.sum ./
@@ -19,7 +23,7 @@ RUN go mod download
 COPY . ./
 COPY --from=build-node /exa/internal/web/build /exa/internal/web/build
 RUN apk add --no-cache make gcc g++ && \
-    make app
+    GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
 
 # Artifact Target
 FROM scratch as artifact
