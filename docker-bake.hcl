@@ -1,19 +1,14 @@
-target "docker-metadata-action" {}
-
-target "_common" {
-  inherits = ["docker-metadata-action"]
-  platforms = [
-    "darwin/amd64",
-    "darwin/arm64",
-    "linux/amd64",
-    "linux/arm64",
-    "linux/arm/v7",
-    "linux/ppc64le",
-  ]
+target "docker-metadata-action" {
+  tags = ["exatorrent:local"]
 }
 
 target "default" {
-  inherits = ["_common"]
+  inherits = ["docker-metadata-action"]
+  platforms = [
+    "linux/amd64",
+    "linux/arm64",
+    "linux/arm/v7",
+  ]
 }
 
 target "artifact" {
@@ -22,8 +17,24 @@ target "artifact" {
   output = ["type=local,dest=./artifact"]
 }
 
+target "artifact-darwin" {
+  inherits = ["docker-metadata-action", "artifact"]
+  target = "artifact-darwin"
+  platforms = [
+    "darwin/amd64",
+    "darwin/arm64",
+  ]
+}
+
 target "artifact-all" {
-  inherits = ["_common", "artifact"]
+  inherits = ["artifact"]
+  target = "artifact"
+  platforms = [
+    "linux/amd64",
+    "linux/arm64",
+    "linux/arm/v7",
+    "linux/ppc64le",
+  ]
 }
 
 target "release" {

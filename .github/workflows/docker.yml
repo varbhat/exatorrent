@@ -61,8 +61,16 @@ jobs:
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
 
-  gh-release:
-    runs-on: ubuntu-latest
+  build-binaries:
+    strategy:
+      max-parallel: 2
+      matrix:
+        include:
+          - runon: ubuntu-22.04
+            target: artifact-all
+          - runon: macos-12
+            target: artifact-darwin
+    runs-on: ${{ matrix.runon }}
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
@@ -73,12 +81,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Create artifacts for all platform
+      - name: Create artifacts
         uses: docker/bake-action@v4
         with:
           files: |
             ./docker-bake.hcl
-          targets: artifact-all
+          targets: ${{ matrix.target }}
           provenance: false
 
       - name: Flatten artifact
@@ -92,8 +100,23 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
+          name: binaries
           path: release/*
           if-no-files-found: error
+
+  gh-release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v3
+        id: binaries
+        with:
+          name: binaries
+
+      - name: Display structure of downloaded files
+        run: ls -R ${{steps.binaries.outputs.download-path}}
 
       - name: GitHub Release
         uses: softprops/action-gh-release@v1
@@ -101,6 +124,6 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            release/*
+            ${{steps.binaries.outputs.download-path}}/release/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
