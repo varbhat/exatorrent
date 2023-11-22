@@ -71,7 +71,6 @@ jobs:
           - runon: macos-12
             target: artifact-darwin
     runs-on: ${{ matrix.runon }}
-    if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
     steps:
