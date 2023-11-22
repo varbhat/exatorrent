@@ -23,32 +23,12 @@ COPY . ./
 COPY --link --from=build-node /exa/internal/web/build /exa/internal/web/build
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
 
-# Build the application from source
-FROM --platform=${BUILDPLATFORM} docker.io/golang:1.21-bookworm AS build-go-darwin
-
-ARG TARGETOS TARGETARCH
-
-WORKDIR /exa
-
-COPY go.mod go.sum ./
-RUN go mod download
-
-COPY . ./
-COPY --link --from=build-node /exa/internal/web/build /exa/internal/web/build
-RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
-
 # Artifact Target
 FROM scratch as artifact
 
 ARG TARGETOS TARGETARCH TARGETVARIANT
 
 COPY --link --from=build-go /exa/build/exatorrent /exatorrent-${TARGETOS}-${TARGETARCH}${TARGETVARIANT}
-
-FROM scratch as artifact-darwin
-
-ARG TARGETOS TARGETARCH TARGETVARIANT
-
-COPY --link --from=build-go-darwin /exa/build/exatorrent /exatorrent-${TARGETOS}-${TARGETARCH}${TARGETVARIANT}
 
 # Failover if contexts=artifacts=<path> is not set
 FROM scratch AS artifacts

@@ -17,18 +17,8 @@ target "artifact" {
   output = ["type=local,dest=./artifact"]
 }
 
-target "artifact-darwin" {
-  inherits = ["docker-metadata-action", "artifact"]
-  target = "artifact-darwin"
-  platforms = [
-    "darwin/amd64",
-    "darwin/arm64",
-  ]
-}
-
-target "artifact-all" {
+target "artifact-linux" {
   inherits = ["artifact"]
-  target = "artifact"
   platforms = [
     "linux/amd64",
     "linux/arm64",

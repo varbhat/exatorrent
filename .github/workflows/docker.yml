@@ -1,9 +1,6 @@
 name: Create and publish Container images
 
 on:
-  pull_request:
-    branches:
-      - "main"
   push:
     tags:
       - v*
@@ -61,16 +58,8 @@ jobs:
             *.cache-from=type=gha
             *.cache-to=type=gha,mode=max
 
-  build-binaries:
-    strategy:
-      max-parallel: 2
-      matrix:
-        include:
-          - runon: ubuntu-22.04
-            target: artifact-all
-          - runon: macos-12
-            target: artifact-darwin
-    runs-on: ${{ matrix.runon }}
+  build-binaries-linux:
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
@@ -85,7 +74,7 @@ jobs:
         with:
           files: |
             ./docker-bake.hcl
-          targets: ${{ matrix.target }}
+          targets: artifact-linux
           provenance: false
 
       - name: Flatten artifact
@@ -99,12 +88,13 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: binaries
+          name: binaries-linux
           path: release/*
           if-no-files-found: error
 
   gh-release:
-    needs: build-binaries
+    needs:
+      - build-binaries-linux
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
@@ -112,8 +102,6 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         id: binaries
-        with:
-          name: binaries
 
       - name: Display structure of downloaded files
         run: ls -R ${{steps.binaries.outputs.download-path}}
@@ -124,6 +112,6 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            ${{steps.binaries.outputs.download-path}}/release/*
+            ${{steps.binaries.outputs.download-path}}/binaries-linux/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
