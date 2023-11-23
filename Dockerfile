@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM --platform=$BUILDPLATFORM docker.io/alpine:3.18 as base
+FROM docker.io/alpine:3.18 as base
 
 # Build the web ui from source
 FROM --platform=$BUILDPLATFORM docker.io/node:18 AS build-node
@@ -10,10 +10,9 @@ ADD Makefile /exa/
 RUN make web
 
 # Build the application from source
-FROM --platform=$BUILDPLATFORM docker.io/golang:1.21-alpine3.18 AS build-go
+FROM docker.io/golang:1.21-bookworm AS build-go
 
-ARG TARGETOS
-ARG TARGETARCH
+ARG TARGETOS TARGETARCH
 
 WORKDIR /exa
 
@@ -21,16 +20,13 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . ./
-COPY --from=build-node /exa/internal/web/build /exa/internal/web/build
-RUN apk add --no-cache make gcc g++ && \
-    GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
+COPY --link --from=build-node /exa/internal/web/build /exa/internal/web/build
+RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
 
 # Artifact Target
 FROM scratch as artifact
 
-ARG TARGETOS
-ARG TARGETARCH
-ARG TARGETVARIANT
+ARG TARGETOS TARGETARCH TARGETVARIANT
 
 COPY --link --from=build-go /exa/build/exatorrent /exatorrent-${TARGETOS}-${TARGETARCH}${TARGETVARIANT}
 
@@ -57,7 +53,7 @@ LABEL org.label-schema.description="self-hostable torrent client"
 LABEL org.label-schema.url="https://github.com/varbhat/exatorrent"
 LABEL org.label-schema.vcs-url="https://github.com/varbhat/exatorrent"
 
-COPY --from=build-go --chown=1000:1000 /exa/build/exatorrent /exatorrent
+COPY --link --from=build-go --chown=1000:1000 /exa/build/exatorrent /exatorrent
 
 RUN apk add -U --upgrade --no-cache \
     ca-certificates
