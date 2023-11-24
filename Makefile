@@ -23,12 +23,12 @@ web-ci:
 ##app: Build the Application
 .PHONY: app
 app:
-	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w -Wl,--allow-multiple-definition"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-no-ui: Build the Application without UI
 .PHONY: app-no-ui
 app-no-ui:
-	env CGO_ENABLED=1 go build -tags noui -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w -Wl,--allow-multiple-definition"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -tags noui -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-no-buildflags: Build the Application without any buildflags
 .PHONY: app-no-buildflags
