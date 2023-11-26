@@ -11,8 +11,8 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 
-	"crawshaw.io/sqlite"
-	"crawshaw.io/sqlite/sqlitex"
+	sqlite "github.com/go-llsqlite/crawshaw"
+	"github.com/go-llsqlite/crawshaw/sqlitex"
 )
 
 type Sqlite3UserDb struct {

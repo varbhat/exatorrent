@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"crawshaw.io/sqlite"
-	"crawshaw.io/sqlite/sqlitex"
+	sqlite "github.com/go-llsqlite/crawshaw"
+	"github.com/go-llsqlite/crawshaw/sqlitex"
 
 	"github.com/anacrolix/torrent/metainfo"
 )
