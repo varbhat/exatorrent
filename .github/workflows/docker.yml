@@ -86,13 +86,17 @@ jobs:
           cache: true
 
       - name: Build amd64
-        run: make app-no-sl
+        run: |
+          make app-no-sl
+          mv build/exatorrent build/exatorrent-darwin-amd64
         env:
           GOOS: darwin
           GOARCH: amd64
 
       - name: Build arm64
-        run: make app-no-sl
+        run: |
+          make app-no-sl
+          mv build/exatorrent build/exatorrent-darwin-arm64
         env:
           GOOS: darwin
           GOARCH: arm64
