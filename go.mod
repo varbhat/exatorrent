@@ -6,7 +6,7 @@ require (
 	github.com/anacrolix/chansync v0.3.0
 	github.com/anacrolix/go-libutp v1.3.1
 	github.com/anacrolix/log v0.14.5
-	github.com/anacrolix/torrent v1.53.1
+	github.com/anacrolix/torrent v1.53.2
 	github.com/go-llsqlite/crawshaw v0.5.0
 	github.com/google/uuid v1.4.0
 	github.com/gorilla/websocket v1.5.1
