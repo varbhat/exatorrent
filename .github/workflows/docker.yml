@@ -102,7 +102,7 @@ jobs:
           GOARCH: arm64
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binaries-darwin
           path: build/*
@@ -136,7 +136,7 @@ jobs:
           provenance: false
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binaries-linux
           path: release/*
