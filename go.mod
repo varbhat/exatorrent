@@ -13,7 +13,7 @@ require (
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.11+incompatible
-	golang.org/x/crypto v0.15.0
+	golang.org/x/crypto v0.17.0
 	golang.org/x/time v0.4.0
 )
 
@@ -88,7 +88,7 @@ require (
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.34.9 // indirect
