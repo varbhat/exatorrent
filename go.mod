@@ -3,7 +3,7 @@ module github.com/varbhat/exatorrent
 go 1.21
 
 require (
-	github.com/anacrolix/chansync v0.3.0
+	github.com/anacrolix/chansync v0.4.0
 	github.com/anacrolix/go-libutp v1.3.1
 	github.com/anacrolix/log v0.14.5
 	github.com/anacrolix/torrent v1.53.1
