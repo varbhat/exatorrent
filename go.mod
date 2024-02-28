@@ -1,19 +1,20 @@
 module github.com/varbhat/exatorrent
 
 go 1.21
+toolchain go1.22.0
 
 require (
 	github.com/anacrolix/chansync v0.3.0
 	github.com/anacrolix/go-libutp v1.3.1
-	github.com/anacrolix/log v0.14.5
-	github.com/anacrolix/torrent v1.53.1
+	github.com/anacrolix/log v0.14.6-0.20231202035202-ed7a02cad0b4
+	github.com/anacrolix/torrent v1.55.0
 	github.com/go-llsqlite/crawshaw v0.5.0
 	github.com/google/uuid v1.4.0
 	github.com/gorilla/websocket v1.5.1
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil v3.21.11+incompatible
-	golang.org/x/crypto v0.15.0
+	golang.org/x/crypto v0.17.0
 	golang.org/x/time v0.4.0
 )
 
@@ -37,6 +38,7 @@ require (
 	github.com/benbjohnson/immutable v0.4.3 // indirect
 	github.com/bits-and-blooms/bitset v1.11.0 // indirect
 	github.com/bradfitz/iter v0.0.0-20191230175014-e8f45d346db8 // indirect
+	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/edsrzf/mmap-go v1.1.0 // indirect
@@ -88,7 +90,7 @@ require (
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.14.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.34.9 // indirect
