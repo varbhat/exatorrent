@@ -1,12 +1,15 @@
-<h1 align="center">exatorrent</h1>
-<p align="center">self-hostable torrent client</p>
+# *exatorrent*
+## 🧲 self-hostable torrent client
 
+![GitHub Repo stars](https://img.shields.io/github/stars/varbhat/exatorrent)
+![Latest Release](https://img.shields.io/github/release/varbhat/exatorrent)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/varbhat/exatorrent)
+![GitHub License](https://img.shields.io/github/license/varbhat/exatorrent?logoColor=violet)
+
+
+<p><a href="docs/screenshots.md">Screenshots</a> &bull; <a href="https://github.com/varbhat/exatorrent/releases/latest">Releases</a> &bull; <a href="#features">Features</a> &bull; <a href="#installation"> Installation </a> &bull; <a href="docs/usage.md"> Usage</a> &bull; <a href="docs/docker.md">Docker</a> &bull; <a href="docs/build.md"> Build </a> &bull; <a href="LICENSE">License</a></p>
 <hr>
-<p align="center"><a href="docs/screenshots.md">Screenshots</a> &bull; <a href="https://github.com/varbhat/exatorrent/releases/latest">Releases</a> &bull; <a href="#features">Features</a> &bull; <a href="#installation"> Installation </a> &bull; <a href="docs/usage.md"> Usage</a> &bull; <a href="docs/docker.md">Docker</a> &bull; <a href="docs/build.md"> Build </a> &bull; <a href="LICENSE">License</a></p>
-<hr>
 
-
-## Introduction
 * exatorrent is Elegant [BitTorrent](https://www.bittorrent.org/) Client written in [Go](https://go.dev/).
 * It is Simple, easy to use, yet feature rich.
 * It can be run locally or be hosted in Remote Server with good resources.
@@ -24,20 +27,28 @@
 </p>
 <hr>
 
-## Installation
- * **Docker:** exatorrent can be run inside Docker. See [Docker Docs](docs/docker.md). Docker supports Linux, MacOS and Windows.
+## Usage
+Exatorrent can be operated using either of the following methods:
+* **Releases:** You can download precompiled binary for your Operating System from [Releases](https://github.com/varbhat/exatorrent/releases/latest). Mark it as executable and run it. Refer [Usage](docs/usage.md).
+  ```bash
+  wget https://github.com/varbhat/exatorrent/releases/latest/download/exatorrent-linux-amd64
+  chmod u+x ./exatorrent-linux-amd64
+  ./exatorrent-linux-amd64
+  ```
+ * **Docker:** Docker images of exatorrent are also provided which lets exatorrent to be run in a Docker container. See [Docker Docs](docs/docker.md).
    ```bash
    docker pull ghcr.io/varbhat/exatorrent:latest
    docker run -p 5000:5000 -p 42069:42069 -v /path/to/directory:/exa/exadir ghcr.io/varbhat/exatorrent:latest
    ```
- * **Build:** exatorrent is open source and can be built from sources. See [Build Docs](docs/build.md).
+ * **Manual Build:** exatorrent is open source and can be built from sources. See [Build Docs](docs/build.md).
    ```bash
    make web && make app
    ```
 
+#### Notes:
 * Note that **Username** and **Password** of Default User created on first run are `adminuser` and `adminpassword` respectively.
 * You can change Password later but Username of Account can't be changed after creation. Refer [Usage](docs/usage.md#-admin).
-* [Github Actions](https://github.com/features/actions) is used to build and publish [Docker Images](https://ghcr.io/varbhat/exatorrent) of exatorrent.
+* [Github Actions](https://github.com/features/actions) is used to build and publish [Releases](https://github.com/varbhat/exatorrent/releases/latest) and [Docker Images](https://ghcr.io/varbhat/exatorrent) of exatorrent.
 
 
 ## Features
@@ -65,15 +76,6 @@
 * Stream directly on Browser or [VLC](https://www.videolan.org/vlc/) or [mpv](https://mpv.io/) or other Media Players
 * [Documented API](docs/API.md)
 * Uses Sqlite3 (embedded database with no setup and no configuration) by Default for [Database](docs/database.md) but PostgreSQL can be used instead too
-
-## Help
-Communication about the project is primarily through the [Issues](https://github.com/varbhat/exatorrent/issues).
-
-## Contribute
-You are welcome to contribute. If you want to implement any significant feature, please discuss it first.
-
-## Thanks
-Special Thanks to [anacrolix/torrent](https://github.com/anacrolix/torrent), Programming Languages and Libraries used in `exatorrent` and Users for making this project happen.
 
 ## License
 [GPL-v3](LICENSE)
