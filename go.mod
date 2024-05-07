@@ -14,7 +14,7 @@ require (
 	github.com/gorilla/websocket v1.5.1
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
-	github.com/shirou/gopsutil v3.21.11+incompatible
+	github.com/shirou/gopsutil/v3 v3.24.4
 	golang.org/x/crypto v0.23.0
 	golang.org/x/time v0.5.0
 )
@@ -58,6 +58,7 @@ require (
 	github.com/jackc/pgtype v1.14.3 // indirect
 	github.com/jackc/puddle v1.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
+	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mr-tron/base58 v1.2.0 // indirect
@@ -83,8 +84,10 @@ require (
 	github.com/pion/webrtc/v3 v3.2.40 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rs/dnscache v0.0.0-20230804202142-fc85eb664529 // indirect
+	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/tidwall/btree v1.7.0 // indirect
