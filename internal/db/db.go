@@ -1,13 +1,20 @@
 package db
 
 import (
+	"database/sql"
 	"fmt"
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/dialect/pgdialect"
+	"github.com/uptrace/bun/dialect/sqlitedialect"
+	"github.com/uptrace/bun/driver/pgdriver"
+	"github.com/uptrace/bun/driver/sqliteshim"
 	"log"
 	"os"
 	"time"
 
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/anacrolix/torrent/storage"
+	"github.com/uptrace/bun/extra/bundebug"
 )
 
 var DbL = log.New(os.Stderr, "[DB]  ", log.LstdFlags) // Database Logger
@@ -27,7 +34,7 @@ func MetafromHex(infohash string) (h metainfo.Hash, err error) {
 
 // Interfaces
 
-type TorrentDb interface {
+type ITorrentRepo interface {
 	Open(string)
 	Close()
 	Exists(metainfo.Hash) bool
@@ -40,7 +47,7 @@ type TorrentDb interface {
 	GetTorrents() ([]*Torrent, error)
 }
 
-type TrackerDb interface {
+type ITrackerRepo interface {
 	Open(string)
 	Close()
 	Add(string)
@@ -51,7 +58,7 @@ type TrackerDb interface {
 	Get() []string
 }
 
-type FileStateDb interface {
+type IFileStateRepo interface {
 	Open(string)
 	Close()
 	Add(string, metainfo.Hash) error
@@ -60,7 +67,7 @@ type FileStateDb interface {
 	Delete(metainfo.Hash) error
 }
 
-type LockStateDb interface {
+type ILockStateRepo interface {
 	Open(string)
 	Close()
 	Lock(metainfo.Hash) error
@@ -68,7 +75,7 @@ type LockStateDb interface {
 	IsLocked(string) bool
 }
 
-type UserDb interface {
+type IUserRepo interface {
 	Open(string)
 	Close()
 	Add(string, string, int) error // Username , Password , Usertype
@@ -81,7 +88,7 @@ type UserDb interface {
 	SetToken(string, string) error
 }
 
-type TorrentUserDb interface {
+type ITorrentUserRepo interface {
 	Open(string)
 	Close()
 	Add(string, metainfo.Hash) error
@@ -93,7 +100,7 @@ type TorrentUserDb interface {
 	ListUsers(metainfo.Hash) []string
 }
 
-type PcDb interface {
+type IPcRepo interface {
 	storage.PieceCompletion
 	Delete(metainfo.Hash)
 }
@@ -114,3 +121,40 @@ type User struct {
 	UserType  int // 0 for User,1 for Admin,-1 for Disabled
 	CreatedAt time.Time
 }
+
+func InitDb(dbType DBType, dsn string) (db *bun.DB, err error) {
+	var sqldb *sql.DB
+	switch dbType {
+	case Postgres:
+		sqldb = sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
+		db = bun.NewDB(sqldb, pgdialect.New())
+	case Sqlite:
+		sqldb, err = sql.Open(sqliteshim.ShimName, dsn)
+		if err != nil {
+			return
+		}
+		db = bun.NewDB(sqldb, sqlitedialect.New())
+		db.SetMaxOpenConns(1) // solve sqlite database is locked error also no need to use a lock
+	default:
+		err = fmt.Errorf("unsupported database type: %s", dbType)
+		return
+	}
+
+	db.AddQueryHook(bundebug.NewQueryHook(
+		bundebug.WithVerbose(true),
+	))
+
+	err = db.Ping()
+	if err != nil {
+		return
+	}
+	return
+}
+
+//go:generate go run github.com/dmarkham/enumer -type=DBType
+type DBType int
+
+const (
+	Postgres DBType = iota
+	Sqlite
+)

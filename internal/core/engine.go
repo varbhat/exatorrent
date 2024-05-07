@@ -23,13 +23,13 @@ type Eng struct {
 
 	onCloseMap map[metainfo.Hash]*chansync.Flag
 
-	PcDb      db.PcDb
-	TorDb     db.TorrentDb
-	TrackerDB db.TrackerDb
-	FsDb      db.FileStateDb
-	LsDb      db.LockStateDb
-	UDb       db.UserDb
-	TUDb      db.TorrentUserDb
+	PcDb      db.IPcRepo
+	TorDb     db.ITorrentRepo
+	TrackerDB db.ITrackerRepo
+	FsDb      db.IFileStateRepo
+	LsDb      db.ILockStateRepo
+	UDb       db.IUserRepo
+	TUDb      db.ITorrentUserRepo
 }
 
 // AddfromSpec Adds Torrent by Torrent Spec

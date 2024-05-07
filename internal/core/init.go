@@ -6,6 +6,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/uptrace/bun"
 	"io/fs"
 	"os"
 	"os/signal"
@@ -220,35 +221,40 @@ func Initialize() {
 		},
 	}}
 
+	var conn *bun.DB
 	if psql {
-
-		Engine.TorDb = &db.PsqlTrntDb{}
-		Engine.TorDb.Open(Engine.PsqlCon)
-
-		Engine.FsDb = &db.PsqlFsDb{}
-		Engine.FsDb.Open(Engine.PsqlCon)
-
-		Engine.LsDb = &db.PsqlLsDb{}
-		Engine.LsDb.Open(Engine.PsqlCon)
-
-		Engine.UDb = &db.PsqlUserDb{}
-		Engine.UDb.Open(Engine.PsqlCon)
-
-		Engine.TUDb = &db.PsqlTrntUserDb{}
-		Engine.TUDb.Open(Engine.PsqlCon)
-
-		Engine.TrackerDB = &db.PsqlTDb{}
-		Engine.TrackerDB.Open(Engine.PsqlCon)
-
-		Engine.PcDb, err = db.NewPsqlPieceCompletion(Engine.PsqlCon)
-
+		conn, err = db.InitDb(db.Postgres, Engine.PsqlCon)
 		if err != nil {
-			Err.Fatalln("Unable to Connect to Postgresql for PieceCompletion")
+			Err.Fatalf("failed to open postgresql database. err: %v", err)
 		}
-
 	} else {
-		sqliteSetup(tc)
+		conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "data.db"))
+		if err != nil {
+			Err.Fatalf("failed to open sqlite database: %v", err)
+		}
 	}
+
+	Engine.TorDb = db.NewTorrentRepo(conn)
+	Engine.TorDb.Open("")
+
+	Engine.FsDb = db.NewFileStateRepo(conn)
+	Engine.FsDb.Open("")
+
+	Engine.LsDb = db.NewLockStateRepo(conn)
+	Engine.LsDb.Open("")
+
+	Engine.UDb = db.NewUserRepo(conn)
+	Engine.UDb.Open("")
+
+	Engine.TUDb = db.NewTorrentUserRepo(conn)
+	Engine.TUDb.Open("")
+
+	Engine.TrackerDB = db.NewTrackerRepo(conn)
+	Engine.TrackerDB.Open("")
+
+	pcr := db.NewPieceCompletionRepo(conn)
+	pcr.Open()
+	Engine.PcDb = pcr
 
 	_, err = os.Stat(filepath.Join(Dirconfig.DataDir, ".adminadded"))
 	if errors.Is(err, os.ErrNotExist) {
@@ -303,13 +309,12 @@ func Initialize() {
 		fmt.Fprintf(os.Stderr, "\n")
 		Warn.Println("Caught Signal:", sig)
 		Warn.Println("Closing exatorrent")
-		Engine.TorDb.Close()
-		Engine.TrackerDB.Close()
-		Engine.TUDb.Close()
-		stoperr = Engine.PcDb.Close() // Close PcDb at the end
+
+		stoperr = conn.Close()
 		if stoperr != nil {
-			Warn.Println("Error Closing PieceCompletion DB ", stoperr)
+			Warn.Printf("Error Closing DB. err: %v", stoperr)
 		}
+
 		Engine.Torc.Close()    // Close the Torrent Client
 		stoperr = stor.Close() // Close the storage.ClientImplCloser
 		if stoperr != nil {

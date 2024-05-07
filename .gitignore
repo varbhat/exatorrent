@@ -1,1 +1,5 @@
 build/
+exadir
+data.db
+yarn.lock
+exatorrent
