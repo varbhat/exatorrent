@@ -30,8 +30,8 @@ func (lsr *LockStateRepo) Open(s string) {
 	}
 }
 
-func (lsr *LockStateRepo) Close() {
-	// do nothing
+func (lsr *LockStateRepo) Close() error {
+	return lsr.conn.Close()
 }
 
 func (lsr *LockStateRepo) Lock(hash metainfo.Hash) error {

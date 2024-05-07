@@ -31,7 +31,8 @@ func (tr *TrackerRepo) Open(dsn string) {
 	}
 }
 
-func (tr *TrackerRepo) Close() {
+func (tr *TrackerRepo) Close() error {
+	return tr.conn.Close()
 }
 
 func (tr *TrackerRepo) Add(s string) {

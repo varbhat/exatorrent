@@ -36,7 +36,7 @@ func MetafromHex(infohash string) (h metainfo.Hash, err error) {
 
 type ITorrentRepo interface {
 	Open(string)
-	Close()
+	Close() error
 	Exists(metainfo.Hash) bool
 	Add(metainfo.Hash) error
 	Delete(metainfo.Hash) error
@@ -49,7 +49,7 @@ type ITorrentRepo interface {
 
 type ITrackerRepo interface {
 	Open(string)
-	Close()
+	Close() error
 	Add(string)
 	Delete(string)
 	DeleteN(int)
@@ -60,7 +60,7 @@ type ITrackerRepo interface {
 
 type IFileStateRepo interface {
 	Open(string)
-	Close()
+	Close() error
 	Add(string, metainfo.Hash) error
 	Get(metainfo.Hash) []string
 	Deletefile(string, metainfo.Hash) error
@@ -69,7 +69,7 @@ type IFileStateRepo interface {
 
 type ILockStateRepo interface {
 	Open(string)
-	Close()
+	Close() error
 	Lock(metainfo.Hash) error
 	Unlock(metainfo.Hash) error
 	IsLocked(string) bool
@@ -77,7 +77,7 @@ type ILockStateRepo interface {
 
 type IUserRepo interface {
 	Open(string)
-	Close()
+	Close() error
 	Add(string, string, int) error // Username , Password , Usertype
 	ChangeType(string, string) error
 	Delete(string) error
@@ -90,7 +90,7 @@ type IUserRepo interface {
 
 type ITorrentUserRepo interface {
 	Open(string)
-	Close()
+	Close() error
 	Add(string, metainfo.Hash) error
 	Remove(string, metainfo.Hash) error
 	RemoveAll(string) error
@@ -103,6 +103,7 @@ type ITorrentUserRepo interface {
 type IPcRepo interface {
 	storage.PieceCompletion
 	Delete(metainfo.Hash)
+	Open()
 }
 
 // Struct

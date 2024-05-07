@@ -37,7 +37,8 @@ func (tr *TorrentRepo) Open(s string) {
 	}
 }
 
-func (tr *TorrentRepo) Close() {
+func (tr *TorrentRepo) Close() error {
+	return tr.conn.Close()
 }
 
 func (tr *TorrentRepo) Exists(hash metainfo.Hash) bool {

@@ -39,7 +39,8 @@ func (ur *UserRepo) Open(s string) {
 	}
 }
 
-func (ur *UserRepo) Close() {
+func (ur *UserRepo) Close() error {
+	return ur.conn.Close()
 }
 
 func (ur *UserRepo) Add(username string, password string, userType int) (err error) {

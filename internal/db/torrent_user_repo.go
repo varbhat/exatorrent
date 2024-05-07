@@ -28,7 +28,8 @@ func (tur *TorrentUserRepo) Open(s string) {
 	}
 }
 
-func (tur *TorrentUserRepo) Close() {
+func (tur *TorrentUserRepo) Close() error {
+	return tur.conn.Close()
 }
 
 func (tur *TorrentUserRepo) Add(username string, hash metainfo.Hash) error {

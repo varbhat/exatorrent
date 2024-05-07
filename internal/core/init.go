@@ -6,7 +6,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/uptrace/bun"
+	"io"
 	"io/fs"
 	"os"
 	"os/signal"
@@ -221,40 +221,11 @@ func Initialize() {
 		},
 	}}
 
-	var conn *bun.DB
 	if psql {
-		conn, err = db.InitDb(db.Postgres, Engine.PsqlCon)
-		if err != nil {
-			Err.Fatalf("failed to open postgresql database. err: %v", err)
-		}
+		initPostgres()
 	} else {
-		conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "data.db"))
-		if err != nil {
-			Err.Fatalf("failed to open sqlite database: %v", err)
-		}
+		initSqlite()
 	}
-
-	Engine.TorDb = db.NewTorrentRepo(conn)
-	Engine.TorDb.Open("")
-
-	Engine.FsDb = db.NewFileStateRepo(conn)
-	Engine.FsDb.Open("")
-
-	Engine.LsDb = db.NewLockStateRepo(conn)
-	Engine.LsDb.Open("")
-
-	Engine.UDb = db.NewUserRepo(conn)
-	Engine.UDb.Open("")
-
-	Engine.TUDb = db.NewTorrentUserRepo(conn)
-	Engine.TUDb.Open("")
-
-	Engine.TrackerDB = db.NewTrackerRepo(conn)
-	Engine.TrackerDB.Open("")
-
-	pcr := db.NewPieceCompletionRepo(conn)
-	pcr.Open()
-	Engine.PcDb = pcr
 
 	_, err = os.Stat(filepath.Join(Dirconfig.DataDir, ".adminadded"))
 	if errors.Is(err, os.ErrNotExist) {
@@ -310,10 +281,7 @@ func Initialize() {
 		Warn.Println("Caught Signal:", sig)
 		Warn.Println("Closing exatorrent")
 
-		stoperr = conn.Close()
-		if stoperr != nil {
-			Warn.Printf("Error Closing DB. err: %v", stoperr)
-		}
+		closeDb()
 
 		Engine.Torc.Close()    // Close the Torrent Client
 		stoperr = stor.Close() // Close the storage.ClientImplCloser
@@ -350,4 +318,102 @@ func Initialize() {
 	go UpdateTrackers()
 	go TorrentRoutine()
 
+}
+
+func initPostgres() {
+	conn, err := db.InitDb(db.Postgres, Engine.PsqlCon)
+	if err != nil {
+		Err.Fatalf("failed to open postgresql database. err: %v", err)
+	}
+	Engine.TorDb = db.NewTorrentRepo(conn)
+	Engine.TorDb.Open("")
+
+	Engine.FsDb = db.NewFileStateRepo(conn)
+	Engine.FsDb.Open("")
+
+	Engine.LsDb = db.NewLockStateRepo(conn)
+	Engine.LsDb.Open("")
+
+	Engine.UDb = db.NewUserRepo(conn)
+	Engine.UDb.Open("")
+
+	Engine.TUDb = db.NewTorrentUserRepo(conn)
+	Engine.TUDb.Open("")
+
+	Engine.TrackerDB = db.NewTrackerRepo(conn)
+	Engine.TrackerDB.Open("")
+
+	Engine.PcDb = db.NewPieceCompletionRepo(conn)
+	Engine.PcDb.Open()
+}
+
+func initSqlite() {
+	conn, err := db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "torc.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database torc.db : %v", err)
+	}
+	Engine.TorDb = db.NewTorrentRepo(conn)
+	Engine.TorDb.Open("")
+
+	conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "trackers.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database trackers.db : %v", err)
+	}
+	Engine.TrackerDB = db.NewTrackerRepo(conn)
+	Engine.TrackerDB.Open("")
+
+	conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "filestate.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database filestate.db : %v", err)
+	}
+	Engine.FsDb = db.NewFileStateRepo(conn)
+	Engine.FsDb.Open("")
+
+	conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "lockstate.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database lockstate.db : %v", err)
+	}
+	Engine.LsDb = db.NewLockStateRepo(conn)
+	Engine.LsDb.Open("")
+
+	conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "user.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database user.db : %v", err)
+	}
+	Engine.UDb = db.NewUserRepo(conn)
+	Engine.UDb.Open(filepath.Join(Dirconfig.DataDir, "user.db"))
+
+	conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "torrentuser.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database torrentuser.db : %v", err)
+	}
+	Engine.TUDb = db.NewTorrentUserRepo(conn)
+	Engine.TUDb.Open("")
+
+	conn, err = db.InitDb(db.Sqlite, filepath.Join(Dirconfig.DataDir, "torrentuser.db"))
+	if err != nil {
+		Err.Fatalf("failed to open sqlite database torrentuser.db : %v", err)
+	}
+	Engine.PcDb = db.NewPieceCompletionRepo(conn)
+	Engine.PcDb.Open()
+}
+
+func closeDb() {
+	var repoList = []io.Closer{
+		Engine.PcDb,
+		Engine.TorDb,
+		Engine.TrackerDB,
+		Engine.FsDb,
+		Engine.LsDb,
+		Engine.UDb,
+		Engine.TUDb,
+	}
+
+	var err error
+	for _, repo := range repoList {
+		err = repo.Close()
+		if err != nil {
+			Warn.Printf("Error Closing DB %T. err: %v", repo, err)
+		}
+	}
 }

@@ -33,9 +33,9 @@ func (fsr *FileStateRepo) Open(dsn string) {
 	}
 }
 
-func (fsr *FileStateRepo) Close() {
+func (fsr *FileStateRepo) Close() error {
 	// do nothing close bun.db somewhere
-	return
+	return fsr.conn.Close()
 }
 
 func (fsr *FileStateRepo) Add(fp string, hash metainfo.Hash) error {

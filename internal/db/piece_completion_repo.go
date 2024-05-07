@@ -64,7 +64,7 @@ func (pcr *PieceCompletionRepo) Set(pk metainfo.PieceKey, complete bool) error {
 }
 
 func (pcr *PieceCompletionRepo) Close() error {
-	return nil
+	return pcr.conn.Close()
 }
 
 func (pcr *PieceCompletionRepo) Delete(hash metainfo.Hash) {
