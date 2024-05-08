@@ -5,7 +5,6 @@ on:
 
 jobs:
   build-container-images:
-    if: ${{ github.repository_owner }} == "varbhat"
     runs-on: ubuntu-latest
     permissions:
       contents: read
