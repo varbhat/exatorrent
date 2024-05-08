@@ -1,9 +1,7 @@
 name: Create and publish Container images
 
 on:
-  push:
-    tags:
-      - v*
+  push
 
 jobs:
   build-container-images:
