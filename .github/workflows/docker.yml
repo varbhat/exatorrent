@@ -3,6 +3,9 @@ name: Create and publish Container images
 on:
   push
 
+env:
+  HAS_TAG: ${{startsWith(github.ref, 'refs/tags/v')}}
+
 jobs:
   build-container-images:
     runs-on: ubuntu-latest
@@ -25,7 +28,7 @@ jobs:
           tags: |
             type=raw,value=amd64
             type=raw,value=arm64
-            type=raw,value=latest
+            type=raw,value=latest,enable=${{env.HAS_TAG}}
             type=schedule
             type=ref,event=branch
             type=ref,event=pr
@@ -144,7 +147,7 @@ jobs:
       - build-binaries-linux
       - build-binaries-darwin
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: ${{env.HAS_TAG}}
     permissions:
       contents: write
     steps:
