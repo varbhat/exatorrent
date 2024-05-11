@@ -1,7 +1,14 @@
 name: Create and publish Container images
 
 on:
-  push
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+  push:
+    branches:
+      - "main"
 
 jobs:
   build-container-images:
