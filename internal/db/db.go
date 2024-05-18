@@ -127,7 +127,8 @@ func InitDb(dbType DBType, dsn string) (db *bun.DB, err error) {
 	var sqldb *sql.DB
 	switch dbType {
 	case Postgres:
-		sqldb = sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
+		// insecure by default and overwrite by dsn
+		sqldb = sql.OpenDB(pgdriver.NewConnector(pgdriver.WithInsecure(true), pgdriver.WithDSN(dsn)))
 		db = bun.NewDB(sqldb, pgdialect.New())
 	case Sqlite:
 		sqldb, err = sql.Open(sqliteshim.ShimName, dsn)

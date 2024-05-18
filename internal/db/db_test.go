@@ -15,9 +15,9 @@ var ih2 metainfo.Hash
 func init() {
 	var err error
 
-	//dsn := "postgres://postgres:postgres@localhost:5432/exatorrent?sslmode=disable"
-	//db, err = InitDb("postgres", dsn)
-	db, err = InitDb(Sqlite, "data.db")
+	dsn := "postgres://postgres:postgres@localhost:5432/exatorrent?sslmode=disable"
+	db, err = InitDb(Postgres, dsn)
+	//db, err = InitDb(Sqlite, "data.db")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -6,16 +6,15 @@ import (
 	"errors"
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/uptrace/bun"
-	"time"
 )
 
 type TorrentEntity struct {
 	bun.BaseModel `bun:"table:torrent"`
 
-	InfoHash  string    `bun:"infohash,pk"`
-	Started   bool      `bun:"started"`
-	AddedAt   time.Time `bun:"addedat,type:timestamptz"`
-	StartedAt time.Time `bun:"startedat,type:timestamptz"`
+	InfoHash  string           `bun:"infohash,pk"`
+	Started   bool             `bun:"started"`
+	AddedAt   RFC3339TimeStamp `bun:"addedat,type:timestamptz"`
+	StartedAt RFC3339TimeStamp `bun:"startedat,type:timestamptz"`
 }
 
 type TorrentRepo struct {
@@ -59,8 +58,8 @@ func (tr *TorrentRepo) Add(hash metainfo.Hash) error {
 		Model(&TorrentEntity{
 			InfoHash:  hash.HexString(),
 			Started:   false,
-			AddedAt:   time.Now(),
-			StartedAt: time.Now(),
+			AddedAt:   RFC3339TimeStampNow(),
+			StartedAt: RFC3339TimeStampNow(),
 		}).
 		On("conflict (infohash) do nothing").
 		Exec(context.Background())
@@ -82,7 +81,7 @@ func (tr *TorrentRepo) Start(hash metainfo.Hash) error {
 		Model(&TorrentEntity{}).
 		Where("infohash = ?", hash.HexString()).
 		Set("started = ?", true).
-		Set("startedat = ?", time.Now()).
+		Set("startedat = ?", RFC3339TimeStampNow()).
 		Exec(context.Background())
 	return err
 }
@@ -131,8 +130,8 @@ func (tr *TorrentRepo) GetTorrent(hash metainfo.Hash) (*Torrent, error) {
 	var torrent = &Torrent{
 		Infohash:  hash,
 		Started:   te.Started,
-		AddedAt:   te.AddedAt,
-		StartedAt: te.StartedAt,
+		AddedAt:   te.AddedAt.Time,
+		StartedAt: te.StartedAt.Time,
 	}
 
 	return torrent, nil
@@ -157,8 +156,8 @@ func (tr *TorrentRepo) GetTorrents() ([]*Torrent, error) {
 		rs = append(rs, &Torrent{
 			Infohash:  ih,
 			Started:   te.Started,
-			AddedAt:   te.AddedAt,
-			StartedAt: te.StartedAt,
+			AddedAt:   te.AddedAt.Time,
+			StartedAt: te.StartedAt.Time,
 		})
 	}
 

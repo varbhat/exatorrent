@@ -6,17 +6,16 @@ import (
 	"github.com/google/uuid"
 	"github.com/uptrace/bun"
 	"golang.org/x/crypto/bcrypt"
-	"time"
 )
 
 type UserEntity struct {
 	bun.BaseModel `bun:"table:userdb"`
 
-	Username  string    `bun:"username,unique"`
-	Password  string    `bun:"password"`
-	Token     string    `bun:"token,unique"`
-	UserType  int       `bun:"usertype"`
-	CreatedAt time.Time `bun:"createdat,type:timestamptz"`
+	Username  string           `bun:"username,unique"`
+	Password  string           `bun:"password"`
+	Token     string           `bun:"token,unique"`
+	UserType  int              `bun:"usertype"`
+	CreatedAt RFC3339TimeStamp `bun:"createdat,type:timestamptz"`
 }
 
 type UserRepo struct {
@@ -69,7 +68,7 @@ func (ur *UserRepo) Add(username string, password string, userType int) (err err
 			Password:  string(buff),
 			Token:     token,
 			UserType:  userType,
-			CreatedAt: time.Now(),
+			CreatedAt: RFC3339TimeStampNow(),
 		}).
 		On("conflict (username) do nothing").
 		Exec(context.Background())
@@ -162,7 +161,7 @@ func (ur *UserRepo) GetUsers() []*User {
 			Password:  entity.Password,
 			Token:     entity.Token,
 			UserType:  entity.UserType,
-			CreatedAt: entity.CreatedAt,
+			CreatedAt: entity.CreatedAt.Time,
 		}
 	}
 
