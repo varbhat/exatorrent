@@ -86,6 +86,7 @@ type IUserRepo interface {
 	Validate(string, string) (int, bool)
 	ValidateToken(string) (string, int, error)
 	SetToken(string, string) error
+	CheckUserExists(string) bool
 }
 
 type ITorrentUserRepo interface {

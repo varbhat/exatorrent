@@ -6,8 +6,13 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/varbhat/exatorrent)
 ![GitHub License](https://img.shields.io/github/license/varbhat/exatorrent?logoColor=violet)
 
+![Linux](https://img.shields.io/badge/Linux-%23.svg?logo=linux&color=FCC624&logoColor=black)
+![macOS](https://img.shields.io/badge/macOS-%23.svg?logo=apple&color=000000&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-%23.svg?logo=windows&color=0078D6&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%23.svg?logo=docker&color=1D63ED&logoColor=white)
+![Podman](https://img.shields.io/badge/podman-%23.svg?logo=podman&color=734392&logoColor=white)
 
-<p><a href="docs/screenshots.md">Screenshots</a> &bull; <a href="https://github.com/varbhat/exatorrent/releases/latest">Releases</a> &bull; <a href="#features">Features</a> &bull; <a href="#installation"> Installation </a> &bull; <a href="docs/usage.md"> Usage</a> &bull; <a href="docs/docker.md">Docker</a> &bull; <a href="docs/build.md"> Build </a> &bull; <a href="LICENSE">License</a></p>
+<p><a href="docs/screenshots.md">Screenshots</a> &bull; <a href="https://github.com/varbhat/exatorrent/releases/latest">Releases</a> &bull; <a href="#features">Features</a> &bull; <a href="#usage"> Installation </a> &bull; <a href="docs/usage.md"> Usage</a> &bull; <a href="docs/docker.md">Docker</a> &bull; <a href="docs/build.md"> Build </a> &bull; <a href="LICENSE">License</a></p>
 <hr>
 
 * exatorrent is Elegant [BitTorrent](https://www.bittorrent.org/) Client written in [Go](https://go.dev/).

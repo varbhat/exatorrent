@@ -227,28 +227,21 @@ func Initialize() {
 		initSqlite()
 	}
 
-	_, err = os.Stat(filepath.Join(Dirconfig.DataDir, ".adminadded"))
-	if errors.Is(err, os.ErrNotExist) {
+	if !CheckUserExists(auser) {
+		var password = "adminpassword"
 		if pw {
-			Info.Println(`Adding Admin user with username "` + auser + `" and custom password`)
-			er := Engine.UDb.Add(auser, os.Getenv("EXAPASSWORD"), 1)
-			if er != nil {
-				Err.Fatalln("Unable to add admin user to adminless exatorrent instance :", er)
-			}
-			_, er = os.Create(filepath.Join(Dirconfig.DataDir, ".adminadded"))
-			if er != nil {
-				Err.Fatalln(er)
-			}
-		} else {
-			Info.Println(`Adding Admin user with username "` + auser + `" and password "adminpassword"`)
-			er := Engine.UDb.Add(auser, "adminpassword", 1)
-			if er != nil {
-				Err.Fatalln("Unable to add admin user to adminless exatorrent instance :", er)
-			}
-			_, er = os.Create(filepath.Join(Dirconfig.DataDir, ".adminadded"))
-			if er != nil {
-				Err.Fatalln(er)
-			}
+			password = os.Getenv("EXAPASSWORD")
+		}
+
+		Info.Printf("Adding Admin user with username %s and password %s\n", auser, password)
+		er := Engine.UDb.Add(auser, password, 1)
+		if er != nil {
+			Err.Fatalln("Unable to add admin user to adminless exatorrent instance :", er)
+		}
+		// keep for backward compatibility
+		_, er = os.Create(filepath.Join(Dirconfig.DataDir, ".adminadded"))
+		if er != nil {
+			Err.Fatalln(er)
 		}
 	}
 
