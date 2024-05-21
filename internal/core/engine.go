@@ -611,3 +611,7 @@ func AddTrackerstoTorrent(User string, infohash metainfo.Hash, announcelist [][]
 	Info.Println("Trackers added to torrent ", infohash, "by ", User)
 	MainHub.SendMsgU(User, "resp", infohash.HexString(), "success", "Trackers added")
 }
+
+func CheckUserExists(username string) bool {
+	return Engine.UDb.CheckUserExists(username)
+}

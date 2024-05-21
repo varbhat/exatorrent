@@ -137,3 +137,15 @@ func (db *PsqlUserDb) ValidateToken(Token string) (user string, ut int, err erro
 	}
 	return
 }
+
+func (db *PsqlUserDb) CheckUserExists(username string) bool {
+	var exists bool
+	var err = db.Db.
+		QueryRow(context.Background(), `select exists(select * from userdb where username = $1);`, username).
+		Scan(&exists)
+	if err != nil {
+		DbL.Printf("fail to check username exists: %s, err: %v", username, err)
+		return false
+	}
+	return exists
+}
