@@ -144,7 +144,7 @@ func InitDb(dbType DBType, dsn string) (db *bun.DB, err error) {
 	}
 
 	db.AddQueryHook(bundebug.NewQueryHook(
-		bundebug.WithVerbose(true),
+		bundebug.FromEnv(),
 	))
 
 	err = db.Ping()
