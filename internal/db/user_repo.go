@@ -216,3 +216,17 @@ func (ur *UserRepo) SetToken(username string, token string) error {
 		Exec(context.Background())
 	return err
 }
+
+func (ur *UserRepo) CheckUserExists(username string) bool {
+	rs, err := ur.conn.
+		NewSelect().
+		Model(&UserEntity{}).
+		Where("username = ?", username).
+		Exists(context.Background())
+
+	if err != nil {
+		DbL.Printf("failed to check user with username %s, err: %v", username, err)
+		return false
+	}
+	return rs
+}
