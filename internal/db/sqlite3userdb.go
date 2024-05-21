@@ -189,3 +189,19 @@ func (db *Sqlite3UserDb) SetToken(Username string, Token string) (err error) {
 	err = sqlitex.Exec(db.Db, `update userdb set token=? where username=?;`, nil, Token, Username)
 	return
 }
+
+func (db *Sqlite3UserDb) CheckUserExists(username string) bool {
+	var exists bool
+	var err = sqlitex.Exec(
+		db.Db,
+		`select exists(select * from userdb where username = ?);`,
+		func(stmt *sqlite.Stmt) error {
+			exists = stmt.ColumnInt(0) != 0
+			return nil
+		}, username)
+	if err != nil {
+		DbL.Printf("fail to check username exists: %s, err: %v", username, err)
+		return false
+	}
+	return exists
+}
