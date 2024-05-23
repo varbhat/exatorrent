@@ -23,22 +23,22 @@ web-ci:
 ##app: Build the Application
 .PHONY: app
 app:
-	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -tags nosqlite -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-no-ui: Build the Application without UI
 .PHONY: app-no-ui
 app-no-ui:
-	env CGO_ENABLED=1 go build -tags noui -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -tags nosqlite noui -trimpath -buildmode=pie -ldflags '-extldflags "-static -s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-no-buildflags: Build the Application without any buildflags
 .PHONY: app-no-buildflags
 app-no-buildflags:
-	env CGO_ENABLED=1 go build -o build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -tags nosqlite -o build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##app-no-sl: Build the Application without -static build flag
 .PHONY: app-no-sl
 app-no-sl:
-	env CGO_ENABLED=1 go build -trimpath -buildmode=pie -ldflags '-extldflags "-s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
+	env CGO_ENABLED=1 go build -tags nosqlite -trimpath -buildmode=pie -ldflags '-extldflags "-s -w"' -o  build/$(APP_NAME) $(MAIN_SOURCE)
 
 ##checksum: Generate sha256 checksums for the builds
 .PHONY: checksum
