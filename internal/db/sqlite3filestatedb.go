@@ -1,27 +1,27 @@
 package db
 
 import (
+	"database/sql"
 	"sync"
 
 	"github.com/anacrolix/torrent/metainfo"
-	sqlite "github.com/go-llsqlite/crawshaw"
-	"github.com/go-llsqlite/crawshaw/sqlitex"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type SqliteFSDb struct {
-	Db *sqlite.Conn
+	Db *sql.DB
 	mu sync.Mutex
 }
 
 func (db *SqliteFSDb) Open(fp string) {
 	var err error
 
-	db.Db, err = sqlite.OpenConn(fp, 0)
+	db.Db, err = sql.Open("sqlite3", fp)
 	if err != nil {
 		DbL.Fatalln(err)
 	}
-
-	err = sqlitex.ExecScript(db.Db, `create table if not exists filestatedb (filepath text,infohash text, unique(filepath, infohash));`)
+	db.Db.SetMaxOpenConns(1)
+	_, err = db.Db.Exec(`create table if not exists filestatedb (filepath text,infohash text, unique(filepath, infohash));`)
 
 	if err != nil {
 		DbL.Fatalln(err)
@@ -40,7 +40,7 @@ func (db *SqliteFSDb) Close() {
 func (db *SqliteFSDb) Add(fp string, ih metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `insert into filestatedb (filepath,infohash) values (?,?) on conflict (filepath,infohash) do nothing;`, nil, fp, ih.HexString())
+	_, err = db.Db.Exec(`insert into filestatedb (filepath,infohash) values (?,?) on conflict (filepath,infohash) do nothing;`, fp, ih.HexString())
 	return
 }
 
@@ -48,26 +48,35 @@ func (db *SqliteFSDb) Get(ih metainfo.Hash) (ret []string) {
 	ret = make([]string, 0)
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(
-		db.Db, `select filepath from filestatedb where infohash=?;`,
-		func(stmt *sqlite.Stmt) error {
-			ret = append(ret, stmt.GetText("filepath"))
-			return nil
-		}, ih.HexString())
+	rows, err := db.Db.Query(`select filepath from filestatedb where infohash=?;`, ih.HexString())
 
+	if err != nil {
+		DbL.Printf("fail to query filestate. err: %v", err)
+		return
+	}
+
+	var fpstring string
+	for rows.Next() {
+		err = rows.Scan(&fpstring)
+		if err != nil {
+			DbL.Println(err)
+			return
+		}
+		ret = append(ret, fpstring)
+	}
 	return
 }
 
 func (db *SqliteFSDb) Delete(ih metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `delete from filestatedb where infohash=?;`, nil, ih.HexString())
+	_, err = db.Db.Exec(`delete from filestatedb where infohash=?;`, ih.HexString())
 	return
 }
 
 func (db *SqliteFSDb) Deletefile(fp string, ih metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `delete from filestatedb where filepath=? and infohash=?;`, nil, fp, ih.HexString())
+	_, err = db.Db.Exec(`delete from filestatedb where filepath=? and infohash=?;`, fp, ih.HexString())
 	return err
 }

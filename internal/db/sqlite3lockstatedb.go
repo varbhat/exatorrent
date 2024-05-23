@@ -1,27 +1,27 @@
 package db
 
 import (
+	"database/sql"
 	"sync"
 
 	"github.com/anacrolix/torrent/metainfo"
-	sqlite "github.com/go-llsqlite/crawshaw"
-	"github.com/go-llsqlite/crawshaw/sqlitex"
 )
 
 type SqliteLSDb struct {
-	Db *sqlite.Conn
+	Db *sql.DB
 	mu sync.Mutex
 }
 
 func (db *SqliteLSDb) Open(fp string) {
 	var err error
 
-	db.Db, err = sqlite.OpenConn(fp, 0)
+	db.Db, err = sql.Open("sqlite3", fp)
+	db.Db.SetMaxOpenConns(1)
 	if err != nil {
 		DbL.Fatalln(err)
 	}
 
-	err = sqlitex.ExecScript(db.Db, `create table if not exists lockstatedb (infohash text primary key);`)
+	_, err = db.Db.Exec(`create table if not exists lockstatedb (infohash text primary key);`)
 
 	if err != nil {
 		DbL.Fatalln(err)
@@ -40,27 +40,33 @@ func (db *SqliteLSDb) Close() {
 func (db *SqliteLSDb) Lock(m metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `insert into lockstatedb (infohash) values (?) on conflict (infohash) do nothing;`, nil, m.HexString())
+	_, err = db.Db.Exec(`insert into lockstatedb (infohash) values (?) on conflict (infohash) do nothing;`, m.HexString())
 	return
 }
 
 func (db *SqliteLSDb) Unlock(m metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `delete from lockstatedb where infohash=?;`, nil, m.HexString())
+	_, err = db.Db.Exec(`delete from lockstatedb where infohash=?;`, m.HexString())
 	return
 }
 
 func (db *SqliteLSDb) IsLocked(m string) (b bool) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	if sqlitex.Exec(
-		db.Db, `select 1 from lockstatedb where infohash=?;`,
-		func(stmt *sqlite.Stmt) error {
-			b = true
-			return nil
-		}, m) != nil {
+
+	row := db.Db.QueryRow(`select exists ( select 1 from lockstatedb where infohash=?);`, m)
+	err := row.Err()
+	if err != nil {
 		return false
 	}
-	return
+
+	err = row.Scan(&b)
+	if err != nil {
+		DbL.Printf("failed to check lockstatedb infohash %s: %s", m, err)
+		return false
+	}
+
+	return b
+
 }

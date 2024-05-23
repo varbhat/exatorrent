@@ -4,30 +4,42 @@
 package db
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 	"sync"
 	"time"
 
-	sqlite "github.com/go-llsqlite/crawshaw"
-	"github.com/go-llsqlite/crawshaw/sqlitex"
-
 	"github.com/anacrolix/torrent/metainfo"
 )
 
+type TorrentEntity struct {
+	InfoHash  string
+	Started   bool
+	AddedAt   time.Time
+	StartedAt time.Time
+}
+
+type Scannable interface {
+	Scan(...any) error
+}
+
 type Sqlite3Db struct {
-	Db *sqlite.Conn
+	Db *sql.DB
 	mu sync.Mutex
 }
 
 func (db *Sqlite3Db) Open(fp string) {
 	var err error
 
-	db.Db, err = sqlite.OpenConn(fp, 0)
+	db.Db, err = sql.Open("sqlite3", fp)
+	db.Db.SetMaxOpenConns(1)
+
 	if err != nil {
 		DbL.Fatalln(err)
 	}
 
-	err = sqlitex.ExecScript(db.Db, `create table if not exists torrent (infohash text primary key,started boolean,addedat text,startedat text);`)
+	_, err = db.Db.Exec(`create table if not exists torrent (infohash text primary key,started boolean,addedat text,startedat text);`)
 
 	if err != nil {
 		DbL.Fatalln(err)
@@ -47,48 +59,54 @@ func (db *Sqlite3Db) Exists(ih metainfo.Hash) (ret bool) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
 
-	serr := sqlitex.Exec(
-		db.Db, `select 1 from torrent where infohash=?;`,
-		func(stmt *sqlite.Stmt) error {
-			ret = stmt.ColumnInt(0) == 1
-			return nil
-		}, ih.HexString())
-	if serr != nil {
+	row := db.Db.QueryRow(`select exists (select 1 from torrent where infohash=?) ;`, ih.HexString())
+	err := row.Err()
+
+	if err != nil {
 		return false
 	}
-	return
+
+	err = row.Scan(&ret)
+	if err != nil {
+		return false
+	}
+	return ret
 }
 
 func (db *Sqlite3Db) IsLocked(ih string) (ret bool) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(
-		db.Db, `select locked from torrent where infohash=?;`,
-		func(stmt *sqlite.Stmt) error {
-			ret = stmt.ColumnInt(0) != 0
-			return nil
-		}, ih)
-
-	return
+	row := db.Db.QueryRow(`select locked from torrent where infohash=?;`, ih)
+	err := row.Err()
+	if err != nil {
+		return false
+	}
+	err = row.Scan(&ret)
+	if err != nil {
+		return false
+	}
+	return ret
 }
 
 func (db *Sqlite3Db) HasStarted(ih string) (ret bool) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(
-		db.Db, `select started from torrent where infohash=?;`,
-		func(stmt *sqlite.Stmt) error {
-			ret = stmt.ColumnInt(0) != 0
-			return nil
-		}, ih)
-
-	return
+	row := db.Db.QueryRow(`select started from torrent where infohash=?;`, ih)
+	err := row.Err()
+	if err != nil {
+		return false
+	}
+	err = row.Scan(&ret)
+	if err != nil {
+		return false
+	}
+	return ret
 }
 
 func (db *Sqlite3Db) SetLocked(ih string, b bool) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `update torrent set locked=? where infohash=?;`, nil, b, ih)
+	_, err = db.Db.Exec(`update torrent set locked=? where infohash=?;`, b, ih)
 	return
 }
 
@@ -96,14 +114,14 @@ func (db *Sqlite3Db) Add(ih metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
 	tn := time.Now().Format(time.RFC3339)
-	err = sqlitex.Exec(db.Db, `insert into torrent (infohash,started,addedat,startedat) values (?,?,?,?) on conflict (infohash) do update set startedat=?;`, nil, ih.HexString(), 0, tn, tn, tn)
+	_, err = db.Db.Exec(`insert into torrent (infohash,started,addedat,startedat) values (?,?,?,?) on conflict (infohash) do update set startedat=?;`, ih.HexString(), 0, tn, tn, tn)
 	return
 }
 
 func (db *Sqlite3Db) Delete(ih metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `delete from torrent where infohash=?;`, nil, ih.HexString())
+	_, err = db.Db.Exec(`delete from torrent where infohash=?;`, ih.HexString())
 	return
 }
 
@@ -111,86 +129,86 @@ func (db *Sqlite3Db) Start(ih metainfo.Hash) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
 	tn := time.Now().Format(time.RFC3339)
-	err = sqlitex.Exec(db.Db, `update torrent set started=?,startedat=? where infohash=?;`, nil, 1, tn, ih.HexString())
+	_, err = db.Db.Exec(`update torrent set started=?,startedat=? where infohash=?;`, 1, tn, ih.HexString())
 	return
 }
 
 func (db *Sqlite3Db) SetStarted(ih metainfo.Hash, inp bool) (err error) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	err = sqlitex.Exec(db.Db, `update torrent set started=? where infohash=?;`, nil, inp, ih.HexString())
+	_, err = db.Db.Exec(`update torrent set started=? where infohash=?;`, inp, ih.HexString())
 	return
 }
 
 func (db *Sqlite3Db) GetTorrent(ih metainfo.Hash) (*Torrent, error) {
-	var trnt Torrent
-	var exists bool
-	var serr error
-	var terr error
-
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	serr = sqlitex.Exec(
-		db.Db, `select * from torrent where infohash=?;`,
-		func(stmt *sqlite.Stmt) error {
-			exists = true
-			trnt.Infohash = ih
-			trnt.Started = stmt.ColumnInt(1) != 0
-			trnt.AddedAt, terr = time.Parse(time.RFC3339, stmt.GetText("addedat"))
-			if terr != nil {
-				DbL.Println(terr)
-				return terr
-			}
-			trnt.StartedAt, terr = time.Parse(time.RFC3339, stmt.GetText("startedat"))
-			if terr != nil {
-				DbL.Println(terr)
-				return terr
-			}
-			return nil
-		}, ih.HexString())
-
-	if serr != nil {
-		return nil, serr
+	row := db.Db.QueryRow(`select * from torrent where infohash=?;`, ih.HexString())
+	err := row.Err()
+	if errors.Is(err, sql.ErrNoRows) {
+		err = fmt.Errorf("Torrent doesn't exist")
+		return nil, err
 	}
-	if !exists {
-		return nil, fmt.Errorf("Torrent doesn't exist")
+	if err != nil {
+		return nil, err
 	}
-	return &trnt, nil
+	entity, err := parseRow(row)
+	if err != nil {
+		return nil, err
+	}
+	return &Torrent{
+		Infohash:  ih,
+		Started:   entity.Started,
+		AddedAt:   entity.AddedAt,
+		StartedAt: entity.StartedAt,
+	}, nil
 }
 
-func (db *Sqlite3Db) GetTorrents() (Trnts []*Torrent, err error) {
-	Trnts = make([]*Torrent, 0)
+func (db *Sqlite3Db) GetTorrents() (torrentList []*Torrent, err error) {
+	torrentList = make([]*Torrent, 0)
 
-	var serr error
-	var terr error
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	serr = sqlitex.Exec(
-		db.Db, `select * from torrent;`,
-		func(stmt *sqlite.Stmt) error {
-			var trnt Torrent
-			trnt.Infohash, terr = MetafromHex(stmt.GetText("infohash"))
-			if terr != nil {
-				DbL.Println(terr)
-				return terr
-			}
-			trnt.Started = stmt.ColumnInt(1) != 0
-			trnt.AddedAt, terr = time.Parse(time.RFC3339, stmt.GetText("addedat"))
-			if terr != nil {
-				DbL.Println(terr)
-				return terr
-			}
-			trnt.StartedAt, terr = time.Parse(time.RFC3339, stmt.GetText("startedat"))
-			if terr != nil {
-				DbL.Println(terr)
-				return terr
-			}
-			Trnts = append(Trnts, &trnt)
-			return nil
+	rows, err := db.Db.Query(`select * from torrent;`)
+	if err != nil {
+		return
+	}
+	var entity TorrentEntity
+	var ih metainfo.Hash
+	for rows.Next() {
+		entity, err = parseRow(rows)
+		if err != nil {
+			DbL.Println(err)
+		}
+		ih, err = MetafromHex(entity.InfoHash)
+		if err != nil {
+			return
+		}
+		torrentList = append(torrentList, &Torrent{
+			Infohash:  ih,
+			Started:   entity.Started,
+			AddedAt:   entity.AddedAt,
+			StartedAt: entity.StartedAt,
 		})
-	if serr != nil {
-		return Trnts, serr
 	}
 
-	return Trnts, nil
+	return torrentList, nil
+}
+
+func parseRow(row Scannable) (entity TorrentEntity, err error) {
+	var addedAt string
+	var startedAt string
+	err = row.Scan(&entity.InfoHash, &entity.Started, &addedAt, &startedAt)
+	if err != nil {
+		return
+	}
+	entity.AddedAt, err = time.Parse(time.RFC3339, addedAt)
+	if err != nil {
+		return
+	}
+	entity.StartedAt, err = time.Parse(time.RFC3339, startedAt)
+	if err != nil {
+		return
+	}
+	return
 }

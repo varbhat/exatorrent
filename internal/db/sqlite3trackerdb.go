@@ -4,26 +4,25 @@
 package db
 
 import (
+	"database/sql"
 	"sync"
-
-	sqlite "github.com/go-llsqlite/crawshaw"
-	"github.com/go-llsqlite/crawshaw/sqlitex"
 )
 
 type SqliteTdb struct {
-	Db *sqlite.Conn
+	Db *sql.DB
 	mu sync.Mutex
 }
 
 func (db *SqliteTdb) Open(fp string) {
 	var err error
 
-	db.Db, err = sqlite.OpenConn(fp, 0)
+	db.Db, err = sql.Open("sqlite3", fp)
 	if err != nil {
 		DbL.Fatalln(err)
 	}
+	db.Db.SetMaxOpenConns(1)
 
-	err = sqlitex.ExecScript(db.Db, `create table if not exists trackerdb (url text primary key);`)
+	_, err = db.Db.Exec(`create table if not exists trackerdb (url text primary key);`)
 
 	if err != nil {
 		DbL.Fatalln(err)
@@ -42,36 +41,52 @@ func (db *SqliteTdb) Close() {
 func (db *SqliteTdb) Add(url string) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(db.Db, `insert into trackerdb (url) values (?);`, nil, url)
+	_, err := db.Db.Exec(`insert into trackerdb (url) values (?);`, url)
+	if err != nil {
+		DbL.Println(err)
+	}
 }
 
 func (db *SqliteTdb) Delete(url string) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(db.Db, `delete from trackerdb where url=?;`, nil, url)
+	_, err := db.Db.Exec(`delete from trackerdb where url=?;`, url)
+	if err != nil {
+		DbL.Println(err)
+	}
 }
 
 func (db *SqliteTdb) DeleteN(count int) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(db.Db, `delete from trackerdb where url in (select url from trackerdb limit ?);`, nil, count)
+	_, err := db.Db.Exec(`delete from trackerdb where url in (select url from trackerdb limit ?);`, count)
+	if err != nil {
+		DbL.Println(err)
+	}
 }
 
 func (db *SqliteTdb) DeleteAll() {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(db.Db, `delete from trackerdb;`, nil)
+	_, err := db.Db.Exec(`delete from trackerdb;`)
+	if err != nil {
+		DbL.Println(err)
+	}
 }
 
 func (db *SqliteTdb) Count() (ret int64) {
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(
-		db.Db, `select count(*) from trackerdb;`,
-		func(stmt *sqlite.Stmt) error {
-			ret = stmt.ColumnInt64(0)
-			return nil
-		})
+	row := db.Db.QueryRow(`select count(*) from trackerdb;`)
+	err := row.Err()
+	if err != nil {
+		DbL.Println(err)
+		return
+	}
+	err = row.Scan(&ret)
+	if err != nil {
+		return
+	}
 	return
 }
 
@@ -79,12 +94,15 @@ func (db *SqliteTdb) Get() (ret []string) {
 	ret = make([]string, 0)
 	db.mu.Lock()
 	defer db.mu.Unlock()
-	_ = sqlitex.Exec(
-		db.Db, `select url from trackerdb;`,
-		func(stmt *sqlite.Stmt) error {
-			ret = append(ret, stmt.GetText("url"))
-			return nil
-		})
 
+	rows, err := db.Db.Query("select url from trackerdb;")
+	if err != nil {
+		return
+	}
+	var url string
+	for rows.Next() {
+		err = rows.Scan(&url)
+		ret = append(ret, url)
+	}
 	return
 }
