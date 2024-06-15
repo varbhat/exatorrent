@@ -11,7 +11,7 @@ require (
 	github.com/anacrolix/torrent v1.56.0
 	github.com/go-llsqlite/crawshaw v0.5.2
 	github.com/google/uuid v1.6.0
-	github.com/gorilla/websocket v1.5.1
+	github.com/gorilla/websocket v1.5.3
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil/v3 v3.24.5
