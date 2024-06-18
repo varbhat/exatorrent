@@ -9,7 +9,7 @@ require (
 	github.com/anacrolix/go-libutp v1.3.1
 	github.com/anacrolix/log v0.15.2
 	github.com/anacrolix/torrent v1.56.0
-	github.com/go-llsqlite/crawshaw v0.5.2
+	github.com/go-llsqlite/crawshaw v0.5.3
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/jackc/pgx/v4 v4.18.3
