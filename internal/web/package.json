@@ -30,7 +30,7 @@
     "esbuild-svelte": "^0.8.1",
     "autoprefixer": "^10.4.19",
     "@tailwindcss/forms": "^0.5.7",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "svelte-preprocess": "^6.0.1",
     "svelte": "^4.2.18"
