@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.22.1
 
 require (
-	github.com/anacrolix/chansync v0.4.0
+	github.com/anacrolix/chansync v0.5.1
 	github.com/anacrolix/go-libutp v1.3.1
 	github.com/anacrolix/log v0.15.2
 	github.com/anacrolix/torrent v1.55.1-0.20240318051623-a005653d3773
