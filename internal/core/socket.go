@@ -180,11 +180,11 @@ func wshandler(uc *UserConn, req *ConReq) {
 
 			Info.Println("Starting getalltorrents for ", uc.Username)
 			for uc.Streamers.Get() == 1 {
-				var tih []metainfo.Hash
+				var lt []metainfo.Hash
 				for _, t := range Engine.Torc.Torrents() {
-					tih = append(tih, t.InfoHash())
+					lt = append(lt, t.InfoHash())
 				}
-				err := uc.Send(GetTorrents(tih))
+				err := uc.Send(GetTorrents(lt))
 				if err != nil {
 					return
 				}
