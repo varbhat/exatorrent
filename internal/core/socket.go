@@ -177,30 +177,13 @@ func wshandler(uc *UserConn, req *ConReq) {
 			defer uc.Streamers.Dec()
 			defer uc.Stream.Unlock()
 
-			files, ferr := os.ReadDir(Dirconfig.TrntDir)
-			if ferr != nil {
-				Warn.Println(ferr)
-				return
-			}
-
-			var lt []metainfo.Hash = make([]metainfo.Hash, 0)
-			for _, file := range files {
-				if file.IsDir() {
-					tm, terr := MetafromHex(file.Name())
-					if terr != nil {
-						Warn.Println(terr)
-						Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-					}
-					lt = append(lt, tm)
-				} else {
-					Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-				}
-			}
-
-			var err error
 			Info.Println("Starting getalltorrents for ", uc.Username)
 			for uc.Streamers.Get() == 1 {
-				err = uc.Send(GetTorrents(lt))
+				var tih []metainfo.Hash
+				for _, t := range Engine.Torc.Torrents() {
+					tih = append(tih, t.InfoHash())
+				}
+				err := uc.Send(GetTorrents(tih))
 				if err != nil {
 					return
 				}
@@ -211,25 +194,11 @@ func wshandler(uc *UserConn, req *ConReq) {
 			Info.Println("Stopped getalltorrents for ", uc.Username)
 			return
 		case "listalltorrents":
-			files, ferr := os.ReadDir(Dirconfig.TrntDir)
-			if ferr != nil {
-				Warn.Println(ferr)
-				return
+			var tih []metainfo.Hash
+			for _, t := range Engine.Torc.Torrents() {
+				tih = append(tih, t.InfoHash())
 			}
-			var lt []metainfo.Hash = make([]metainfo.Hash, 0)
-			for _, file := range files {
-				if file.IsDir() {
-					tm, terr := MetafromHex(file.Name())
-					if terr != nil {
-						Warn.Println(terr)
-						Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-					}
-					lt = append(lt, tm)
-				} else {
-					Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-				}
-			}
-			_ = uc.Send(GetTorrents(lt))
+			_ = uc.Send(GetTorrents(tih))
 			return
 		case "listtorrentsforuser":
 			if req.Data1 != "" {
