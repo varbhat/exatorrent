@@ -392,6 +392,35 @@ func DeleteTorrent(User string, infohash metainfo.Hash) {
 	MainHub.SendMsgU(User, "resp", infohash.HexString(), "success", "Torrent Deleted")
 }
 
+// VerifyTorrent Verify Torrent given infohash
+func VerifyTorrent(User string, infohash metainfo.Hash) {
+	if User != "" {
+		if !Engine.TUDb.HasUser(User, infohash.HexString()) {
+			MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent Not Present!")
+			return
+		}
+	}
+
+	Info.Println("Verifying Torrent for Infohash ", infohash)
+
+	_, err := Engine.TorDb.GetTorrent(infohash)
+	if err != nil {
+		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent Not Present!")
+		Warn.Println(err)
+		return
+	}
+
+	trnt, ok := Engine.Torc.Torrent(infohash)
+	if !ok {
+		MainHub.SendMsgU(User, "nfn", infohash.HexString(), "error", "Torrent Not Present!")
+		Warn.Println("Error fetching torrent of infohash ", infohash, " from the client")
+		return
+	}
+
+	trnt.VerifyData()
+	return
+}
+
 // StartFile Starts File in Torrent given infohash and Filepath
 func StartFile(User string, infohash metainfo.Hash, fp string) {
 	fp = filepath.ToSlash(fp)

@@ -115,6 +115,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 	if uc.IsAdmin && req.Aop == 1 {
 		switch req.Command {
 		// parse these in normal block
+		case "verifytorrent":
 		case "abandontorrent":
 		case "removetorrent":
 		case "addtrackerstotorrent":
@@ -616,6 +617,19 @@ func wshandler(uc *UserConn, req *ConReq) {
 			return
 		}
 		go AbandonTorrent(uc.Username, ih)
+		return
+	case "verifytorrent":
+		ih, err := MetafromHex(req.Data1)
+		if err != nil {
+			_ = uc.SendMsg("resp", "error", "abandontorrent: infohash couldn't be parsed "+req.Data1)
+			return
+		}
+		if uc.IsAdmin && req.Aop == 1 {
+			VerifyTorrent("", ih)
+		} else {
+			VerifyTorrent(uc.Username, ih)
+		}
+		_ = uc.SendMsg("resp", "success", "Verification Complete for "+ih.HexString())
 		return
 	case "gettorrents":
 		uc.Streamers.Inc()
