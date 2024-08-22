@@ -195,11 +195,11 @@ func wshandler(uc *UserConn, req *ConReq) {
 			Info.Println("Stopped getalltorrents for ", uc.Username)
 			return
 		case "listalltorrents":
-			var tih []metainfo.Hash
+			var lt []metainfo.Hash
 			for _, t := range Engine.Torc.Torrents() {
-				tih = append(tih, t.InfoHash())
+				lt = append(lt, t.InfoHash())
 			}
-			_ = uc.Send(GetTorrents(tih))
+			_ = uc.Send(GetTorrents(lt))
 			return
 		case "listtorrentsforuser":
 			if req.Data1 != "" {
