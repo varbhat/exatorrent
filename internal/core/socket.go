@@ -998,6 +998,11 @@ func wshandler(uc *UserConn, req *ConReq) {
 		ret, _ := json.Marshal(DataMsg{Type: "version", Data: Version})
 		_ = uc.Send(ret)
 		return
+	case "networkstats":
+		nstats := GetNetworkStats()
+		ret, _ := json.Marshal(DataMsg{Type: "networkstats", Data: nstats})
+		_ = uc.Send(ret)
+		return
 	default:
 		_ = uc.SendMsg("resp", "error", "invalid command")
 	}

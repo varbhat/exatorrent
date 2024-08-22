@@ -35,6 +35,21 @@ type machStats struct {
 	GoRoutines      int     `json:"goroutines"`
 }
 
+type NetworkStats struct {
+	ActiveHalfOpenAttempts      int   `json:"activehalfopenattempts"`
+	BytesWritten                int64 `json:"byteswritten"`
+	BytesWrittenData            int64 `json:"byteswrittendata"`
+	BytesRead                   int64 `json:"bytesread"`
+	BytesReadData               int64 `json:"bytesreaddata"`
+	BytesReadUsefulData         int64 `json:"bytesreadusefuldata"`
+	BytesReadUsefulIntendedData int64 `json:"bytesreadusefulintendeddata"`
+	ChunksWritten               int64 `json:"chunkswritten"`
+	ChunksRead                  int64 `json:"chunksread"`
+	ChunksReadUseful            int64 `json:"chunksreaduseful"`
+	ChunksReadWasted            int64 `json:"chunksreadwasted"`
+	MetadataChunksRead          int64 `json:"metadatachunksread"`
+}
+
 var MachInfo machInfo = loadMachInfo()
 var MachStats machStats
 
@@ -82,4 +97,21 @@ func (s *machStats) LoadStats(diskDir string) {
 	s.GoMemorySys = int64(memStats.Sys)
 	//count current number of goroutines
 	s.GoRoutines = runtime.NumGoroutine()
+}
+
+func GetNetworkStats() (retnstats NetworkStats) {
+	s := Engine.Torc.Stats()
+	retnstats.ActiveHalfOpenAttempts = s.ActiveHalfOpenAttempts
+	retnstats.BytesWritten = s.BytesWritten.Int64()
+	retnstats.BytesWrittenData = s.BytesWrittenData.Int64()
+	retnstats.BytesRead = s.BytesRead.Int64()
+	retnstats.BytesReadData = s.BytesReadData.Int64()
+	retnstats.BytesReadUsefulData = s.BytesReadUsefulData.Int64()
+	retnstats.BytesReadUsefulIntendedData = s.BytesReadUsefulIntendedData.Int64()
+	retnstats.ChunksWritten = s.ChunksWritten.Int64()
+	retnstats.ChunksRead = s.ChunksRead.Int64()
+	retnstats.ChunksReadUseful = s.ChunksReadUseful.Int64()
+	retnstats.ChunksReadWasted = s.ChunksReadWasted.Int64()
+	retnstats.MetadataChunksRead = s.MetadataChunksRead.Int64()
+	return
 }
