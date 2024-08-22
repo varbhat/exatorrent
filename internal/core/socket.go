@@ -621,7 +621,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 	case "verifytorrent":
 		ih, err := MetafromHex(req.Data1)
 		if err != nil {
-			_ = uc.SendMsg("resp", "error", "abandontorrent: infohash couldn't be parsed "+req.Data1)
+			_ = uc.SendMsg("resp", "error", "verifytorrent: infohash couldn't be parsed "+req.Data1)
 			return
 		}
 		if uc.IsAdmin && req.Aop == 1 {
