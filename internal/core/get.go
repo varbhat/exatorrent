@@ -61,9 +61,9 @@ type PeerInfo struct {
 	PeerPreferEncryption bool    `json:"peerpreferencryption"`
 }
 
-func GetTorrent(lt metainfo.Hash) (ret Torrent1) {
-	ret.Infohash = lt.HexString()
-	t, ok := Engine.Torc.Torrent(lt)
+func GetTorrent(ih metainfo.Hash) (ret Torrent1) {
+	ret.Infohash = ih.HexString()
+	t, ok := Engine.Torc.Torrent(ih)
 	if !ok {
 		ret.State = "removed"
 		return
@@ -73,7 +73,7 @@ func GetTorrent(lt metainfo.Hash) (ret Torrent1) {
 		ret.State = "loading"
 		return
 	}
-	if Engine.TorDb.HasStarted(lt.HexString()) {
+	if Engine.TorDb.HasStarted(ih.HexString()) {
 		ret.State = "active"
 	} else {
 		ret.State = "inactive"
