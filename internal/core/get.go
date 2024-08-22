@@ -3,6 +3,7 @@ package core
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -13,13 +14,22 @@ import (
 )
 
 type Torrent1 struct {
-	Infohash       string `json:"infohash"`
-	Name           string `json:"name,omitempty"`
-	BytesCompleted int64  `json:"bytescompleted,omitempty"`
-	BytesMissing   int64  `json:"bytesmissing,omitempty"`
-	Length         int64  `json:"length,omitempty"`
-	State          string `json:"state"`
-	Seeding        bool   `json:"seeding,omitempty"`
+	Infohash         string   `json:"infohash"`
+	Name             string   `json:"name,omitempty"`
+	BytesCompleted   int64    `json:"bytescompleted,omitempty"`
+	BytesMissing     int64    `json:"bytesmissing,omitempty"`
+	BytesWritten     int64    `json:"byteswritten,omitempty"`
+	Length           int64    `json:"length,omitempty"`
+	State            string   `json:"state"`
+	Seeding          bool     `json:"seeding,omitempty"`
+	Private          bool     `json:"private,omitempty"`
+	CreationDate     int64    `json:"creationdate,omitempty"`
+	AddedDate        int64    `json:"addeddate,omitempty"`
+	StartedDate      int64    `json:"starteddate,omitempty"`
+	TotalPeers       int      `json:"totalpeers,omitempty"`
+	ActivePeers      int      `json:"activepeers,omitempty"`
+	ConnectedSeeders int      `json:"connectedseeders,omitempty"`
+	AnnounceList     []string `json:"announcelist,omitempty"`
 }
 
 type Torrent2 struct {
@@ -44,60 +54,69 @@ type FsFileInfo struct {
 	IsDir bool   `json:"isdir"`
 }
 
+type PeerInfo struct {
+	RemoteAddr           string  `json:"remoteaddr"`
+	PeerClientName       string  `json:"peerclientname"`
+	DownloadRate         float64 `json:"downloadrate"`
+	PeerPreferEncryption bool    `json:"peerpreferencryption"`
+}
+
+func GetTorrent(lt metainfo.Hash) (ret Torrent1) {
+	ret.Infohash = lt.HexString()
+	t, ok := Engine.Torc.Torrent(lt)
+	if !ok {
+		ret.State = "removed"
+		return
+	}
+	ret.Name = t.Name()
+	if t == nil || t.Info() == nil {
+		ret.State = "loading"
+		return
+	}
+	if Engine.TorDb.HasStarted(lt.HexString()) {
+		ret.State = "active"
+	} else {
+		ret.State = "inactive"
+	}
+	tdb, _ := Engine.TorDb.GetTorrent(t.InfoHash())
+	if tdb != nil {
+		ret.AddedDate = tdb.AddedAt.Unix()
+		ret.StartedDate = tdb.StartedAt.Unix()
+	}
+
+	stats := t.Stats()
+	info := t.Metainfo()
+
+	if t.Info().Private != nil {
+		ret.Private = *t.Info().Private
+	}
+
+	ret.Length = t.Length()
+	ret.BytesCompleted = t.BytesCompleted()
+	ret.BytesMissing = t.BytesMissing()
+	ret.BytesWritten = stats.BytesWrittenData.Int64()
+	ret.Seeding = t.Seeding()
+	ret.CreationDate = info.CreationDate
+	ret.TotalPeers = stats.TotalPeers
+	ret.ActivePeers = stats.ActivePeers
+	ret.ConnectedSeeders = stats.ConnectedSeeders
+	ret.AnnounceList = info.AnnounceList.DistinctValues()
+
+	return
+}
+
 func GetTorrents(lt []metainfo.Hash) (ret []byte) {
 	var tinits []*Torrent1
 	for _, ih := range lt {
-		var tinit Torrent1
-		tinit.Infohash = ih.HexString()
+		tinit := GetTorrent(ih)
 		tinits = append(tinits, &tinit)
-		t, ok := Engine.Torc.Torrent(ih)
-		if !ok {
-			tinit.State = "removed"
-			continue
-		}
-		tinit.Name = t.Name()
-		if t == nil || t.Info() == nil {
-			tinit.State = "loading"
-			continue
-		}
-		if Engine.TorDb.HasStarted(ih.HexString()) {
-			tinit.State = "active"
-		} else {
-			tinit.State = "inactive"
-		}
-		tinit.Length = t.Length()
-		tinit.BytesCompleted = t.BytesCompleted()
-		tinit.BytesMissing = t.BytesMissing()
-		tinit.Seeding = t.Seeding()
 	}
 	ret, _ = json.Marshal(DataMsg{Type: "torrentstream", Data: tinits})
 	return
 }
 
 func GetTorrentInfo(ih metainfo.Hash) (ret []byte) {
-	var tinit Torrent1
-	tinit.Infohash = ih.HexString()
-	t, ok := Engine.Torc.Torrent(ih)
-	if !ok {
-		tinit.State = "removed"
-		ret, _ = json.Marshal(DataMsg{Type: "torrentinfo", Data: tinit})
-		return
-	}
-	tinit.Name = t.Name()
-	if t == nil || t.Info() == nil {
-		tinit.State = "loading"
-		ret, _ = json.Marshal(DataMsg{Type: "torrentinfo", Data: tinit})
-		return
-	}
-	if Engine.TorDb.HasStarted(ih.HexString()) {
-		tinit.State = "active"
-	} else {
-		tinit.State = "inactive"
-	}
-	tinit.Length = t.Length()
-	tinit.BytesCompleted = t.BytesCompleted()
-	tinit.BytesMissing = t.BytesMissing()
-	tinit.Seeding = t.Seeding()
+	tinit := GetTorrent(ih)
 	ret, _ = json.Marshal(DataMsg{Type: "torrentinfo", Data: tinit})
 	return
 }
@@ -329,6 +348,16 @@ func GetTorrentPeerConns(ih metainfo.Hash) (ret []byte) {
 		return
 	}
 
-	ret, _ = json.Marshal(DataMsg{Infohash: ih.HexString(), Type: "torrentpeerconns", Data: t.PeerConns()})
+	var retpeers []PeerInfo
+	for _, peerconn := range t.PeerConns() {
+		var peerinfo PeerInfo
+		peerinfo.RemoteAddr = peerconn.Peer.RemoteAddr.String()
+		peerinfo.PeerClientName = fmt.Sprint(peerconn.PeerClientName.Load())
+		peerinfo.DownloadRate = peerconn.DownloadRate()
+		peerinfo.PeerPreferEncryption = peerconn.PeerPrefersEncryption
+		retpeers = append(retpeers, peerinfo)
+	}
+
+	ret, _ = json.Marshal(DataMsg{Infohash: ih.HexString(), Type: "torrentpeerconns", Data: retpeers})
 	return
 }
