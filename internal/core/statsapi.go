@@ -61,9 +61,9 @@ func loadMachInfo() (retmachinfo machInfo) {
 
 func (s *machStats) LoadStats(diskDir string) {
 	//count cpu cycles between last count
-	if cpu, err := cpu.Percent(0, false); err == nil {
-		if len(cpu) > 0 {
-			s.CPU = cpu[0]
+	if cpuprct, err := cpu.Percent(0, false); err == nil {
+		if len(cpuprct) > 0 {
+			s.CPU = cpuprct[0]
 		}
 	}
 	//count disk usage
