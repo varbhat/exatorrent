@@ -118,7 +118,7 @@ func bauthHelper(w http.ResponseWriter, r *http.Request) (username string, usert
 		return "", -1, "", fmt.Errorf("not authorized")
 	}
 
-	if len(username) < 5 || len(password) < 5 {
+	if len(username) == 0 || len(password) < 5 {
 		http.Error(w, "Not authorized", http.StatusUnauthorized)
 		return "", -1, "", fmt.Errorf("not authorized")
 	}
@@ -161,7 +161,7 @@ func rauthHelper(w http.ResponseWriter, r *http.Request) (username string, usert
 	if err != nil {
 		return "", -1, "", err
 	}
-	if len(cred.Data1) < 5 || len(cred.Data2) < 5 {
+	if len(cred.Data1) == 0 || len(cred.Data2) < 5 {
 		return "", -1, "", fmt.Errorf("invalid credentials")
 	}
 	usertype, ok = Engine.UDb.Validate(cred.Data1, cred.Data2)

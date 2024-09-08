@@ -126,7 +126,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 		case "deletetorrent":
 		//
 		case "adduser":
-			if !(len(req.Data1) > 5 || len(req.Data2) > 5) {
+			if !(len(req.Data1) == 0 || len(req.Data2) > 5) {
 				_ = uc.SendMsg("resp", "error", "length of username and password must be more than 5")
 				return
 			}
@@ -149,7 +149,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 			Info.Println("New User ", req.Data1, " added by ", uc.Username)
 			return
 		case "removeuser":
-			if !(len(req.Data1) > 5) {
+			if len(req.Data1) == 0 {
 				_ = uc.SendMsg("resp", "error", "length of username  must be more than 5")
 				return
 			}
