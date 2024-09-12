@@ -7,8 +7,8 @@ toolchain go1.23.1
 require (
 	github.com/anacrolix/chansync v0.6.0
 	github.com/anacrolix/go-libutp v1.3.1
-	github.com/anacrolix/log v0.15.2
-	github.com/anacrolix/torrent v1.56.1
+	github.com/anacrolix/log v0.15.3-0.20240627045001-cd912c641d83
+	github.com/anacrolix/torrent v1.57.0
 	github.com/go-llsqlite/crawshaw v0.5.5
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.1
@@ -58,7 +58,7 @@ require (
 	github.com/jackc/pgtype v1.14.3 // indirect
 	github.com/jackc/puddle v1.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
-	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
+	github.com/lufia/plan9stats v0.0.0-20220913051719-115f729f3c8c // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mr-tron/base58 v1.2.0 // indirect
@@ -84,7 +84,8 @@ require (
 	github.com/pion/webrtc/v3 v3.2.40 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
+	github.com/power-devops/perfstat v0.0.0-20220216144756-c35f1ee13d7c // indirect
+	github.com/protolambda/ctxlock v0.1.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rs/dnscache v0.0.0-20230804202142-fc85eb664529 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
