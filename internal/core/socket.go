@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"github.com/anacrolix/chansync"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -359,9 +360,10 @@ func wshandler(uc *UserConn, req *ConReq) {
 							infohash := eachtrnt.InfoHash()
 							go func(eachtrnt *torrent.Torrent) {
 								if _, ok := Engine.onCloseMap[infohash]; !ok {
-									Engine.onCloseMap[infohash] = &eachtrnt.Complete
+									c := eachtrnt.Complete().(*chansync.Flag)
+									Engine.onCloseMap[infohash] = c
 									Info.Println("Listening for Completion of Torrent ", infohash)
-									<-eachtrnt.Complete.On()
+									<-c.On()
 									delete(Engine.onCloseMap, infohash)
 
 									_, err := Engine.TorDb.GetTorrent(infohash)

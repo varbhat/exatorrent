@@ -231,9 +231,10 @@ func StartTorrent(User string, infohash metainfo.Hash, nofsdb bool) {
 	if Engine.Econfig.GetListenC() {
 		go func() {
 			if _, ok := Engine.onCloseMap[infohash]; !ok {
-				Engine.onCloseMap[infohash] = &trnt.Complete
+				c := trnt.Complete().(*chansync.Flag)
+				Engine.onCloseMap[infohash] = c
 				Info.Println("Listening for Completion of Torrent ", infohash)
-				<-trnt.Complete.On()
+				<-c.On()
 				delete(Engine.onCloseMap, infohash)
 
 				_, err := Engine.TorDb.GetTorrent(infohash)
@@ -333,8 +334,9 @@ func RemoveTorrent(User string, infohash metainfo.Hash) {
 	trnt.Drop()
 
 	if Engine.Econfig.GetListenC() {
-		trnt.Complete.Set()
-		trnt.Complete.Clear()
+		c := trnt.Complete().(*chansync.Flag)
+		c.Set()
+		c.Clear()
 	}
 
 	err := Engine.TorDb.Delete(infohash)
