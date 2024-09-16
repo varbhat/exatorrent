@@ -116,6 +116,7 @@ func wshandler(uc *UserConn, req *ConReq) {
 	if uc.IsAdmin && req.Aop == 1 {
 		switch req.Command {
 		// parse these in normal block
+		case "verifytorrent":
 		case "abandontorrent":
 		case "removetorrent":
 		case "addtrackerstotorrent":
@@ -178,30 +179,13 @@ func wshandler(uc *UserConn, req *ConReq) {
 			defer uc.Streamers.Dec()
 			defer uc.Stream.Unlock()
 
-			files, ferr := os.ReadDir(Dirconfig.TrntDir)
-			if ferr != nil {
-				Warn.Println(ferr)
-				return
-			}
-
-			var lt []metainfo.Hash = make([]metainfo.Hash, 0)
-			for _, file := range files {
-				if file.IsDir() {
-					tm, terr := MetafromHex(file.Name())
-					if terr != nil {
-						Warn.Println(terr)
-						Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-					}
-					lt = append(lt, tm)
-				} else {
-					Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-				}
-			}
-
-			var err error
 			Info.Println("Starting getalltorrents for ", uc.Username)
 			for uc.Streamers.Get() == 1 {
-				err = uc.Send(GetTorrents(lt))
+				var lt []metainfo.Hash
+				for _, t := range Engine.Torc.Torrents() {
+					lt = append(lt, t.InfoHash())
+				}
+				err := uc.Send(GetTorrents(lt))
 				if err != nil {
 					return
 				}
@@ -212,23 +196,9 @@ func wshandler(uc *UserConn, req *ConReq) {
 			Info.Println("Stopped getalltorrents for ", uc.Username)
 			return
 		case "listalltorrents":
-			files, ferr := os.ReadDir(Dirconfig.TrntDir)
-			if ferr != nil {
-				Warn.Println(ferr)
-				return
-			}
-			var lt []metainfo.Hash = make([]metainfo.Hash, 0)
-			for _, file := range files {
-				if file.IsDir() {
-					tm, terr := MetafromHex(file.Name())
-					if terr != nil {
-						Warn.Println(terr)
-						Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-					}
-					lt = append(lt, tm)
-				} else {
-					Warn.Println("Non Torrent Directories found in ", Dirconfig.TrntDir, file, file.Name())
-				}
+			var lt []metainfo.Hash
+			for _, t := range Engine.Torc.Torrents() {
+				lt = append(lt, t.InfoHash())
 			}
 			_ = uc.Send(GetTorrents(lt))
 			return
@@ -650,6 +620,19 @@ func wshandler(uc *UserConn, req *ConReq) {
 		}
 		go AbandonTorrent(uc.Username, ih)
 		return
+	case "verifytorrent":
+		ih, err := MetafromHex(req.Data1)
+		if err != nil {
+			_ = uc.SendMsg("resp", "error", "verifytorrent: infohash couldn't be parsed "+req.Data1)
+			return
+		}
+		if uc.IsAdmin && req.Aop == 1 {
+			VerifyTorrent("", ih)
+		} else {
+			VerifyTorrent(uc.Username, ih)
+		}
+		_ = uc.SendMsg("resp", "success", "Verification Complete for "+ih.HexString())
+		return
 	case "gettorrents":
 		uc.Streamers.Inc()
 		uc.Stream.Lock()
@@ -1029,6 +1012,11 @@ func wshandler(uc *UserConn, req *ConReq) {
 		return
 	case "version":
 		ret, _ := json.Marshal(DataMsg{Type: "version", Data: Version})
+		_ = uc.Send(ret)
+		return
+	case "networkstats":
+		nstats := GetNetworkStats()
+		ret, _ := json.Marshal(DataMsg{Type: "networkstats", Data: nstats})
 		_ = uc.Send(ret)
 		return
 	default:
