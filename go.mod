@@ -7,7 +7,7 @@ toolchain go1.23.1
 require (
 	github.com/anacrolix/chansync v0.6.0
 	github.com/anacrolix/go-libutp v1.3.1
-	github.com/anacrolix/log v0.15.3-0.20240627045001-cd912c641d83
+	github.com/anacrolix/log v0.16.0
 	github.com/anacrolix/torrent v1.57.1
 	github.com/go-llsqlite/crawshaw v0.5.5
 	github.com/google/uuid v1.6.0
