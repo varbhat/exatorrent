@@ -8,7 +8,7 @@ require (
 	github.com/anacrolix/chansync v0.6.0
 	github.com/anacrolix/go-libutp v1.3.1
 	github.com/anacrolix/log v0.15.3-0.20240627045001-cd912c641d83
-	github.com/anacrolix/torrent v1.57.0
+	github.com/anacrolix/torrent v1.57.1
 	github.com/go-llsqlite/crawshaw v0.5.5
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.1
@@ -25,10 +25,10 @@ require (
 	github.com/alecthomas/atomic v0.1.0-alpha2 // indirect
 	github.com/anacrolix/dht/v2 v2.21.1 // indirect
 	github.com/anacrolix/envpprof v1.3.0 // indirect
-	github.com/anacrolix/generics v0.0.2-0.20240227122613-f95486179cab // indirect
+	github.com/anacrolix/generics v0.0.3-0.20240902042256-7fb2702ef0ca // indirect
 	github.com/anacrolix/missinggo v1.3.0 // indirect
 	github.com/anacrolix/missinggo/perf v1.0.0 // indirect
-	github.com/anacrolix/missinggo/v2 v2.7.3 // indirect
+	github.com/anacrolix/missinggo/v2 v2.7.4 // indirect
 	github.com/anacrolix/mmsg v1.0.0 // indirect
 	github.com/anacrolix/multiless v0.3.1-0.20221221005021-2d12701f83f7 // indirect
 	github.com/anacrolix/stm v0.5.0 // indirect
@@ -99,7 +99,7 @@ require (
 	go.opentelemetry.io/otel v1.26.0 // indirect
 	go.opentelemetry.io/otel/metric v1.26.0 // indirect
 	go.opentelemetry.io/otel/trace v1.26.0 // indirect
-	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842 // indirect
+	golang.org/x/exp v0.0.0-20240823005443-9b4947da3948 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
