@@ -16,7 +16,7 @@ require (
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil/v3 v3.24.5
 	golang.org/x/crypto v0.27.0
-	golang.org/x/time v0.6.0
+	golang.org/x/time v0.7.0
 )
 
 require (
