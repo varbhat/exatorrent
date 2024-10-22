@@ -1,5 +1,6 @@
 import Index from './Index.svelte';
+import { mount } from 'svelte';
 
-new Index({
+mount(Index, {
   target: document.getElementById('app')
 });
