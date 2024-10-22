@@ -55,15 +55,3 @@
     <p class="text-xl text-center text-red-400 font-sans">Not Found</p>
   </div>
 {/if}
-
-<style global lang="postcss">
-  body {
-    @apply bg-neutral-900;
-  }
-  .noHL {
-    -webkit-tap-highlight-color: transparent;
-  }
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-</style>

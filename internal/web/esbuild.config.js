@@ -24,8 +24,8 @@ build({
   bundle: true,
   treeShaking: true,
   splitting: true,
-//  watch: WATCH,
- // incremental: WATCH,
+  //  watch: WATCH,
+  // incremental: WATCH,
   plugins: [
     sveltePlugin({
       compilerOptions: {
