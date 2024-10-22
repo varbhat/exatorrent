@@ -1,8 +1,7 @@
 import './index.css';
 import Index from './Index.svelte';
+import { mount } from 'svelte';
 
-const app = new Index({
-  target: document.getElementById('app')!
-});
+const app = mount(Index, { target: document.getElementById('app')! });
 
 export default app;
