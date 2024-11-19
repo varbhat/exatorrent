@@ -24,7 +24,7 @@ COPY --link --from=build-node /exa/internal/web/build /exa/internal/web/build
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
 
 # Artifact Target
-FROM scratch as artifact
+FROM scratch AS artifact
 
 ARG TARGETOS TARGETARCH TARGETVARIANT
 
