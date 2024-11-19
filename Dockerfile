@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM docker.io/alpine:3.18 as base
+FROM docker.io/alpine:3.18 AS base
 
 # Build the web ui from source
 FROM --platform=$BUILDPLATFORM docker.io/node:18 AS build-node
@@ -24,7 +24,7 @@ COPY --link --from=build-node /exa/internal/web/build /exa/internal/web/build
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} make app
 
 # Artifact Target
-FROM scratch as artifact
+FROM scratch AS artifact
 
 ARG TARGETOS TARGETARCH TARGETVARIANT
 
