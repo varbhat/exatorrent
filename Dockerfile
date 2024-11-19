@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM docker.io/alpine:3.18 as base
+FROM docker.io/alpine:3.18 AS base
 
 # Build the web ui from source
 FROM --platform=$BUILDPLATFORM docker.io/node:18 AS build-node
