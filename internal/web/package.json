@@ -19,7 +19,7 @@
   "type": "module",
   "devDependencies": {
     "@tsconfig/svelte": "^5.0.4",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.1",
     "prettier-plugin-svelte": "^3.3.2",
     "svelte-check": "^4.1.0",
     "typescript": "^5.7.2"
