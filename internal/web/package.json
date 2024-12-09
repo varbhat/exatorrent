@@ -30,7 +30,7 @@
     "tslib": "^2.7.0",
     "typescript": "^5.5.3",
     "vite": "^5.4.8",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "prettier-plugin-svelte": "^3.3.2"
   },
   "dependencies": {
