@@ -240,7 +240,7 @@ export let Connect = () => {
     return;
   }
 
-  if (!(un.length > 5) || !(pw.length > 5)) {
+  if (!(un.length > 0) || !(pw.length > 5)) {
     alert('Invalid Credentials');
     return;
   }
