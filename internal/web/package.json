@@ -24,7 +24,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "@sveltejs/vite-plugin-svelte": "^4.0.4",
-    "svelte": "^5.16.0",
+    "svelte": "^5.17.3",
     "svelte-check": "^4.1.1",
     "tailwindcss": "^3.4.17",
     "tslib": "^2.7.0",
