@@ -57,6 +57,7 @@ jobs:
           files: |
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
+          source: .
           push: true
           set: |
             *.cache-from=type=gha
