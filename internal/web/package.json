@@ -22,7 +22,7 @@
   "devDependencies": {
     "@tsconfig/svelte": "^5.0.4",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
+    "postcss": "^8.5.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.4",
     "svelte": "^5.17.4",
     "svelte-check": "^4.1.4",
