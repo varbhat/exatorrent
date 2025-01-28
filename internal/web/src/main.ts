@@ -1,7 +1,7 @@
-import './index.css';
-import Index from './Index.svelte';
+import './app.css';
+import App from './App.svelte';
 import { mount } from 'svelte';
 
-const app = mount(Index, { target: document.getElementById('app')! });
+const app = mount(App, { target: document.getElementById('app')! });
 
 export default app;
