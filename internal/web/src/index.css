@@ -1,10 +1,10 @@
+@import "tailwindcss";
+
 body {
-  @apply bg-neutral-900;
-}
-.noHL {
-  -webkit-tap-highlight-color: transparent;
+    @apply bg-neutral-900;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.noHL {
+    -webkit-tap-highlight-color: transparent;
+}
+
