@@ -6,7 +6,7 @@ toolchain go1.23.5
 
 require (
 	github.com/anacrolix/chansync v0.6.0
-	github.com/anacrolix/go-libutp v1.3.1
+	github.com/anacrolix/go-libutp v1.3.2
 	github.com/anacrolix/log v0.16.0
 	github.com/anacrolix/torrent v1.58.0
 	github.com/go-llsqlite/crawshaw v0.5.5
@@ -29,7 +29,7 @@ require (
 	github.com/anacrolix/missinggo v1.3.0 // indirect
 	github.com/anacrolix/missinggo/perf v1.0.0 // indirect
 	github.com/anacrolix/missinggo/v2 v2.7.4 // indirect
-	github.com/anacrolix/mmsg v1.0.0 // indirect
+	github.com/anacrolix/mmsg v1.0.1 // indirect
 	github.com/anacrolix/multiless v0.4.0 // indirect
 	github.com/anacrolix/stm v0.5.0 // indirect
 	github.com/anacrolix/sync v0.5.1 // indirect
