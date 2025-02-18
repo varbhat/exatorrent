@@ -1,5 +1,7 @@
 <script lang="ts">
   // Password box visibility toggle
+  import { toast } from 'svelte-sonner';
+
   let pwvisible = false;
   let pwbox: HTMLInputElement;
   function toggleinput() {
@@ -28,18 +30,18 @@
     if (exausername != '' && exausername != undefined && exausername != null) {
       if (exapassword != '' && exapassword != undefined && exapassword != null) {
         if (!(exausername.length > 5) || !(exapassword.length > 5)) {
-          alert('Invalid Credentials');
+          toast.error('Invalid Credentials');
           return;
         }
         localStorage.setItem('exausername', exausername);
         localStorage.setItem('exapassword', exapassword);
         Connect();
       } else {
-        alert('Password Field Cannot be Empty');
+        toast.error('Password Field Cannot be Empty');
         return;
       }
     } else {
-      alert('Username Field Cannot be Empty');
+      toast.error('Username Field Cannot be Empty');
       return;
     }
     return;

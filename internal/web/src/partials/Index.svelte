@@ -1,6 +1,7 @@
 <script lang="ts">
   import { dontstart, Send, isAdmin } from './core';
   import slocation from 'slocation';
+  import { toast } from 'svelte-sonner';
   let ismetainfo = true;
   let torrentinput = '';
   let trntfilestring = '';
@@ -9,7 +10,7 @@
   let addfunc = () => {
     if (ismetainfo === true) {
       if (torrentinput === '') {
-        alert('Empty Input');
+        toast.error('Empty Input');
         return;
       }
       if (torrentinput.startsWith('magnet:')) {
@@ -31,7 +32,7 @@
       }
     } else {
       if (trntfilestring === '') {
-        alert('File Invalid');
+        toast.error('File Invalid');
         return;
       }
       console.log('Adding Torrent', trntfilestring, $dontstart);
@@ -56,7 +57,7 @@
   function readtrnt(e: Event) {
     let f = (e.target as HTMLInputElement).files[0];
     if (f.size > 20971520) {
-      alert('Error: Maximum Torrent File Size is 20MB');
+      toast.error('Error: Maximum Torrent File Size is 20MB');
       return;
     }
     let reader = new FileReader();
