@@ -1,7 +1,6 @@
 module github.com/varbhat/exatorrent
 
 go 1.23
-
 toolchain go1.23.5
 
 require (
@@ -15,7 +14,7 @@ require (
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil/v3 v3.24.5
-	golang.org/x/crypto v0.33.0
+	golang.org/x/crypto v0.35.0
 	golang.org/x/time v0.10.0
 )
 
