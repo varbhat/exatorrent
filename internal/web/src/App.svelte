@@ -15,6 +15,7 @@
   import File from './partials/File.svelte';
   import About from './partials/About.svelte';
   import User from './partials/User.svelte';
+  import { Toaster } from 'svelte-sonner';
 </script>
 
 <svelte:head>
@@ -55,3 +56,5 @@
     <p class="text-xl text-center text-red-400 font-sans">Not Found</p>
   </div>
 {/if}
+
+<Toaster position="top-right" theme="dark" richColors />

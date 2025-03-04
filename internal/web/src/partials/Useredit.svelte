@@ -9,6 +9,7 @@
   });
 
   import { Send } from './core';
+  import { toast } from 'svelte-sonner';
 
   export let username = '';
   export let timestring = '';
@@ -37,7 +38,7 @@
           aop: 1
         });
       } else {
-        alert('Same Usertype Selected');
+        toast.error('Same Usertype Selected');
       }
     }
   };
