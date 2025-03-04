@@ -10,7 +10,7 @@ ADD Makefile /exa/
 RUN make web
 
 # Build the application from source
-FROM docker.io/golang:1.23-bookworm AS build-go
+FROM docker.io/golang:1.24-bookworm AS build-go
 
 ARG TARGETOS TARGETARCH
 
