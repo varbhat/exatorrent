@@ -1,7 +1,6 @@
 module github.com/varbhat/exatorrent
 
 go 1.24.0
-
 require (
 	github.com/anacrolix/chansync v0.6.0
 	github.com/anacrolix/go-libutp v1.3.2
@@ -14,7 +13,7 @@ require (
 	github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 	github.com/shirou/gopsutil/v3 v3.24.5
 	golang.org/x/crypto v0.36.0
-	golang.org/x/time v0.10.0
+	golang.org/x/time v0.11.0
 )
 
 require (
