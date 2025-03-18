@@ -5,6 +5,7 @@
   import TorrentCard from './TorrentCard.svelte';
   import type { DlObject } from './core';
   import ProgStat from './ProgStat.svelte';
+  import { toast } from 'svelte-sonner';
 
   onMount(() => {
     torrentinfo.set({} as DlObject);
@@ -32,7 +33,7 @@
     trackerfilestring = '';
     let f = (e.target as HTMLInputElement).files[0];
     if (f.size > 20971520) {
-      alert('Error: Maximum Tracker File Size is 20MB');
+      toast.error('Error: Maximum Tracker File Size is 20MB');
       return;
     }
     let reader = new FileReader();
