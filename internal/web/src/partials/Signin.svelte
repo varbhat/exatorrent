@@ -27,7 +27,7 @@
   function signIn() {
     if (exausername != '' && exausername != undefined && exausername != null) {
       if (exapassword != '' && exapassword != undefined && exapassword != null) {
-        if (!(exausername.length > 5) || !(exapassword.length > 5)) {
+        if (!(exausername.length > 0) || !(exapassword.length > 5)) {
           alert('Invalid Credentials');
           return;
         }
