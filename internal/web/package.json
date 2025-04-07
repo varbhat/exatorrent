@@ -33,6 +33,6 @@
     "tailwindcss": "^4.0.17",
     "tslib": "^2.7.0",
     "typescript": "^5.8.3",
-    "vite": "^6.2.4"
+    "vite": "^6.2.5"
   }
 }
