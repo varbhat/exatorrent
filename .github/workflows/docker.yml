@@ -51,12 +51,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create artifact directory
+        run: mkdir -p artifact
+
       - name: Build and push
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v6
         with:
           files: |
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
+          source: .
           push: true
           set: |
             *.cache-from=type=gha
@@ -124,19 +128,21 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Create artifacts
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v6
         with:
           files: |
             ./docker-bake.hcl
           targets: artifact-linux
+          source: .
           provenance: false
 
       - name: Flatten artifact
-        uses: docker/bake-action@v5
+        uses: docker/bake-action@v6
         with:
           files: |
             ./docker-bake.hcl
           targets: release
+          source: .
           provenance: false
 
       - name: Upload artifacts
