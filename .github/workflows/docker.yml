@@ -51,6 +51,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create artifact directory
+        run: mkdir -p artifact
+
       - name: Build and push
         uses: docker/bake-action@v6
         with:
