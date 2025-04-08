@@ -133,6 +133,7 @@ jobs:
           files: |
             ./docker-bake.hcl
           targets: artifact-linux
+          source: .
           provenance: false
 
       - name: Flatten artifact
@@ -141,6 +142,7 @@ jobs:
           files: |
             ./docker-bake.hcl
           targets: release
+          source: .
           provenance: false
 
       - name: Upload artifacts
