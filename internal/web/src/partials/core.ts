@@ -1,6 +1,7 @@
 import { writable, get } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 import slocation from 'slocation';
+import { toast } from 'svelte-sonner';
 
 export interface DlObject {
   infohash: string;
@@ -46,6 +47,7 @@ interface DevInfo {
   goversion: string;
   startedat: string;
 }
+
 interface DevStats {
   cpucycles: number;
   diskfree: number;
@@ -184,7 +186,7 @@ let wonclosefn = () => {
 
 let werrorfn = () => {
   if (firsttimecon === false && location.pathname !== '/signin') {
-    alert('Error Connecting');
+    toast.error('Error Connecting');
     return;
   }
   try {
@@ -196,7 +198,7 @@ let werrorfn = () => {
         if (res.status >= 200 && res.status <= 299) {
           return res.json();
         } else {
-          alert('Error Authenticating');
+          toast.error('Error Authenticating');
           throw new Error('Error Authenticating');
         }
       })
@@ -241,7 +243,7 @@ export let Connect = () => {
   }
 
   if (!(un.length > 5) || !(pw.length > 5)) {
-    alert('Invalid Credentials');
+    toast.error('Invalid Credentials');
     return;
   }
 
@@ -265,9 +267,14 @@ export let SocketHandler = (event: MessageEvent) => {
   switch (msg.type) {
     case 'resp':
       if (!(msg == null)) {
-        if (msg?.state === 'error' || msg?.state === 'success') {
-          alert(msg?.message);
+        let state = msg?.state ?? '';
+        let content = msg?.message ?? '';
+        if (state === 'error') {
+          toast.error(content);
+        } else if (state === 'success') {
+          toast.success(content);
         }
+
         let rl = get(resplist);
         resplist.set({ has: true, data: [msg, ...rl?.data] as RespObject[] });
       } else {
@@ -310,7 +317,10 @@ export let SocketHandler = (event: MessageEvent) => {
       break;
     case 'torrentinfostat':
       if (!(msg.data == null)) {
-        torctime.set({ addedat: new Date(msg.data?.AddedAt)?.toLocaleString(), startedat: new Date(msg.data?.StartedAt)?.toLocaleString() });
+        torctime.set({
+          addedat: new Date(msg.data?.AddedAt)?.toLocaleString(),
+          startedat: new Date(msg.data?.StartedAt)?.toLocaleString()
+        });
       } else {
         torctime.set({ addedat: '', startedat: '' });
       }
