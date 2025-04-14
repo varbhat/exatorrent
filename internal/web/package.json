@@ -29,7 +29,7 @@
     "@tsconfig/svelte": "^5.0.4",
     "prettier": "^3.5.3",
     "prettier-plugin-svelte": "^3.3.3",
-    "svelte": "^5.25.8",
+    "svelte": "^5.26.3",
     "svelte-check": "^4.1.5",
     "tailwindcss": "^4.0.17",
     "tslib": "^2.7.0",
