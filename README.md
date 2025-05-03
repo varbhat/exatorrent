@@ -80,7 +80,6 @@ Exatorrent can be operated using either of the following methods:
 * Download Directory as Zip or as Tarball
 * Stream directly on Browser or [VLC](https://www.videolan.org/vlc/) or [mpv](https://mpv.io/) or other Media Players
 * [Documented API](docs/API.md)
-* Uses Sqlite3 (embedded database with no setup and no configuration) by Default for [Database](docs/database.md) but PostgreSQL can be used instead too
 
 ## License
 [GPL-v3](LICENSE)

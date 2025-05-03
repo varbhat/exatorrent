@@ -17,7 +17,6 @@ import (
 type Eng struct {
 	Tconfig TorConfig
 	Econfig EngConfig
-	PsqlCon string
 
 	Torc *torrent.Client
 

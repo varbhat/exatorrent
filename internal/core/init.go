@@ -1,7 +1,6 @@
 package core
 
 import (
-	"bufio"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -15,8 +14,6 @@ import (
 
 	"github.com/anacrolix/chansync"
 	utp "github.com/anacrolix/go-libutp"
-
-	"github.com/varbhat/exatorrent/internal/db"
 
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
@@ -55,7 +52,6 @@ func checkDir(dir string) {
 func Initialize() {
 	var cfilename string
 	var torcc bool
-	var psql bool
 	var engc bool
 	var err error
 	var auser string
@@ -82,7 +78,6 @@ func Initialize() {
 	flag.StringVar(&Dirconfig.DirPath, "dir", "exadir", `<path> exatorrent Directory (Default: "exadir")`)
 	flag.StringVar(&auser, "admin", "adminuser", `<user> Default admin username (Default Username: "adminuser" and Default Password: "adminpassword")`)
 	flag.BoolVar(&pw, "passw", false, `<opt>  Set Default admin password from "EXAPASSWORD" environment variable`)
-	flag.BoolVar(&psql, "psql", false, "<opt>  Generate Sample Postgresql Connection URL")
 	flag.BoolVar(&engc, "engc", false, "<opt>  Generate Custom Engine Configuration")
 	flag.BoolVar(&torcc, "torc", false, "<opt>  Generate Custom Torrent Client Configuration")
 	flag.Parse()
@@ -172,41 +167,6 @@ func Initialize() {
 		os.Exit(0)
 	}
 
-	// Read Postgresql Secret
-	cfilename = filepath.Join(Dirconfig.ConfigDir, "psqlconfig.txt")
-	_, cfileerr = os.Stat(cfilename)
-	if cfileerr == nil {
-		pfile, err := os.Open(cfilename)
-		if err != nil {
-			Err.Fatalln("Error Reading Postgresql Connection URL: ", err)
-		}
-		defer pfile.Close()
-
-		scanner := bufio.NewScanner(pfile)
-		for scanner.Scan() {
-			Engine.PsqlCon = scanner.Text()
-			psql = true
-			Info.Println("Postgresql Connection URL at", cfilename, " has been Read")
-			break
-		}
-
-		if err := scanner.Err(); err != nil {
-			Err.Fatalln("Error Reading Postgresql Connection URL: ", err)
-		}
-	} else {
-		Engine.PsqlCon = os.Getenv("DATABASE_URL")
-		if len(Engine.PsqlCon) != 0 {
-			psql = true
-			_ = os.Unsetenv("DATABASE_URL")
-		}
-	}
-	if os.IsNotExist(cfileerr) && psql {
-		_ = os.WriteFile(cfilename, []byte("postgres://username:password@localhost:5432/database_name"), 0644)
-		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "\nSample Postgresql Connection URL has been written at %s\n", cfilename)
-		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "Please Enter your Postgresql Connection URL at File %s , and restart\n", cfilename)
-		os.Exit(0)
-	}
-
 	tc := Engine.Tconfig.ToTorrentConfig()
 
 	// Set Different Logger for UTP
@@ -220,35 +180,7 @@ func Initialize() {
 		},
 	}}
 
-	if psql {
-
-		Engine.TorDb = &db.PsqlTrntDb{}
-		Engine.TorDb.Open(Engine.PsqlCon)
-
-		Engine.FsDb = &db.PsqlFsDb{}
-		Engine.FsDb.Open(Engine.PsqlCon)
-
-		Engine.LsDb = &db.PsqlLsDb{}
-		Engine.LsDb.Open(Engine.PsqlCon)
-
-		Engine.UDb = &db.PsqlUserDb{}
-		Engine.UDb.Open(Engine.PsqlCon)
-
-		Engine.TUDb = &db.PsqlTrntUserDb{}
-		Engine.TUDb.Open(Engine.PsqlCon)
-
-		Engine.TrackerDB = &db.PsqlTDb{}
-		Engine.TrackerDB.Open(Engine.PsqlCon)
-
-		Engine.PcDb, err = db.NewPsqlPieceCompletion(Engine.PsqlCon)
-
-		if err != nil {
-			Err.Fatalln("Unable to Connect to Postgresql for PieceCompletion")
-		}
-
-	} else {
-		sqliteSetup(tc)
-	}
+	sqliteSetup(tc)
 
 	if !CheckUserExists(auser) {
 		var password = "adminpassword"

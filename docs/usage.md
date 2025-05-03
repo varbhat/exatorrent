@@ -8,7 +8,6 @@ Usage of exatorrent:
  -engc    <opt>  Generate Custom Engine Configuration
  -key     <path> Path to TLS Key (Required for HTTPS)
  -passw   <opt>  Set Default admin password from "EXAPASSWORD" environment variable
- -psql    <opt>  Generate Sample Postgresql Connection URL
  -torc    <opt>  Generate Custom Torrent Client Configuration
  -unix    <path> Unix Socket Path
  -help    <opt>  Print this Help
@@ -58,9 +57,6 @@ Writes Sample Runtime-Configurable Engine connection URL to `<exadirectory>/conf
 
 ### `-torc`
 Writes Sample Torrent Client connection URL to `<exadirectory>/config/clientconfig.json` . These settings cannot be configured during runtime and must only be configured before starting `exatorrent` .
-
-### `-psql`
-Writes Sample Postgresql connection URL to `<exadirectory>/config/psqlconfig.txt` . Instead of reading configuration URL from env variable `DATABASE_URL` , reads `DATABASE_URL` from file . Refer [Database Docs](database.md) for more details .
 
 
 ## Blocklist
